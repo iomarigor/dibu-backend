@@ -39,10 +39,12 @@ docker-compose up -d
 
 5. Acceder al proyecto por la url:
    http://localhost:8080/public/
-   [![](https://i.ibb.co/xs5DS0Q/Captura-de-pantalla-2023-07-22-154019.png)](https://i.ibb.co/xs5DS0Q/Captura-de-pantalla-2023-07-22-154019.png)
-
+   [![](https://i.ibb.co/r60d4Pn/Captura-de-pantalla-2023-07-22-231112.png)](https://i.ibb.co/r60d4Pn/Captura-de-pantalla-2023-07-22-231112.png)
 ##Otros comandos
 
 ```
-docker-compose exec php php /var/www/html/artisan migrate  //Correr las migraciones
+php artisan make:migration *nombre_migracion* --create=*nombre_tabla* *//Crear las migraciones*
+php artisan migrate                                                   *//Correr las migraciones*
+php artisan make:controller DetalleVentasController                   *//Crear controlador sin recursos*
+php artisan make:controller VentasController --resource               *//Crear controlador con recursos
 ```
