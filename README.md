@@ -40,8 +40,7 @@ docker-compose up -d
 5. Acceder al proyecto por la url:
    http://localhost:8080/public/
    [![](https://i.ibb.co/r60d4Pn/Captura-de-pantalla-2023-07-22-231112.png)](https://i.ibb.co/r60d4Pn/Captura-de-pantalla-2023-07-22-231112.png)
-##Otros comandos
-
+## Otros comandos
 ```
 php artisan make:migration *nombre_migracion* --create=*nombre_tabla* *//Crear las migraciones*
 php artisan migrate                                                   *//Correr las migraciones*
