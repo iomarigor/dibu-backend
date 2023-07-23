@@ -1,0 +1,6 @@
+public/vendor
+public/.idea
+public/Homestead.json
+public/Homestead.yaml
+public/.env
+public/.phpunit.result.cache
