@@ -16,11 +16,12 @@ $router->get('/', function () use ($router) {
     //return $router->app->version();
     return '<h1> Dibu Backend Proyect </h1>';
 });
-$router->get('/test', function () use ($router) {
-    return "test";
-});
-
-$router->get('/db', function () {
-    $tables = DB::table('test')->get();
-    return json_encode($tables);
+$router->post('/register', 'AuthController@register');
+$router->post('/login', 'AuthController@login');
+$router->post('/auth', 'AuthController@validateToken');
+$router->group(['middleware' => 'auth'], function ($router) {
+    $router->get('/users', function () {
+        return 'test users';
+    });
+    $router->get('/logout', 'AuthController@logout');
 });

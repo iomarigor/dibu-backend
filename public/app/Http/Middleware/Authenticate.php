@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use App\TokenBlacklist;
 
 class Authenticate
 {
@@ -35,8 +36,18 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+        $token = $request->bearerToken();
+        // Verifica si el token está en la lista de tokens inválidos
+        $tokenInBlacklist = TokenBlacklist::where('token', $token)->exists();
+
+        if ($tokenInBlacklist) {
+            return response()->json(['msg' => 'Token invalido', 'detalle' => null], 401);
+        }
+
+        // Validar la IP del cliente
+        $user = auth()->user();
+        if ($user && $user->ip_address !== $request->ip()) {
+            return response()->json(['msg' => 'Token invalido', 'detalle' => null], 401);
         }
 
         return $next($request);
