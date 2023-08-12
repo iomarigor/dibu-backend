@@ -74,6 +74,7 @@ $app->configure('auth');
 
 $app->middleware([
     \Fruitcake\Cors\HandleCors::class,
+    App\Http\Middleware\CorsMiddleware::class
 ]);
 
 $app->routeMiddleware([
@@ -95,6 +96,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

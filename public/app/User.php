@@ -29,6 +29,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $hidden = [
         'password',
+        'ip_address',
+        'email_verified_at',
+        'remember_token',
+        'created_at',
+        'updated_at'
     ];
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

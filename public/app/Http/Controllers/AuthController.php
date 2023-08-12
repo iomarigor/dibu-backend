@@ -33,12 +33,6 @@ class AuthController extends Controller
 
         $user = User::create(['username' => $request->input('username'), 'password' => $password, 'email' => $request->input('email')]);
 
-        // Quitando atributos innecesarios antes de retornar la respuesta
-        unset($user['email_verified_at']);
-        unset($user['remember_token']);
-        unset($user['created_at']);
-        unset($user['updated_at']);
-
         return response()->json(['msg' => 'Cuenta registrada satisfactoriamente', 'detalle' => $user], 200);
     }
 
@@ -66,16 +60,10 @@ class AuthController extends Controller
         // Actualizar la columna ip_address en el registro del usuario
         $user->update(['ip_address' => $request->ip()]);
 
-        // Quitando atributos innecesarios antes de retornar la respuesta
-        unset($user['email_verified_at']);
-        unset($user['remember_token']);
-        unset($user['created_at']);
-        unset($user['updated_at']);
-
-        $user['expirer_in'] = auth()->factory()->getTTL() * 60;
+        $user['expirer_in'] = auth()->factory()->getTTL() * env('JWR_TIME_TOKEN');
         $user['token'] = 'Bearer ' . $token;
 
-        return response()->json(['msg' => 'Iniciando sesión', 'detalle' => $user], 200);
+        return response()->json(['msg' => 'Sesión Iniciada', 'detalle' => $user], 200);
     }
 
     /**
