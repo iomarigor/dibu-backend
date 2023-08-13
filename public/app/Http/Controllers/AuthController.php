@@ -43,10 +43,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'password' => 'required',
-            'email' => 'required|unique:users,email,1,id'
-        ]);
+
 
         $credentials = $request->only(['email', 'password']);
 
