@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\DB;
 $router->group([], function ($router) {
     $router->get('/', function () use ($router) {
         //return ;
-        return '<h1> SGEA API REST</h1> </br> ' . $router->app->version();
+        return '<h1>API REST</h1> </br> ' . $router->app->version();
     });
-
     $router->post('/login', 'AuthController@login');
     $router->get('/validateToken', 'AuthController@validateToken');
 });
