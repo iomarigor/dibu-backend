@@ -12,7 +12,7 @@ code .
 ```
 
 2. Configurar el .env
-   **public/.env**
+   **.env**
 
 ```
 DB_CONNECTION=mysql
