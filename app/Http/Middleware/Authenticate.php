@@ -46,8 +46,9 @@ class Authenticate
 
         // Validar la IP del cliente
         $user = auth()->user();
+        //var_dump($user);
         if ($user && $user->ip_address !== $request->ip()) {
-            return response()->json(['msg' => 'Token invalido', 'detalle' => null], 401);
+            return response()->json(['msg' => 'Token invalido A', 'detalle' => null], 401);
         }
 
         return $next($request);

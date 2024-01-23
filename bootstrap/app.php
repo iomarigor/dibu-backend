@@ -61,6 +61,8 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('auth');
+$app->configure('cors');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -74,10 +76,13 @@ $app->configure('auth');
 
 $app->middleware([
     \Fruitcake\Cors\HandleCors::class,
+    //'Nord\Lumen\Cors\CorsMiddleware',
 ]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'restriclevel1' => App\Http\Middleware\RestricLevel1::class,
+    'restriclevel2' => App\Http\Middleware\RestricLevel2::class,
 ]);
 
 /*
@@ -95,6 +100,8 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+//$app->register('Nord\Lumen\Cors\CorsServiceProvider');
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

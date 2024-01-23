@@ -20,24 +20,35 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login', 'register', 'validate']]);
     }
-
+    /**
+     * Registro de usuarios
+     **/
     public function register(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|unique:users,username',
+            'username' => 'required',
+            'full_name' => 'required',
             'password' => 'required|confirmed',
-            'email' => 'required|unique:users,email,1,id'
+            'email' => 'required',
+            'id_level_user' => 'required',
+            'last_user' => 'required'
         ]);
+        // Limpiado datos de confirmacion de contraseña
+        $data = $request->all();
+        $user = User::where([
+            ['username', '=', $data['username']],
+            ['status_id', '!=', 1],
+            ['email', '=', $data['email']]
+        ])->first();
+        if ($user) {
+            return response()->json(['msg' => 'Ya existe un usuario con el mismo nombre de usuario o correo electronico', 'detalle' => $user], 404);
+        }
+        unset($data['password_confirmation']);
 
-        $password = Hash::make($request->input('password'));
+        //Hasheando contraseña
+        $data["password"] = Hash::make($request->input('password'));
 
-        $user = User::create(['username' => $request->input('username'), 'password' => $password, 'email' => $request->input('email')]);
-
-        // Quitando atributos innecesarios antes de retornar la respuesta
-        unset($user['email_verified_at']);
-        unset($user['remember_token']);
-        unset($user['created_at']);
-        unset($user['updated_at']);
+        $user = User::create($data);
 
         return response()->json(['msg' => 'Cuenta registrada satisfactoriamente', 'detalle' => $user], 200);
     }
@@ -51,11 +62,11 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'password' => 'required',
-            'email' => 'required|unique:users,email,1,id'
+            'username' => 'required'
         ]);
 
-        $credentials = $request->only(['email', 'password']);
-
+        $credentials = $request->only(['username', 'password']);
+        $credentials['status_id'] = 3;
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['msg' => 'Credenciales inválidas', 'detalle' => null], 401);
         }
@@ -67,15 +78,19 @@ class AuthController extends Controller
         $user->update(['ip_address' => $request->ip()]);
 
         // Quitando atributos innecesarios antes de retornar la respuesta
-        unset($user['email_verified_at']);
+        /* unset($user['email_verified_at']);
         unset($user['remember_token']);
         unset($user['created_at']);
-        unset($user['updated_at']);
+        unset($user['updated_at']); */
 
-        $user['expirer_in'] = auth()->factory()->getTTL() * 60;
+        $user['expirer_in'] = auth()->factory()->getTTL() * 60 * 12;
         $user['token'] = 'Bearer ' . $token;
 
-        return response()->json(['msg' => 'Iniciando sesión', 'detalle' => $user], 200);
+        if ($user['status_id'] == 3) {
+            return response()->json(['msg' => 'Sesión iniciada', 'detalle' => $user], 200);
+        } else {
+            return response()->json(['msg' => 'Credenciales inválidas', 'detalle' => null], 401);
+        }
     }
 
     /**
@@ -91,14 +106,7 @@ class AuthController extends Controller
             return response()->json(['msg' => 'Token no válido', 'detalle' => null], 401);
         }
 
-        // Puedes personalizar la información que deseas retornar del usuario
-        $userData = [
-            'id' => $user->id,
-            'username' => $user->username,
-            'email' => $user->email
-        ];
-
-        return response()->json(['msg' => 'Token válido', 'detalle' => $userData], 200);
+        return response()->json(['msg' => 'Token válido', 'detalle' => $user], 200);
     }
 
     /**
@@ -108,25 +116,6 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $token = $request->bearerToken();
-        // Registra el token actual en la tabla de blacklist
-        TokenBlacklist::insert(['token' => $token]);
-
-        // Invalida el token
-        auth()->logout();
-
-        return response()->json(['msg' => 'Sesión cerrada', 'detalle' => null], 200);
-    }
-
-    /**
-     * Cambiar la contraseña de un usuario.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function changePassword(Request $request)
-    {
-        //... por implementar
-        // Cambiar la contraseña del usuario y luego registrar el token actual en la tabla de blacklist
         $token = $request->bearerToken();
         // Registra el token actual en la tabla de blacklist
         TokenBlacklist::insert(['token' => $token]);
