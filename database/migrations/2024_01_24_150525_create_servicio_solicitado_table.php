@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoRequisitosTable extends Migration
+class CreateServicioSolicitadoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTipoRequisitosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_requisitos', function (Blueprint $table) {
+        Schema::create('servicio_solicitado', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion_tipo');
+            $table->string('estado');
+            $table->date('fecha_aprovacion');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateTipoRequisitosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_requisito');
+        Schema::dropIfExists('servicio_solicitado');
     }
 }

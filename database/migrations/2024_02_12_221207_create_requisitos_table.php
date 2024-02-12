@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConvocatoriasRequisitoTable extends Migration
+class CreateRequisitosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,28 +13,33 @@ class CreateConvocatoriasRequisitoTable extends Migration
      */
     public function up()
     {
-        Schema::create('convocatoria_requisitos', function (Blueprint $table) {
+        Schema::create('requisitos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->string('url_guia');
+            $table->string('estado');
+            $table->date('fecha_registro');
+            $table->unsignedBigInteger('tipo_requisito_id');
             $table->unsignedBigInteger('convocatoria_id');
-            $table->unsignedBigInteger('requisito_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('seccion_id');
             $table->timestamps();
-
+            
+            $table->foreign('tipo_requisito_id')
+                ->references('id')
+                ->on('tipo_requisitos')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+                
             $table->foreign('convocatoria_id')
                 ->references('id')
                 ->on('convocatorias')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-                
-            $table->foreign('requisito_id')
-                ->references('id')
-                ->on('requisitos')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
             
-            $table->foreign('status_id')
+            $table->foreign('seccion_id')
                 ->references('id')
-                ->on('status_data')
+                ->on('secciones')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
         });
@@ -47,6 +52,6 @@ class CreateConvocatoriasRequisitoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('convocatoria_requisito');
+        Schema::dropIfExists('requisito');
     }
 }

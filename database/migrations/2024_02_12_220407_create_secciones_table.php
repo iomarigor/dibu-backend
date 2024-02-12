@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoRequisitosTable extends Migration
+class CreateSeccionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,16 @@ class CreateTipoRequisitosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_requisitos', function (Blueprint $table) {
+        Schema::create('secciones', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion_tipo');
+            $table->unsignedBigInteger('convocatoria_id');
             $table->timestamps();
+            
+            $table->foreign('convocatoria_id')
+                ->references('id')
+                ->on('convocatorias')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 
@@ -27,6 +33,6 @@ class CreateTipoRequisitosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_requisito');
+        Schema::dropIfExists('secciones');
     }
 }
