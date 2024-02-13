@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "flipbox/lumen-generator": "^9.2",
         "fruitcake/laravel-cors": "^2.2",
         "laravel/lumen-framework": "^7.0",
         "tymon/jwt-auth": "^1.0"
