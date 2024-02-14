@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\User;
-use App\TokenBlacklist;
+use App\Models\User;
+use App\Models\TokenBlacklist;
 
 class AuthController extends Controller
 {

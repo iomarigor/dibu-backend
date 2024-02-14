@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\LevelUser;
+use App\Models\LevelUser;
 use Illuminate\Http\Request;
 
 class LevelUserController extends Controller
