@@ -2,29 +2,54 @@
 
 namespace App\Http\Requests\Servicio;
 
-use Anik\Form\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Laravel\Lumen\Http\Request as LumenRequest;
 
-class CreateServicioRequest extends FormRequest
+class CreateServicioRequest extends LumenRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Validate the incoming request with the given rules.
      *
-     * @return bool
+     * @return array
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    protected function authorize(): bool
+    public function validator()
     {
-        return false;
+        $rules = [
+            'descripcion' => 'required|string',
+            'capacidad_maxima' => 'required|string',
+        ];
+        $validator = app('validator')->make($this->all(), $rules);
+
+        if ($validator->fails()) {
+            $this->failedValidation($validator);
+        }
+
+        return $this->validationData();
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Override the default failed validation method to throw an exception
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
+
+    /**
+     * Get the validated data from the request.
      *
      * @return array
      */
-    protected function rules(): array
+    public function validated()
     {
-        return [
-            //
-        ];
+        return $this->validator()->validated();
     }
 }

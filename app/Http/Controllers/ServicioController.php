@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Servicio\CreateServicioRequest;
+use App\Http\Resources\Servicio\ServicioResource;
 use App\Models\Servicio;
+use App\Services\Servicio\CreateServicioService;
 use Illuminate\Http\Request;
 
 class ServicioController extends Controller
@@ -22,10 +25,16 @@ class ServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    // public function create(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'descripcion' => 'required',
+    //         'capacidad_maxima' => 'required'
+    //     ]);
+    //     $data = $request->all();
+    //     $servicio = Servicio::create($data);
+    //     return response()->json(['msg' => 'Servicio registrada satisfactoriamente', 'detalle' => $servicio], 200);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -33,6 +42,11 @@ class ServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function create(Request $request, CreateServicioService $createService): ServicioResource
+    {
+        return ServicioResource::make($createService->create($request->all()));
+    }
+
     public function store(Request $request)
     {
         //

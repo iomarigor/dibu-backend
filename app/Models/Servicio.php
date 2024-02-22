@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Servicio extends Model
 {
-    protected $table = 'servicios'; 
+    protected $table = 'servicios';
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'descripcion',
+        'capacidad_maxima',
+    ];
 }

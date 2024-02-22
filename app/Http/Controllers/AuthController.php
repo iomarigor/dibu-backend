@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,14 +26,6 @@ class AuthController extends Controller
      **/
     public function register(Request $request)
     {
-        $this->validate($request, [
-            'username' => 'required',
-            'full_name' => 'required',
-            'password' => 'required|confirmed',
-            'email' => 'required',
-            'id_level_user' => 'required',
-            'last_user' => 'required'
-        ]);
         // Limpiado datos de confirmacion de contraseña
         $data = $request->all();
         $user = User::where([
@@ -83,7 +76,7 @@ class AuthController extends Controller
         unset($user['created_at']);
         unset($user['updated_at']); */
 
-        $user['expirer_in'] = auth()->factory()->getTTL() * 60 * 12;
+        $user['expirer_in'] = auth()->factory()->getTTL() * 60 * 12 * 7;
         $user['token'] = 'Bearer ' . $token;
 
         if ($user['status_id'] == 3) {
