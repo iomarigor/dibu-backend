@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Servicio\CreateServicioRequest;
 use App\Http\Resources\Servicio\ServicioResource;
 use App\Models\Servicio;
+use App\Services\Servicio\UpdateServicioService;
 use App\Services\Servicio\CreateServicioService;
 use Illuminate\Http\Request;
 
@@ -71,9 +72,8 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Servicio $servicio)
+    public function edit(Request $request, Servicio $servicio)
     {
-        //
     }
 
     /**
@@ -83,9 +83,23 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Servicio $servicio)
+    // public function update(Request $request, UpdateServicioService $updateService,  Servicio $servicio): ServicioResource
+    // {
+    //     // $service = $updateService->update($servicio, $request->all());
+    //     // return response()->json(ServicioResource::make($service));
+    //     return ServicioResource::make($updateService->update($servicio, $request->all()));
+    // }
+    public function update(Request $request, UpdateServicioService $updateService, $id): ServicioResource
     {
-        //
+        $servicio = Servicio::findOrFail($id);
+        $this->validate($request, [
+            'descripcion' => 'required',
+            'capacidad_maxima' => 'required',
+        ]);
+
+        $servicio = $updateService->update($servicio, $request->all());
+
+        return new ServicioResource($servicio);
     }
 
     /**
