@@ -34,7 +34,8 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     
     //Servicio
     $router->post('/servicio/create', 'ServicioController@create');
-    //COnvocatoria
+    $router->put('/servicio/update/{id}', 'ServicioController@update');
+    //Convocatoria
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
 });
 
