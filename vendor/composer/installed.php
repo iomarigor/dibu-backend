@@ -3,7 +3,7 @@
         'name' => 'laravel/lumen',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4d082d8b633636ac40c43126646ad2ab537e3559',
+        'reference' => '495955cf9d7f925143d8a9373e06b361430e5aed',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -364,7 +364,7 @@
         'laravel/lumen' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4d082d8b633636ac40c43126646ad2ab537e3559',
+            'reference' => '495955cf9d7f925143d8a9373e06b361430e5aed',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -457,6 +457,15 @@
             'reference' => '3d81e4309d2a927abbe66df935f4bb60082805ad',
             'type' => 'library',
             'install_path' => __DIR__ . '/../opis/closure',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'pearl/lumen-request-validate' => array(
+            'pretty_version' => '1.8',
+            'version' => '1.8.0.0',
+            'reference' => '0f82861748fb5e6ea91feb07bd8c0befc2fcb8be',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../pearl/lumen-request-validate',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -598,8 +607,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0 || 3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(

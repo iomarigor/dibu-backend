@@ -4,9 +4,9 @@ namespace App\Http\Requests\Servicio;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Laravel\Lumen\Http\Request as LumenRequest;
+use Illuminate\Http\Request;
 
-class CreateServicioRequest extends LumenRequest
+class CreateServicioRequest extends Request
 {
     /**
      * Validate the incoming request with the given rules.
@@ -15,7 +15,7 @@ class CreateServicioRequest extends LumenRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function validator()
+    private function validator()
     {
         $rules = [
             'descripcion' => 'required|string',

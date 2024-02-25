@@ -102,6 +102,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Illuminate\Validation\ValidationServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
+$app->register(Pearl\RequestValidate\RequestServiceProvider::class);
 //$app->register('Nord\Lumen\Cors\CorsServiceProvider');
 /*
 |--------------------------------------------------------------------------

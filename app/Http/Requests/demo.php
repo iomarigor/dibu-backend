@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Convocatoria;
+namespace App\Http\Requests;
 
-use Pearl\RequestValidate\RequestAbstract;
+use Anik\Form\FormRequest;
 
-class CreateConvocatoriaRequest extends RequestAbstract
+class demo extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    protected function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class CreateConvocatoriaRequest extends RequestAbstract
      *
      * @return array
      */
-    public function rules()
+    protected function rules(): array
     {
         return [
             'fecha_inicio' => [
@@ -47,22 +47,6 @@ class CreateConvocatoriaRequest extends RequestAbstract
                 'required',
                 'exists:servicio,id',
             ],
-        ];
-    }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'fecha_inicio.required' => 'Debe ingresar una fecha de inicio',
-            'fecha_fin.required' => 'Debe ingresar una fecha de fin',
-            'nombre.required' => 'Debe ingresar un nombre',
-            'user_id.required' => 'Debe ingresar el id de usuario',
-            'servicio_id.required' => 'Debe seleccionar el servicio',
         ];
     }
 }
