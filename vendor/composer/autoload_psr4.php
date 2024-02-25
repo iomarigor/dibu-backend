@@ -89,4 +89,5 @@ return array(
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src'),
     'App\\Models\\' => array($baseDir . '/app/Models'),
     'App\\' => array($baseDir . '/app'),
+    'Anik\\Form\\' => array($vendorDir . '/anik/form-request/src'),
 );

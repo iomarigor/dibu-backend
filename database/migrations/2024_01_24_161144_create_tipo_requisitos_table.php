@@ -27,6 +27,6 @@ class CreateTipoRequisitosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_requisito');
+        Schema::dropIfExists('tipo_requisitos');
     }
 }

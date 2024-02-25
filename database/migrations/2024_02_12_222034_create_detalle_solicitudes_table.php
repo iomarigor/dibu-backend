@@ -19,20 +19,20 @@ class CreateDetalleSolicitudesTable extends Migration
             $table->string('descripcion');
             $table->string('url_documento');
             $table->unsignedBigInteger('solicitud_id');
-            $table->unsignedBigInteger('requisito_id');
-            $table->timestamps();
-            
             $table->foreign('solicitud_id')
                 ->references('id')
                 ->on('solicitudes')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
+            $table->unsignedBigInteger('requisito_id');
             $table->foreign('requisito_id')
                 ->references('id')
                 ->on('requisitos')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
+            $table->timestamps();
         });
     }
 
@@ -43,6 +43,6 @@ class CreateDetalleSolicitudesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_solicitud');
+        Schema::dropIfExists('detalle_solicitudes');
     }
 }

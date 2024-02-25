@@ -13,7 +13,7 @@ class CreateUserRequest extends FormRequest
      */
     protected function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,32 @@ class CreateUserRequest extends FormRequest
     protected function rules(): array
     {
         return [
-            //
+            'username' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'full_name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'password' => [
+                'required',
+                'confirmedstring',
+                'min:6'
+            ],
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email'
+            ],
+            'id_level_user' => 'required',
+            'last_user' => 'required',
         ];
+    }
+    public function messages(): array
+    {
+        return [];
     }
 }

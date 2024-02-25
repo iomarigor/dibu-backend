@@ -13,7 +13,7 @@ class CreateServicioRequest extends FormRequest
      */
     protected function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class CreateServicioRequest extends FormRequest
     protected function rules(): array
     {
         return [
-            //
+            'descripcion' => 'required|string',
+            'capacidad_maxima' => 'required|string',
         ];
+    }
+    public function messages(): array
+    {
+        return [];
     }
 }

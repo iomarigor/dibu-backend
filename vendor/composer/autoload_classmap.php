@@ -6,6 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Anik\\Form\\FormRequest' => $vendorDir . '/anik/form-request/src/FormRequest.php',
+    'Anik\\Form\\FormRequestServiceProvider' => $vendorDir . '/anik/form-request/src/FormRequestServiceProvider.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\Event' => $baseDir . '/app/Events/Event.php',
     'App\\Events\\ExampleEvent' => $baseDir . '/app/Events/ExampleEvent.php',
@@ -26,6 +28,13 @@ return array(
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\RestricLevel1' => $baseDir . '/app/Http/Middleware/RestricLevel1.php',
     'App\\Http\\Middleware\\RestricLevel2' => $baseDir . '/app/Http/Middleware/RestricLevel2.php',
+    'App\\Http\\Requests\\Convocatoria\\CreateConvocatoriaRequest' => $baseDir . '/app/Http/Requests/Convocatoria/CreateConvocatoriaRequest.php',
+    'App\\Http\\Requests\\Demo' => $baseDir . '/app/Http/Requests/Demo.php',
+    'App\\Http\\Requests\\Requisito\\CreateRequisitoRequest' => $baseDir . '/app/Http/Requests/Requisito/CreateRequisitoRequest.php',
+    'App\\Http\\Requests\\Servicio\\CreateServicioRequest' => $baseDir . '/app/Http/Requests/Servicio/CreateServicioRequest.php',
+    'App\\Http\\Requests\\User\\CreateUserRequest' => $baseDir . '/app/Http/Requests/User/CreateUserRequest.php',
+    'App\\Http\\Resources\\Convocatoria\\ConvocatoriaResource' => $baseDir . '/app/Http/Resources/Convocatoria/ConvocatoriaResource.php',
+    'App\\Http\\Resources\\Servicio\\ServicioResource' => $baseDir . '/app/Http/Resources/Servicio/ServicioResource.php',
     'App\\Jobs\\ExampleJob' => $baseDir . '/app/Jobs/ExampleJob.php',
     'App\\Jobs\\Job' => $baseDir . '/app/Jobs/Job.php',
     'App\\Listeners\\ExampleListener' => $baseDir . '/app/Listeners/ExampleListener.php',
@@ -47,6 +56,9 @@ return array(
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
+    'App\\Services\\Convocatoria\\CreateConvocatoriaService' => $baseDir . '/app/Services/Convocatoria/CreateConvocatoriaService.php',
+    'App\\Services\\Servicio\\CreateServicioService' => $baseDir . '/app/Services/Servicio/CreateServicioService.php',
+    'App\\Services\\Servicio\\UpdateServicioService' => $baseDir . '/app/Services/Servicio/UpdateServicioService.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/CorsService.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
