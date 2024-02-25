@@ -19,16 +19,10 @@ class CreateConvocatoriasTable extends Migration
             $table->date('fecha_fin');
             $table->string('nombre');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('servicio_id');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->timestamps();
-            
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-            
-            $table->foreign('servicio_id')
-                ->references('id')
-                ->on('servicios');
         });
     }
 
@@ -39,6 +33,6 @@ class CreateConvocatoriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('convocatoria');
+        Schema::dropIfExists('convocatorias');
     }
 }

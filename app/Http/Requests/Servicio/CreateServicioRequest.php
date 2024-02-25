@@ -2,54 +2,34 @@
 
 namespace App\Http\Requests\Servicio;
 
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
+use Anik\Form\FormRequest;
 
-class CreateServicioRequest extends Request
+class CreateServicioRequest extends FormRequest
 {
     /**
-     * Validate the incoming request with the given rules.
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    protected function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
      *
      * @return array
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
-    private function validator()
+    protected function rules(): array
     {
-        $rules = [
+        return [
             'descripcion' => 'required|string',
             'capacidad_maxima' => 'required|string',
         ];
-        $validator = app('validator')->make($this->all(), $rules);
-
-        if ($validator->fails()) {
-            $this->failedValidation($validator);
-        }
-
-        return $this->validationData();
     }
-
-    /**
-     * Override the default failed validation method to throw an exception
-     *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function failedValidation(Validator $validator)
+    public function messages(): array
     {
-        throw new HttpResponseException(response()->json($validator->errors(), 422));
-    }
-
-    /**
-     * Get the validated data from the request.
-     *
-     * @return array
-     */
-    public function validated()
-    {
-        return $this->validator()->validated();
+        return [];
     }
 }

@@ -8,7 +8,6 @@ use App\Http\Requests\Convocatoria\CreateConvocatoriaRequest;
 use App\Http\Resources\Convocatoria\ConvocatoriaResource;
 use App\Services\Convocatoria\CreateConvocatoriaService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class ConvocatoriaController extends Controller
 {
@@ -46,7 +45,7 @@ class ConvocatoriaController extends Controller
     //     $convocatoria = Convocatoria::create($data);
     //     return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente', 'detalle' => $convocatoria], 200);
     // }
-    
+
     public function create(CreateConvocatoriaRequest $request, CreateConvocatoriaService $createService): ConvocatoriaResource
     {
         return ConvocatoriaResource::make($createService->create($request->validated()));

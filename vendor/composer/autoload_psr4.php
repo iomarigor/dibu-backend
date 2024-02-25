@@ -41,7 +41,6 @@ return array(
     'Psr\\Clock\\' => array($vendorDir . '/psr/clock/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
-    'Pearl\\RequestValidate\\' => array($vendorDir . '/pearl/lumen-request-validate/src'),
     'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
     'Namshi\\JOSE\\' => array($vendorDir . '/namshi/jose/src/Namshi/JOSE'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
@@ -90,4 +89,5 @@ return array(
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src'),
     'App\\Models\\' => array($baseDir . '/app/Models'),
     'App\\' => array($baseDir . '/app'),
+    'Anik\\Form\\' => array($vendorDir . '/anik/form-request/src'),
 );

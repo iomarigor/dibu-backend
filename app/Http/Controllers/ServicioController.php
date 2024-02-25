@@ -43,7 +43,7 @@ class ServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, CreateServicioService $createService)
+    public function create(CreateServicioRequest $request, CreateServicioService $createService)
     {
         $servicio = $createService->create($request->all());
         return response()->json(ServicioResource::make($servicio));

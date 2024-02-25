@@ -23,12 +23,10 @@ class CreateFaltasTable extends Migration
             $table->string('url_documento');
             $table->unsignedBigInteger('alumno_id');
             $table->timestamps();
-            
+
             $table->foreign('alumno_id')
                 ->references('id')
-                ->on('alumnos')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+                ->on('alumnos');
         });
     }
 

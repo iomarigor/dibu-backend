@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests\Convocatoria;
 
-use Pearl\RequestValidate\RequestAbstract;
+use Anik\Form\FormRequest;
 
-class CreateConvocatoriaRequest extends RequestAbstract
+class CreateConvocatoriaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    protected function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class CreateConvocatoriaRequest extends RequestAbstract
      *
      * @return array
      */
-    public function rules()
+    protected function rules(): array
     {
         return [
             'fecha_inicio' => [
@@ -41,28 +41,22 @@ class CreateConvocatoriaRequest extends RequestAbstract
             ],
             'user_id' => [
                 'required',
-                'exists:user,id',
+                'exists:users,id',
             ],
             'servicio_id' => [
                 'required',
-                'exists:servicio,id',
+                'exists:servicios,id',
             ],
         ];
     }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages()
+    public function messages(): array
     {
         return [
-            'fecha_inicio.required' => 'Debe ingresar una fecha de inicio',
-            'fecha_fin.required' => 'Debe ingresar una fecha de fin',
-            'nombre.required' => 'Debe ingresar un nombre',
-            'user_id.required' => 'Debe ingresar el id de usuario',
-            'servicio_id.required' => 'Debe seleccionar el servicio',
+            'fecha_inicio.required' => 'La fecha de inicio es requerida',
+            'fecha_fin.required' => 'La fecha de fin es requerida',
+            'nombre.required' => 'El nombre es requerido',
+            'user_id.required' => 'El id de usuario es requerido',
+            'servicio_id.required' => 'El servicio es requerido',
         ];
     }
 }

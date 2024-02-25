@@ -6,11 +6,11 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "anik/form-request": "^5.0",
         "flipbox/lumen-generator": "^9.2",
         "fruitcake/laravel-cors": "^2.2",
         "illuminate/validation": "^7.30",
         "laravel/lumen-framework": "^7.0",
-        "pearl/lumen-request-validate": "^1.8",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

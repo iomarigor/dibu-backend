@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateServiciosTable extends Migration
 {
@@ -19,6 +20,16 @@ class CreateServiciosTable extends Migration
             $table->integer('capacidad_maxima');
             $table->timestamps();
         });
+        DB::table('servicios')->insert([
+            [
+                'descripcion' => 'Internado',
+                'capacidad_maxima' => 175,
+            ],
+            [
+                'descripcion' => 'Comedor',
+                'capacidad_maxima' => 200,
+            ]
+        ]);
     }
 
     /**
