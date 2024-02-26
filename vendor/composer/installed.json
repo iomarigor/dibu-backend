@@ -1,6 +1,58 @@
 {
     "packages": [
         {
+            "name": "anik/form-request",
+            "version": "v5.0",
+            "version_normalized": "5.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ssi-anik/form-request.git",
+                "reference": "9c3aa82adc07c6431c0968fdaf36a4abc6e68c51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ssi-anik/form-request/zipball/9c3aa82adc07c6431c0968fdaf36a4abc6e68c51",
+                "reference": "9c3aa82adc07c6431c0968fdaf36a4abc6e68c51",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "anik/testbench-lumen": "^1.0"
+            },
+            "time": "2023-07-26T23:59:24+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Anik\\Form\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Syed Sirajul Islam Anik",
+                    "email": "sirajul.islam.anik@gmail.com"
+                }
+            ],
+            "description": "Form request is a package for Lumen that lets developer validate form requests like Laravel does.",
+            "keywords": [
+                "form-request",
+                "lumen",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/ssi-anik/form-request/issues",
+                "source": "https://github.com/ssi-anik/form-request/tree/v5.0"
+            },
+            "install-path": "../anik/form-request"
+        },
+        {
             "name": "asm89/stack-cors",
             "version": "v2.2.0",
             "version_normalized": "2.2.0.0",

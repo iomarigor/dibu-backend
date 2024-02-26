@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/lumen',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '4d082d8b633636ac40c43126646ad2ab537e3559',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '4b4eb4191caca0381f17ee2db52b614f7b5395f3',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'anik/form-request' => array(
+            'pretty_version' => 'v5.0',
+            'version' => '5.0.0.0',
+            'reference' => '9c3aa82adc07c6431c0968fdaf36a4abc6e68c51',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../anik/form-request',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'asm89/stack-cors' => array(
             'pretty_version' => 'v2.2.0',
             'version' => '2.2.0.0',
@@ -362,9 +371,9 @@
             ),
         ),
         'laravel/lumen' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '4d082d8b633636ac40c43126646ad2ab537e3559',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '4b4eb4191caca0381f17ee2db52b614f7b5395f3',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
