@@ -29,6 +29,7 @@ return array(
     'App\\Http\\Middleware\\RestricLevel1' => $baseDir . '/app/Http/Middleware/RestricLevel1.php',
     'App\\Http\\Middleware\\RestricLevel2' => $baseDir . '/app/Http/Middleware/RestricLevel2.php',
     'App\\Http\\Requests\\Convocatoria\\CreateConvocatoriaRequest' => $baseDir . '/app/Http/Requests/Convocatoria/CreateConvocatoriaRequest.php',
+    'App\\Http\\Requests\\Demo' => $baseDir . '/app/Http/Requests/Demo.php',
     'App\\Http\\Requests\\Requisito\\CreateRequisitoRequest' => $baseDir . '/app/Http/Requests/Requisito/CreateRequisitoRequest.php',
     'App\\Http\\Requests\\Servicio\\CreateServicioRequest' => $baseDir . '/app/Http/Requests/Servicio/CreateServicioRequest.php',
     'App\\Http\\Requests\\User\\CreateUserRequest' => $baseDir . '/app/Http/Requests/User/CreateUserRequest.php',

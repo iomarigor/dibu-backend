@@ -2,20 +2,28 @@
 
 namespace App\Http\Requests\Convocatoria;
 
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Anik\Form\FormRequest;
 
-class CreateConvocatoriaRequest extends Request
+class CreateConvocatoriaRequest extends FormRequest
 {
     /**
-     * Override the default validation method to use Illuminate\Validation\Validator
+     * Determine if the user is authorized to make this request.
      *
-     * @return Illuminate\Contracts\Validation\Validator
+     * @return bool
      */
-    protected function validator()
+    protected function authorize(): bool
     {
-        $validator = app('validator')->make($this->all(), [
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    protected function rules(): array
+    {
+        return [
             'fecha_inicio' => [
                 'required',
                 'date',
@@ -33,44 +41,22 @@ class CreateConvocatoriaRequest extends Request
             ],
             'user_id' => [
                 'required',
-                'exists:user,id',
+                'exists:users,id',
             ],
             'servicio_id' => [
                 'required',
-                'exists:servicio,id',
+                'exists:servicios,id',
             ],
-        ]);
-
-        // Optionally, you can customize the error messages here
-        // $validator->setAttributeNames([
-        //     'name' => 'Nombre',
-        //     'email' => 'Correo electrónico',
-        //     'password' => 'Contraseña',
-        // ]);
-
-        return $validator;
+        ];
     }
-
-    /**
-     * Override the default failed validation method to throw an exception
-     *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function failedValidation(Validator $validator)
+    public function messages(): array
     {
-        throw new HttpResponseException(response()->json($validator->errors(), 422));
-    }
-
-    /**
-     * Get the validated data from the request.
-     *
-     * @return array
-     */
-    public function validated()
-    {
-        return $this->validator()->validated();
+        return [
+            'fecha_inicio.required' => 'La fecha de inicio es requerida',
+            'fecha_fin.required' => 'La fecha de fin es requerida',
+            'nombre.required' => 'El nombre es requerido',
+            'user_id.required' => 'El id de usuario es requerido',
+            'servicio_id.required' => 'El servicio es requerido',
+        ];
     }
 }

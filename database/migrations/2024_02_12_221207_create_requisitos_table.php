@@ -21,27 +21,27 @@ class CreateRequisitosTable extends Migration
             $table->string('estado');
             $table->date('fecha_registro');
             $table->unsignedBigInteger('tipo_requisito_id');
-            $table->unsignedBigInteger('convocatoria_id');
-            $table->unsignedBigInteger('seccion_id');
-            $table->timestamps();
-            
             $table->foreign('tipo_requisito_id')
                 ->references('id')
                 ->on('tipo_requisitos')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-                
+
+            $table->unsignedBigInteger('convocatoria_id');
             $table->foreign('convocatoria_id')
                 ->references('id')
                 ->on('convocatorias')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            
+
+            $table->unsignedBigInteger('seccion_id');
             $table->foreign('seccion_id')
                 ->references('id')
                 ->on('secciones')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
+            $table->timestamps();
         });
     }
 
@@ -52,6 +52,6 @@ class CreateRequisitosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requisito');
+        Schema::dropIfExists('requisitos');
     }
 }

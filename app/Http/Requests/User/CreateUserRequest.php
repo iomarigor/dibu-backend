@@ -13,7 +13,7 @@ class CreateUserRequest extends FormRequest
      */
     protected function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -44,12 +44,12 @@ class CreateUserRequest extends FormRequest
                 'email',
                 'unique:users,email'
             ],
-            'id_level_user' => [
-                'required'
-            ],
-            'last_user' => [
-                'required'
-            ],
+            'id_level_user' => 'required',
+            'last_user' => 'required',
         ];
+    }
+    public function messages(): array
+    {
+        return [];
     }
 }
