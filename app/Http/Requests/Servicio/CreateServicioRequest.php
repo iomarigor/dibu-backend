@@ -34,4 +34,9 @@ class CreateServicioRequest extends FormRequest
             ],
         ];
     }
+        
+    public function messages(): array
+    {
+        return [];
+    }
 }
