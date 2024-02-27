@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Servicio\CreateServicioRequest;
+use App\Http\Requests\Servicio\ServicioRequest;
 use App\Http\Resources\Servicio\ServicioResource;
 use App\Models\Servicio;
 use App\Services\Servicio\UpdateServicioService;
 use App\Services\Servicio\CreateServicioService;
+use App\Services\Servicio\ListServicioService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServicioController extends Controller
 {
@@ -16,26 +18,10 @@ class ServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ListServicioService $listServicioService)
     {
-        //
+        return response()->json(['msg' => 'Servicios listados satisfactoriamente','detalle' => ServicioResource::collection($listServicioService->list())],200);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function create(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'descripcion' => 'required',
-    //         'capacidad_maxima' => 'required'
-    //     ]);
-    //     $data = $request->all();
-    //     $servicio = Servicio::create($data);
-    //     return response()->json(['msg' => 'Servicio registrada satisfactoriamente', 'detalle' => $servicio], 200);
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -43,11 +29,9 @@ class ServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(CreateServicioRequest $request, CreateServicioService $createService)
+    public function create(ServicioRequest $request, CreateServicioService $createService)
     {
-        $servicio = $createService->create($request->all());
-        return response()->json(ServicioResource::make($servicio));
-        //return ServicioResource::make($createService->create($request->all()));
+        return response()->json(['msg' => 'Servicio registrado satisfactoriamente','detalle' => ServicioResource::make($createService->create($request->validated()))],200);
     }
 
     public function store(Request $request)
@@ -61,9 +45,13 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function show(Servicio $servicio)
+    public function show($id)
     {
-        //
+        $servicio = Servicio::find($id);
+        if (!$servicio) {
+            return response()->json(['msg' => 'Servicio no encontrado', 'detalle' => null], 404);
+        }
+        return response()->json(['msg' => 'Servicio', 'detalle' => $servicio]);
     }
 
     /**
@@ -83,23 +71,11 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, UpdateServicioService $updateService,  Servicio $servicio): ServicioResource
-    // {
-    //     // $service = $updateService->update($servicio, $request->all());
-    //     // return response()->json(ServicioResource::make($service));
-    //     return ServicioResource::make($updateService->update($servicio, $request->all()));
-    // }
-    public function update(Request $request, UpdateServicioService $updateService, $id): ServicioResource
+    public function update(ServicioRequest $request, UpdateServicioService $updateService, $id)
     {
         $servicio = Servicio::findOrFail($id);
-        $this->validate($request, [
-            'descripcion' => 'required',
-            'capacidad_maxima' => 'required',
-        ]);
-
-        $servicio = $updateService->update($servicio, $request->all());
-
-        return new ServicioResource($servicio);
+        $servicio = $updateService->update($servicio, $request->validated());
+        return response()->json(['msg' => 'Servicio actualizado satisfactoriamente','detalle' => ServicioResource::make($servicio)],200);
     }
 
     /**

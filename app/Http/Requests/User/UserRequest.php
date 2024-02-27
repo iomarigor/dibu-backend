@@ -4,7 +4,7 @@ namespace App\Http\Requests\User;
 
 use Anik\Form\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
