@@ -3,7 +3,7 @@
         'name' => 'laravel/lumen',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '04e741d1bb10bf245914748fd523c58785ba6f9b',
+        'reference' => 'c794d0047a7a5943b2e40a9d5d2ae6f7c0d847f2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -364,7 +364,7 @@
         'laravel/lumen' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '04e741d1bb10bf245914748fd523c58785ba6f9b',
+            'reference' => 'c794d0047a7a5943b2e40a9d5d2ae6f7c0d847f2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -598,8 +598,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0 || 3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(
