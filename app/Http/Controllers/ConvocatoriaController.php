@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Convocatoria;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Convocatoria\CreateConvocatoriaRequest;
+use App\Http\Requests\Convocatoria\ConvocatoriaRequest;
 use App\Http\Resources\Convocatoria\ConvocatoriaResource;
 use App\Services\Convocatoria\CreateConvocatoriaService;
 use Illuminate\Http\Request;
@@ -46,7 +46,7 @@ class ConvocatoriaController extends Controller
     //     return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente', 'detalle' => $convocatoria], 200);
     // }
 
-    public function create(CreateConvocatoriaRequest $request, CreateConvocatoriaService $createService): ConvocatoriaResource
+    public function create(ConvocatoriaRequest $request, CreateConvocatoriaService $createService): ConvocatoriaResource
     {
         return ConvocatoriaResource::make($createService->create($request->validated()));
     }

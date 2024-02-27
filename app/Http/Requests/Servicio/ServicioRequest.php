@@ -4,7 +4,7 @@ namespace App\Http\Requests\Servicio;
 
 use Anik\Form\FormRequest;
 
-class CreateServicioRequest extends FormRequest
+class ServicioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,17 @@ class CreateServicioRequest extends FormRequest
     protected function rules(): array
     {
         return [
-            'descripcion' => 'required|string',
-            'capacidad_maxima' => 'required|string',
+            'descripcion' => [
+                'required',
+                'string'
+            ],
+            'capacidad_maxima' => [
+                'required',
+                'string'
+            ],
         ];
     }
+        
     public function messages(): array
     {
         return [

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Convocatoria;
 
 use Anik\Form\FormRequest;
 
-class CreateConvocatoriaRequest extends FormRequest
+class ConvocatoriaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
