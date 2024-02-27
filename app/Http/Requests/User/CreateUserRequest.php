@@ -50,6 +50,12 @@ class CreateUserRequest extends FormRequest
     }
     public function messages(): array
     {
-        return [];
+        return [
+            'username.required' => 'El nombre de usuario es requerido',
+            'full_name.required' => 'El nombre completo es requerido',
+            'password.required' => 'La contraseña es requerida',
+            'email.required' => 'El correo es requerido',
+            'id_level_user.required' => 'El nivel de acceso de usuario es requerido',
+        ];
     }
 }

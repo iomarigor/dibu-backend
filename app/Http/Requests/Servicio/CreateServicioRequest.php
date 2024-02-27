@@ -30,6 +30,9 @@ class CreateServicioRequest extends FormRequest
     }
     public function messages(): array
     {
-        return [];
+        return [
+            'descripcion.required' => 'La descripción es requerida',
+            'capacidad_maxima.required' => 'Se requiere de la capacidad máxima',
+        ];
     }
 }

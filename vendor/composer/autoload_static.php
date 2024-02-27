@@ -529,7 +529,6 @@ class ComposerStaticInit3d80f8424689c4edfbe69aaae5330bc3
         'App\\Http\\Middleware\\RestricLevel1' => __DIR__ . '/../..' . '/app/Http/Middleware/RestricLevel1.php',
         'App\\Http\\Middleware\\RestricLevel2' => __DIR__ . '/../..' . '/app/Http/Middleware/RestricLevel2.php',
         'App\\Http\\Requests\\Convocatoria\\CreateConvocatoriaRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Convocatoria/CreateConvocatoriaRequest.php',
-        'App\\Http\\Requests\\Demo' => __DIR__ . '/../..' . '/app/Http/Requests/Demo.php',
         'App\\Http\\Requests\\Requisito\\CreateRequisitoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Requisito/CreateRequisitoRequest.php',
         'App\\Http\\Requests\\Servicio\\CreateServicioRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Servicio/CreateServicioRequest.php',
         'App\\Http\\Requests\\User\\CreateUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/User/CreateUserRequest.php',
