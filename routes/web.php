@@ -39,6 +39,9 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->put('/servicio/update/{id}', 'ServicioController@update');
     //Convocatoria
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
+    $router->get('/convocatorias', 'ConvocatoriaController@index');
+    $router->get('/convocatorias/{id}', 'ConvocatoriaController@show');
+    //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
