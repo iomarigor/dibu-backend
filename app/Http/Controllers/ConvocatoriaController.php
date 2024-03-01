@@ -26,29 +26,9 @@ class ConvocatoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'fecha_inicio' => 'required',
-    //         'fecha_fin' => 'required',
-    //         'nombre' => 'required',
-    //         'user_id' => [
-    //             'required',
-    //             'exists:user,id',
-    //         ],
-    //         'servicio_id' => [
-    //             'required',
-    //             'exists:servicio,id',
-    //         ],
-    //     ]);
-    //     $data = $request->all();
-    //     $convocatoria = Convocatoria::create($data);
-    //     return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente', 'detalle' => $convocatoria], 200);
-    // }
-
-    public function create(ConvocatoriaRequest $request, CreateConvocatoriaService $createService): ConvocatoriaResource
+    public function create(ConvocatoriaRequest $request, CreateConvocatoriaService $createService)
     {
-        return ConvocatoriaResource::make($createService->create($request->validated()));
+        return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente','detalle' =>ConvocatoriaResource::make($createService->create($request->validated()))],200);
     }
 
     /**

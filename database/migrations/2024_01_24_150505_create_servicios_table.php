@@ -22,7 +22,7 @@ class CreateServiciosTable extends Migration
         });
         DB::table('servicios')->insert([
             [
-                'descripcion' => 'Internado',
+                'descripcion' => 'Residencia',
                 'capacidad_maxima' => 175,
             ],
             [

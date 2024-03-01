@@ -20,8 +20,6 @@ class CreateConvocatoriasTable extends Migration
             $table->string('nombre');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('servicio_id');
-            $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->timestamps();
         });
     }
