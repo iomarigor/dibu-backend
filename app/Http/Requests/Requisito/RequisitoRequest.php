@@ -26,38 +26,44 @@ class RequisitoRequest extends FormRequest
         return [
             'nombre' => [
                 'required',
-                'string',
-                'max:255',
             ],
             'descripcion' => [
                 'required',
-                'string',
-                'max:255',
             ],
             'url_guia' => [
                 'required',
-                'string',
-                'max:255',
             ],
             'estado' => [
-                'required',
-                'string',
+                'required'
             ],
             'fecha_registro' => [
                 'required',
-                'date',
-                'date_format:Y-m-d',
-            ],            
+                'date_format:Y-m-d'
+            ],
+            'tipo_requisito_id' => [
+                'required',
+            ],
+            'convocatoria_id' => [
+                'required',
+            ],
+            'seccion_id' => [
+                'required',
+            ],
+
         ];
     }
+
     public function messages(): array
     {
         return [
-            'nombre.required' => 'La fecha de inicio es requerida',
-            'descripcion.required' => 'La fecha de fin es requerida',
-            'url_guia.required' => 'El nombre es requerido',
-            'estado.required' => 'El id de usuario es requerido',
-            'fecha_registro.required' => 'El servicio es requerido',
+            'nombre.required' => 'El nombre es de inicio es requerida',
+            'descripcion.required' => 'La descripcion es requerida',
+            'url_guia.required' => 'La url guia es requerida',
+            'estado.required' => 'El estado es requerido',
+            'fecha_registro.required' => 'El fecha registro es requerido',
+            'tipo_requisito_id.required' => 'El tipo de requisito requerido',
+            'convocatoria_id.required' => 'El convocatoria es requerido',
+            'seccion_id.required' => 'El seccion es requerido',
         ];
     }
 }

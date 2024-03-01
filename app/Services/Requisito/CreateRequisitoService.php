@@ -9,9 +9,6 @@ class CreateRequisitoService
 {
     public function create(array $data): Model
     {
-        return Requisito::create([
-            'descripcion' => $data['descripcion'],
-            'capacidad_maxima' => $data['capacidad_maxima'],
-        ]);
+        return Requisito::create($data);
     }
 }
