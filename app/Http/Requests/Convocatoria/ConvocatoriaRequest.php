@@ -4,7 +4,7 @@ namespace App\Http\Requests\Convocatoria;
 
 use Anik\Form\FormRequest;
 
-class CreateConvocatoriaRequest extends FormRequest
+class ConvocatoriaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,14 +39,6 @@ class CreateConvocatoriaRequest extends FormRequest
                 'string',
                 'max:255'
             ],
-            'user_id' => [
-                'required',
-                'exists:users,id',
-            ],
-            'servicio_id' => [
-                'required',
-                'exists:servicios,id',
-            ],
         ];
     }
     public function messages(): array
@@ -55,8 +47,6 @@ class CreateConvocatoriaRequest extends FormRequest
             'fecha_inicio.required' => 'La fecha de inicio es requerida',
             'fecha_fin.required' => 'La fecha de fin es requerida',
             'nombre.required' => 'El nombre es requerido',
-            'user_id.required' => 'El id de usuario es requerido',
-            'servicio_id.required' => 'El servicio es requerido',
         ];
     }
 }

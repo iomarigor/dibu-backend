@@ -16,17 +16,9 @@ class ServicioResource extends JsonResource
     public function toArray(Request $request)
     {
         return [
-            'msg' => 'Servicio registrado satisfactoriamente',
-            'detalle' => [
-                'id' => $this->id,
-                'descripcion' => $this->descripcion,
-                'capacidad_maxima' => $this->capacidad_maxima,
-            ]
+            'id' => $this->id,
+            'descripcion' => $this->descripcion,
+            'capacidad_maxima' => $this->capacidad_maxima,
         ];
-        // return [
-        //     'id'=> $this->id,
-        //     'descripcion'=> $this->descripcion,
-        //     'capacidad_maxima'=> $this->capacidad_maxima,
-        // ];
     }
 }
