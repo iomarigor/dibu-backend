@@ -53,11 +53,11 @@ class RequisitoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'fecha_inicio.required' => 'La fecha de inicio es requerida',
-            'fecha_fin.required' => 'La fecha de fin es requerida',
-            'nombre.required' => 'El nombre es requerido',
-            'user_id.required' => 'El id de usuario es requerido',
-            'servicio_id.required' => 'El servicio es requerido',
+            'nombre.required' => 'La fecha de inicio es requerida',
+            'descripcion.required' => 'La fecha de fin es requerida',
+            'url_guia.required' => 'El nombre es requerido',
+            'estado.required' => 'El id de usuario es requerido',
+            'fecha_registro.required' => 'El servicio es requerido',
         ];
     }
 }

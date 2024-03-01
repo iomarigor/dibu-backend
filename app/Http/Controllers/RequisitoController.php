@@ -14,7 +14,7 @@ class RequisitoController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(['msg' => 'requisitos listados satisfactoriamente','detalle' => RequisitoResource::collection($listRequisitoService->list())],200);
     }
 
     /**
