@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 use Illuminate\Http\Resources\DelegatesToResource;
 use JsonSerializable;
+use Illuminate\Http\Request;
 
 class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRoutable
 {
@@ -110,7 +111,7 @@ class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRou
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray(Request $request)
     {
         if (is_null($this->resource)) {
             return [];

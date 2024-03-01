@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Requisito\CreateRequisitoRequest;
+use App\Http\Resources\Requisito\RequisitoResource;
 use App\Models\Requisito;
+use App\Services\Requisito\CreateRequisitoService;
+use App\Services\Requisito\ListRequisitoService;
 use Illuminate\Http\Request;
 
 class RequisitoController extends Controller
@@ -12,9 +16,9 @@ class RequisitoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ListRequisitoService $listService)
     {
-        //
+        return response()->json(['msg' => 'Requisitos listados', 'detalle' => RequisitoResource::collection($listService->list())]);
     }
 
     /**
@@ -22,64 +26,40 @@ class RequisitoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CreateRequisitoRequest $request, CreateRequisitoService $createService): RequisitoResource
     {
-        //
+        return RequisitoResource::make($createService->create($request->validated()));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+        $user = Requisito::findDA($id);
+        if (!$user) {
+            return response()->json(['msg' => 'Requisitos no encontrado', 'detalle' => null], 404);
+        }
+        return response()->json(['msg' => 'Requisitos', 'detalle' => $user]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Requisito  $requisito
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Requisito $requisito)
+    public function update(CreateRequisitoRequest $request, $id)
     {
-        //
+        $data = $request->all();
+        $requisito = Requisito::where([
+            ['id', '=', $id],
+            ['status_id', '!=', 1]
+        ])->first();
+        $requisito->update($data);
+        return response()->json(['msg' => 'Datos de Requisitos actualizado satisfactoriamente', 'detalle' => $requisito], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Requisito  $requisito
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Requisito $requisito)
+    public function destroy($id)
     {
-        //
-    }
+        $requisito = Requisito::find($id);
+        if (!$requisito) {
+            return response()->json(['msg' => 'Requisitos no encontrado', 'detalle' => null], 404);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Requisito  $requisito
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Requisito $requisito)
-    {
-        //
-    }
+        $requisito->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Requisito  $requisito
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Requisito $requisito)
-    {
-        //
+        return response()->json(['msg' => 'Requisitos eliminado', 'detalle' => $requisito], 200);
     }
 }
