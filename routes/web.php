@@ -44,9 +44,9 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     //Requisito
     $router->get('/requisito', 'RequisitoController@index');
     $router->post('/requisito/create', 'RequisitoController@create');
-    $router->post('/requisito/show', 'RequisitoController@show');
-    $router->post('/requisito/update', 'RequisitoController@update');
-    $router->post('/requisito/destroy', 'RequisitoController@destroy');
+    $router->post('/requisito/show/{id}', 'RequisitoController@show');
+    $router->put('/requisito/update/{id}', 'RequisitoController@update');
+    $router->delete('/requisito/delete/{id}', 'RequisitoController@destroy');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
