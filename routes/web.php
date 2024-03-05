@@ -40,19 +40,16 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
 
     //Convocatoria
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
-<<<<<<< HEAD
     $router->get('/convocatorias', 'ConvocatoriaController@index');
     $router->get('/convocatorias/{id}', 'ConvocatoriaController@show');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
-=======
-
+    
     //Requisito
     $router->get('/requisito', 'RequisitoController@index');
     $router->post('/requisito/create', 'RequisitoController@create');
     $router->post('/requisito/show', 'RequisitoController@show');
     $router->post('/requisito/update', 'RequisitoController@update');
     $router->post('/requisito/destroy', 'RequisitoController@destroy');
->>>>>>> 37f4f5b29a2478f655f7f8f8c83761d89e01f297
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
