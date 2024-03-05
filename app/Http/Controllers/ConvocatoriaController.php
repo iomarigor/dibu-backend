@@ -28,7 +28,7 @@ class ConvocatoriaController extends Controller
      */
     public function create(ConvocatoriaRequest $request, CreateConvocatoriaService $createService)
     {
-        return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente','detalle' =>ConvocatoriaResource::make($createService->create($request->validated()))],200);
+        return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente', 'detalle' => ConvocatoriaResource::make($createService->create($request->validated()))], 200);
     }
 
     /**
