@@ -70,15 +70,8 @@ class AuthController extends Controller
         // Actualizar la columna ip_address en el registro del usuario
         $user->update(['ip_address' => $request->ip()]);
 
-        // Quitando atributos innecesarios antes de retornar la respuesta
-        /* unset($user['email_verified_at']);
-        unset($user['remember_token']);
-        unset($user['created_at']);
-        unset($user['updated_at']); */
-
         $user['expirer_in'] = auth()->factory()->getTTL() * 60 * 12 * 7;
         $user['token'] = 'Bearer ' . $token;
-
         if ($user['status_id'] == 3) {
             return response()->json(['msg' => 'Sesión iniciada', 'detalle' => $user], 200);
         } else {
