@@ -16,7 +16,7 @@ class CreateServicioSolicitadoTable extends Migration
         Schema::create('servicio_solicitado', function (Blueprint $table) {
             $table->id();
             $table->string('estado');
-            $table->date('fecha_aprovacion');
+            $table->date('fecha_revision');
             $table->timestamps();
         });
     }
