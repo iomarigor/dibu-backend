@@ -47,14 +47,10 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     //Requisito
     $router->get('/requisito', 'RequisitoController@index');
     $router->post('/requisito/create', 'RequisitoController@create');
-<<<<<<< HEAD
+
     $router->post('/requisito/show/{id}', 'RequisitoController@show');
     $router->put('/requisito/update/{id}', 'RequisitoController@update');
     $router->delete('/requisito/delete/{id}', 'RequisitoController@destroy');
-=======
-    $router->post('/requisito/show', 'RequisitoController@show');
-    $router->post('/requisito/update', 'RequisitoController@update');
-    $router->post('/requisito/destroy', 'RequisitoController@destroy');
 
     //Secciones
     $router->get('/seccion', 'SeccionController@index');
@@ -62,7 +58,6 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->get('/seccion/{id}', 'SeccionController@show');
     $router->put('/seccion/update/{id}', 'SeccionController@update');
     $router->post('/seccion/destroy/{id}', 'SeccionController@destroy');
->>>>>>> j-migrations
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
