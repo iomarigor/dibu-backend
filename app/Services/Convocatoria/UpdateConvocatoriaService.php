@@ -6,14 +6,14 @@ use App\Models\Convocatoria;
 
 class UpdateConvocatoriaService
 {
-    public function update(Convocatoria $convocatoria, array $dataConvocatoria): Convocatoria
+    public function update(array $data, $id): ?Convocatoria
     {
-        $convocatoria->update([
-            'fecha_inicio' => $dataConvocatoria['fecha_inicio'],
-            'fecha_fin' => $dataConvocatoria['fecha_fin'],
-            'nombre' => $dataConvocatoria['nombre'],
-        ]);
-
+        $convocatoria = Convocatoria::where([
+            ['id', '=', $id]
+        ])->first();
+        if (!$convocatoria)
+            return null;
+        $convocatoria->update($data);
         return $convocatoria;
     }
 }

@@ -26,8 +26,8 @@ class CreateSolicitudesTable extends Migration
                 ->references('id')
                 ->on('alumnos');
 
-            $table->unsignedBigInteger('id_servicio_solicitado');
-            $table->foreign('id_servicio_solicitado')
+            $table->unsignedBigInteger('servicio_solicitado_id');
+            $table->foreign('servicio_solicitado_id')
                 ->references('id')
                 ->on('servicio_solicitado');
 

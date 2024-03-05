@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Requisito\RequisitoRequest;
 use App\Http\Resources\Requisito\RequisitoResource;
-use App\Models\Requisito;
 use App\Services\Requisito\CreateRequisitoService;
 use App\Services\Requisito\ListRequisitoService;
 use App\Services\Requisito\ShowRequisitoService;

@@ -9,6 +9,11 @@ class ConvocatoriaServicio extends Model
 {
     protected $table = 'convocatoria_servicio'; 
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'servicio_id',
+        'convocatoria_id',
+        'cantidad',
+    ];
     
     public function servicio(): HasMany
     {

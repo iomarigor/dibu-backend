@@ -17,6 +17,12 @@ class Convocatoria extends Model
         'user_id'
     ];
 
+    
+    public function convocatoriaServicio(): HasMany
+    {
+        return $this->hasMany(ConvocatoriaServicio::class);
+    }
+
     public function status()
     {
         return $this->belongsTo(StatusData::class, 'status_id');

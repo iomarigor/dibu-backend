@@ -39,6 +39,19 @@ class ConvocatoriaRequest extends FormRequest
                 'string',
                 'max:255',
             ],
+            'convocatoria_servicio' => [
+                'required',
+                'array'
+            ],
+            'convocatoria_servicio.*.servicio_id' => [
+                'required',
+                'numeric',
+            ],
+            'convocatoria_servicio.*.cantidad' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
         ];
     }
     public function messages(): array
@@ -47,6 +60,7 @@ class ConvocatoriaRequest extends FormRequest
             'fecha_inicio.required' => 'La fecha de inicio es requerida',
             'fecha_fin.required' => 'La fecha de fin es requerida',
             'nombre.required' => 'El nombre es requerido',
+            'convocatoria_servicio.required' => 'La convocatoria de servicio es requerida',
         ];
     }
 }

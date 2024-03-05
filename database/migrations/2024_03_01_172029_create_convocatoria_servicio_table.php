@@ -16,10 +16,10 @@ class CreateConvocatoriaServicioTable extends Migration
         Schema::create('convocatoria_servicio', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('id_servicio')->nullable();
-            $table->foreign('id_servicio')->references('id')->on('servicios');
-            $table->unsignedBigInteger('id_convocatoria')->nullable();
-            $table->foreign('id_convocatoria')->references('id')->on('convocatorias');
+            $table->unsignedBigInteger('servicio_id')->nullable();
+            $table->foreign('servicio_id')->references('id')->on('servicios');
+            $table->unsignedBigInteger('convocatoria_id')->nullable();
+            $table->foreign('convocatoria_id')->references('id')->on('convocatorias');
             $table->integer('cantidad');
         });
     }
