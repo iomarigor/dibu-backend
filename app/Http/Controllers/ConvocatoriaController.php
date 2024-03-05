@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Convocatoria\ConvocatoriaRequest;
 use App\Http\Resources\Convocatoria\ConvocatoriaResource;
 use App\Services\Convocatoria\CreateConvocatoriaService;
+use App\Services\Convocatoria\ListConvocatoriaService;
+use App\Services\Convocatoria\UpdateConvocatoriaService;
 use Illuminate\Http\Request;
 
 class ConvocatoriaController extends Controller
@@ -16,9 +18,9 @@ class ConvocatoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ListConvocatoriaService $listConvocatoriaService)
     {
-        //
+        return response()->json(['msg' => 'Servicios listados satisfactoriamente', 'detalle' => ConvocatoriaResource::collection($listConvocatoriaService->list())], 200);
     }
 
     /**
@@ -48,9 +50,13 @@ class ConvocatoriaController extends Controller
      * @param  \App\Models\Convocatoria  $convocatoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Convocatoria $convocatoria)
+    public function show($id)
     {
-        //
+        $convocatoria = Convocatoria::find($id);
+        if (!$convocatoria) {
+            return response()->json(['msg' => 'Convocatoria no encontrado', 'detalle' => null], 404);
+        }
+        return response()->json(['msg' => 'Convocatoria', 'detalle' => $convocatoria]);
     }
 
     /**
@@ -71,9 +77,11 @@ class ConvocatoriaController extends Controller
      * @param  \App\Models\Convocatoria  $convocatoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Convocatoria $convocatoria)
+    public function update(ConvocatoriaRequest $request, UpdateConvocatoriaService $updateService, $id)
     {
-        //
+        $convocatoria = Convocatoria::findOrFail($id);
+        $convocatoria = $updateService->update($convocatoria, $request->validated());
+        return response()->json(['msg' => 'Convocatoria actualizada satisfactoriamente', 'detalle' => ConvocatoriaResource::make($convocatoria)], 200);
     }
 
     /**
