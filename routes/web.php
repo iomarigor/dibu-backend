@@ -47,6 +47,13 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->post('/requisito/show', 'RequisitoController@show');
     $router->post('/requisito/update', 'RequisitoController@update');
     $router->post('/requisito/destroy', 'RequisitoController@destroy');
+
+    //Secciones
+    $router->get('/seccion', 'SeccionController@index');
+    $router->post('/seccion/create', 'SeccionController@create');
+    $router->get('/seccion/{id}', 'SeccionController@show');
+    $router->put('/seccion/update/{id}', 'SeccionController@update');
+    $router->post('/seccion/destroy/{id}', 'SeccionController@destroy');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
