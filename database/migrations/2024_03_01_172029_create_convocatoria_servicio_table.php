@@ -20,6 +20,7 @@ class CreateConvocatoriaServicioTable extends Migration
             $table->foreign('id_servicio')->references('id')->on('servicios');
             $table->unsignedBigInteger('id_convocatoria')->nullable();
             $table->foreign('id_convocatoria')->references('id')->on('convocatorias');
+            $table->integer('cantidad');
         });
     }
 

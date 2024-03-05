@@ -16,18 +16,18 @@ class CreateServiciosTable extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->string('descripcion');
-            $table->integer('capacidad_maxima');
             $table->timestamps();
         });
         DB::table('servicios')->insert([
             [
+                'nombre' => 'Residencia',
                 'descripcion' => 'Residencia',
-                'capacidad_maxima' => 175,
             ],
             [
+                'nombre' => 'Comedor',
                 'descripcion' => 'Comedor',
-                'capacidad_maxima' => 200,
             ]
         ]);
     }
