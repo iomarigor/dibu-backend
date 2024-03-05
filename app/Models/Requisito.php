@@ -19,11 +19,6 @@ class Requisito extends Model
         'seccion_id',
         'user_id',
     ];
-    public function status()
-    {
-        return $this->belongsTo(StatusData::class, 'status_id');
-    }
-
     public static function allDA()
     {
         return self::get();
@@ -37,13 +32,13 @@ class Requisito extends Model
 
     public static function findDA($id)
     {
-        return self::whereIn('status_id', [2, 3])->find($id);
+        return self::find($id);
     }
 
     public function delete()
     {
         // Cambia el estado a "Eliminado" en lugar de eliminar el registro
-        $this->status_id = 1;
+        $this->estado = -1;
         $this->save();
     }
 }

@@ -27,17 +27,17 @@ class ConvocatoriaRequest extends FormRequest
             'fecha_inicio' => [
                 'required',
                 'date',
-                'date_format:Y-m-d'
+                'date_format:Y-m-d',
             ],
             'fecha_fin' => [
                 'required',
                 'date',
-                'date_format:Y-m-d'
+                'date_format:Y-m-d',
             ],
             'nombre' => [
                 'required',
                 'string',
-                'max:255'
+                'max:255',
             ],
         ];
     }

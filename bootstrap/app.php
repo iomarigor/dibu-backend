@@ -62,7 +62,6 @@ $app->singleton(
 $app->configure('app');
 $app->configure('auth');
 $app->configure('cors');
-
 /*
 |--------------------------------------------------------------------------
 | Register Middleware

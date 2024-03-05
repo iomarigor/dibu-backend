@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Requisito\CreateRequisitoRequest;
+use App\Http\Requests\Requisito\RequisitoRequest;
 use App\Http\Resources\Requisito\RequisitoResource;
 use App\Models\Requisito;
 use App\Services\Requisito\CreateRequisitoService;
 use App\Services\Requisito\ListRequisitoService;
-use Illuminate\Http\Request;
+use App\Services\Requisito\ShowRequisitoService;
+use App\Http\Response\Response;
+use App\Services\Requisito\DeleteRequisitoService;
+use App\Services\Requisito\UpdateRequisitoService;
 
 class RequisitoController extends Controller
 {
@@ -18,7 +21,9 @@ class RequisitoController extends Controller
      */
     public function index(ListRequisitoService $listService)
     {
-        return response()->json(['msg' => 'Requisitos listados', 'detalle' => RequisitoResource::collection($listService->list())]);
+
+        return Response::res('Requisitos listados', RequisitoResource::collection($listService->list()), 200);
+        //return response()->json(['msg' => 'Requisitos listados', 'detalle' => RequisitoResource::collection($listService->list())]);
     }
 
     /**
@@ -26,40 +31,23 @@ class RequisitoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(CreateRequisitoRequest $request, CreateRequisitoService $createService): RequisitoResource
+    public function create(RequisitoRequest $request, CreateRequisitoService $createService)
     {
-        return RequisitoResource::make($createService->create($request->validated()));
+        return Response::res('Requisito registrado', RequisitoResource::make($createService->create($request->validated())));
     }
 
-    public function show($id)
+    public function show($id, ShowRequisitoService $showRequisitoService)
     {
-        $user = Requisito::findDA($id);
-        if (!$user) {
-            return response()->json(['msg' => 'Requisitos no encontrado', 'detalle' => null], 404);
-        }
-        return response()->json(['msg' => 'Requisitos', 'detalle' => $user]);
+        return Response::res('Requisito filtrado', RequisitoResource::make($showRequisitoService->show($id)));
     }
 
-    public function update(CreateRequisitoRequest $request, $id)
+    public function update($id, RequisitoRequest $request, UpdateRequisitoService $updateRequisitoService)
     {
-        $data = $request->all();
-        $requisito = Requisito::where([
-            ['id', '=', $id],
-            ['status_id', '!=', 1]
-        ])->first();
-        $requisito->update($data);
-        return response()->json(['msg' => 'Datos de Requisitos actualizado satisfactoriamente', 'detalle' => $requisito], 200);
+        return Response::res('Datos de Requisitos actualizado satisfactoriamente', RequisitoResource::make($updateRequisitoService->update($request->validated(), $id)));
     }
 
-    public function destroy($id)
+    public function destroy($id, DeleteRequisitoService $deleteRequisitoService)
     {
-        $requisito = Requisito::find($id);
-        if (!$requisito) {
-            return response()->json(['msg' => 'Requisitos no encontrado', 'detalle' => null], 404);
-        }
-
-        $requisito->delete();
-
-        return response()->json(['msg' => 'Requisitos eliminado', 'detalle' => $requisito], 200);
+        return Response::res('Requisitos eliminado', RequisitoResource::make($deleteRequisitoService->delete($id)));
     }
 }

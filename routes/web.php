@@ -39,11 +39,12 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->put('/servicio/update/{id}', 'ServicioController@update');
 
     //Convocatoria
+    $router->get('/convocatoria', 'ConvocatoriaController@index');
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatorias', 'ConvocatoriaController@index');
     $router->get('/convocatorias/{id}', 'ConvocatoriaController@show');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
-    
+
     //Requisito
     $router->get('/requisito', 'RequisitoController@index');
     $router->post('/requisito/create', 'RequisitoController@create');

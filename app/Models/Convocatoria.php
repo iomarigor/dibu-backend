@@ -10,6 +10,13 @@ class Convocatoria extends Model
 {
     protected $table = 'convocatorias';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'fecha_inicio',
+        'fecha_fin',
+        'nombre',
+        'user_id'
+    ];
+
     public function status()
     {
         return $this->belongsTo(StatusData::class, 'status_id');

@@ -20,8 +20,7 @@ class ConvocatoriaController extends Controller
      */
     public function index(ListConvocatoriaService $listConvocatoriaService)
     {
-        return response()->json(['msg' => 'Servicios listados satisfactoriamente','detalle' => ConvocatoriaResource::collection($listConvocatoriaService->list())],200);
-    
+        return response()->json(['msg' => 'Servicios listados satisfactoriamente', 'detalle' => ConvocatoriaResource::collection($listConvocatoriaService->list())], 200);
     }
 
     /**
@@ -31,7 +30,7 @@ class ConvocatoriaController extends Controller
      */
     public function create(ConvocatoriaRequest $request, CreateConvocatoriaService $createService)
     {
-        //return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente','detalle' =>ConvocatoriaResource::make($createService->create($request->validated()))],200);
+        return response()->json(['msg' => 'Convocatoria registrada satisfactoriamente', 'detalle' => ConvocatoriaResource::make($createService->create($request->validated()))], 200);
     }
 
     /**
@@ -58,7 +57,6 @@ class ConvocatoriaController extends Controller
             return response()->json(['msg' => 'Convocatoria no encontrado', 'detalle' => null], 404);
         }
         return response()->json(['msg' => 'Convocatoria', 'detalle' => $convocatoria]);
-    
     }
 
     /**
@@ -83,7 +81,7 @@ class ConvocatoriaController extends Controller
     {
         $convocatoria = Convocatoria::findOrFail($id);
         $convocatoria = $updateService->update($convocatoria, $request->validated());
-        return response()->json(['msg' => 'Convocatoria actualizada satisfactoriamente','detalle' => ConvocatoriaResource::make($convocatoria)],200);
+        return response()->json(['msg' => 'Convocatoria actualizada satisfactoriamente', 'detalle' => ConvocatoriaResource::make($convocatoria)], 200);
     }
 
     /**
