@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Servicio;
+namespace App\Http\Requests\Seccion;
 
 use Anik\Form\FormRequest;
 
-class ServicioRequest extends FormRequest
+class SeccionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +28,6 @@ class ServicioRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'capacidad_maxima' => [
-                'required',
-                'string'
-            ],
         ];
     }
         
@@ -39,7 +35,6 @@ class ServicioRequest extends FormRequest
     {
         return [
             'descripcion.required' => 'La descripción es requerida',
-            'capacidad_maxima.required' => 'Se requiere de la capacidad máxima',
         ];
     }
 }
