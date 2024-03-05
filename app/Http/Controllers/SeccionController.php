@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Requisito\RequisitoResource;
 use App\Models\Seccion;
 use Illuminate\Http\Request;
 
