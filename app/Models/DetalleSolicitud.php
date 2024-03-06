@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleSolicitud extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'detalle_solicitudes';
     protected $primaryKey = 'id';
     public function status()

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Falta extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'faltas';
     protected $primaryKey = 'id';
     public function status()

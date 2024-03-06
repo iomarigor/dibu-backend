@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seccion extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'secciones';
     protected $primaryKey = 'id';
     public function status()
