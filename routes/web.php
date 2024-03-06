@@ -45,6 +45,7 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
 
     //Datos academicos de alumnos
     $router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
+    //$router->post('/DatosAlumnoAcademico/create', 'DatosAlumnoAcademicoController@index');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
 
     //Requisito

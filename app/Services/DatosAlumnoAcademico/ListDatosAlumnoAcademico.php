@@ -10,6 +10,7 @@ class ListDatosAlumnoAcademico
 {
     public function list(): Collection
     {
+
         return DatosAlumnoAcademico::all();
     }
 }
