@@ -3,12 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Seccion extends Model
 {
     protected $connection = "mysql_dbu";
     protected $table = 'secciones';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'descripcion',
+    ];
+
+    
+    public function requisitos(): HasMany
+    {
+        return $this->hasMany(Requisito::class);
+    }
+    
     public function status()
     {
         return $this->belongsTo(StatusData::class, 'status_id');
