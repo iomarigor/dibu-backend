@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alumno extends Model
 {
-    protected $table = 'alumnos'; 
+    protected $connection = "mysql_dbu";
+    protected $table = 'alumnos';
     protected $primaryKey = 'id';
 }

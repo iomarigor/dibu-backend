@@ -2,77 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ExceptionGenerate;
+use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\User\UserResource;
+use App\Http\Response\Response;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Services\User\DeleteUserService;
+use App\Services\User\ListUserService;
+use App\Services\User\ShowUserService;
+use App\Services\User\UpdateUserService;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(ListUserService $listUserService)
     {
-        $users = User::allDA();
-        return response()->json(['msg' => 'Usuarios listados', 'detalle' => $users]);
+        return Response::res('Lista de usuarios', UserResource::collection($listUserService->list()), 200);
     }
 
-    public function show($id)
+    public function show($id, ShowUserService $showUserService)
     {
-        $user = User::findDA($id);
-        if (!$user) {
-            return response()->json(['msg' => 'Usuario no encontrado', 'detalle' => null], 404);
+        try {
+            return Response::res('Usuario', UserResource::make($showUserService->show($id)));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
         }
-        return response()->json(['msg' => 'Usuario', 'detalle' => $user]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, UpdateUserService $updateUserService, $id)
     {
-        $this->validate($request, [
-            'id' => 'required',
-            'username' => 'required',
-            'full_name' => 'required',
-            'password' => 'nullable',
-            'email' => 'required',
-            'id_level_user' => 'required',
-            'last_user' => 'required'
-        ]);
-
-        // Limpiado datos de confirmacion de contraseña
-        $data = $request->all();
-        $user = User::where([
-            ['username', '=', $data['username']],
-            ['status_id', '!=', 1]
-        ])->first();
-
-
-        if ($user && ($user['id'] != $data['id'])) {
-            return response()->json(['msg' => 'Ya existe un usuario con el mismo nombre de usuario', 'detalle' => $user], 404);
+        try {
+            return Response::res('Datos de usuario actualizado satisfactoriamente', UserResource::make($updateUserService->update($id, $request->validated())));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
         }
-        if (array_key_exists('password', $data) && strlen($data['password']) == 0) {
-            unset($data['password']);
-        } else {
-            // Hasheando contraseña
-            if (array_key_exists('password', $data)) {
-                $data["password"] = Hash::make($request->input('password'));
-            }
-        }
-        unset($data['password_confirmation']);
-
-
-
-        // Recupera los datos actuales antes de la actualización
-        $user = User::whereId($data['id'])->first();
-        $user->update($data);
-        return response()->json(['msg' => 'Datos de usuario actualizado satisfactoriamente', 'detalle' => $user], 200);
     }
 
-    public function destroy($id)
+    public function destroy($id, DeleteUserService $deleteUserService)
     {
-        $user = User::find($id);
-        if (!$user) {
-            return response()->json(['msg' => 'Usuario no encontrado', 'detalle' => null], 404);
+        try {
+            return Response::res('Usuario eliminado', UserResource::make($deleteUserService->delete($id)));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
         }
-
-        $user->delete();
-
-        return response()->json(['msg' => 'Usuario eliminado', 'detalle' => $user], 200);
     }
 }

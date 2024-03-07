@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServicioSolicitado extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'servicio_solicitado';
     protected $primaryKey = 'id';
     public function status()

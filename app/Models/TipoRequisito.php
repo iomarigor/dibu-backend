@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoRequisito extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'tipo_requisitos';
     protected $primaryKey = 'id';
     public function status()
