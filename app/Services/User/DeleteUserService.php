@@ -10,7 +10,7 @@ class DeleteUserService
 {
     public function delete($id): Model
     {
-        $user = User::find($id);
+        $user = User::findDA($id);
         if (!$user) {
             throw new ExceptionGenerate('Usuario no encontrado', 404);
         }
