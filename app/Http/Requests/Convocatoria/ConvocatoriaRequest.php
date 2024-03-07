@@ -52,6 +52,37 @@ class ConvocatoriaRequest extends FormRequest
                 'numeric',
                 'min:0',
             ],
+            'secciones' => [
+                'required',
+                'array'
+            ],
+            'secciones.*.descripcion' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'secciones.*.requisitos' => [
+                'required',
+                'array'
+            ],
+            'secciones.*.requisitos.*.nombre' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'secciones.*.requisitos.*.descripcion' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'secciones.*.requisitos.*.url_guia' => [
+                'required',
+                'string',
+            ],
+            'secciones.*.requisitos.*.tipo_requisito_id' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
     public function messages(): array

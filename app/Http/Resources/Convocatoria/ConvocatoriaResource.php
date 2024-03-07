@@ -2,7 +2,8 @@
 
 namespace App\Http\Resources\Convocatoria;
 
-use App\Http\Resources\Convocatoria\ConvocatoriaServicio\ConvocatoriaServicioResource;
+use App\Http\Resources\Seccion\SeccionResource;
+use App\Http\Resources\ConvocatoriaServicio\ConvocatoriaServicioResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +24,7 @@ class ConvocatoriaResource extends JsonResource
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'convocatoria_servicio' => ConvocatoriaServicioResource::collection($this->convocatoriaServicio),
+            'secciones' => SeccionResource::collection($this->secciones),
         ];
     }
 }

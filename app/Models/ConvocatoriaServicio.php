@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ConvocatoriaServicio extends Model
 {
@@ -15,8 +15,8 @@ class ConvocatoriaServicio extends Model
         'cantidad',
     ];
     
-    public function servicio(): HasMany
+    public function servicio(): BelongsTo
     {
-        return $this->hasMany(Servicio::class);
+        return $this->belongsTo(Servicio::class);
     }
 }

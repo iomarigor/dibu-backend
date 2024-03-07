@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Convocatoria extends Model
@@ -21,6 +20,11 @@ class Convocatoria extends Model
     public function convocatoriaServicio(): HasMany
     {
         return $this->hasMany(ConvocatoriaServicio::class);
+    }
+    
+    public function secciones(): HasMany
+    {
+        return $this->hasMany(Seccion::class);
     }
 
     public function status()

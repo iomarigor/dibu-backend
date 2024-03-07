@@ -12,10 +12,7 @@ class Requisito extends Model
         'nombre',
         'descripcion',
         'url_guia',
-        'estado',
-        'fecha_registro',
         'tipo_requisito_id',
-        'convocatoria_id',
         'seccion_id',
         'user_id',
     ];

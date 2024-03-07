@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Seccion;
 
+use App\Http\Resources\Requisito\RequisitoResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SeccionResource extends JsonResource
@@ -12,12 +14,12 @@ class SeccionResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray(Request $request)
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'descripcion' => $this->descripcion,
-            'convocatoria_id' => $this->convocatoria_id,
+            'requisitos' => RequisitoResource::collection($this->requisitos),
         ];
     }
 }

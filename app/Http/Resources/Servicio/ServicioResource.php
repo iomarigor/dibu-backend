@@ -17,8 +17,8 @@ class ServicioResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
-            'capacidad_maxima' => $this->capacidad_maxima,
         ];
     }
 }

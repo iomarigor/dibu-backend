@@ -3,6 +3,7 @@
 namespace App\Services\Convocatoria;
 
 use App\Models\Convocatoria;
+use App\Models\Seccion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -28,6 +29,13 @@ class CreateConvocatoriaService
 
             $convocatoria->load(['convocatoriaServicio']);
 
+            foreach ($data['secciones'] as $seccionesData) {
+                $this->secciones($seccionesData, $convocatoria);
+            }
+            DB::commit();
+
+            $convocatoria->load(['secciones']);
+
             return $convocatoria;
 
         } catch (\Exception $e) {
@@ -44,14 +52,30 @@ class CreateConvocatoriaService
             'cantidad' => $data['cantidad'],
         ]);
     }
-    // public function create(array $data): Model
-    // {
-    //     $user = auth()->user();
-    //     return Convocatoria::create([
-    //         'fecha_inicio' => $data['fecha_inicio'],
-    //         'fecha_fin' => $data['fecha_fin'],
-    //         'nombre' => $data['nombre'],
-    //         'user_id' => $user->id,
-    //     ]);
-    // }
+    
+    private function secciones(array $data, Convocatoria $convocatoria): Model
+    {
+        $secciones = $convocatoria->secciones()->create([
+            'descripcion' => $data['descripcion'],
+        ]);
+        
+        foreach ($data['requisitos'] as $requisitosData) {
+            $this->requisitos($requisitosData, $secciones);
+        }
+        DB::commit();
+        $secciones->load(['requisitos']);
+
+        return $convocatoria;
+    }
+
+    private function requisitos(array $data, Seccion $secciones): Model
+    {
+        return $secciones->requisitos()->create([
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'],
+            'url_guia' => $data['url_guia'],
+            'tipo_requisito_id' => $data['tipo_requisito_id'],
+            'user_id' => auth()->user()->id,
+        ]);
+    }
 }
