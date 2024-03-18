@@ -11,7 +11,7 @@ use App\Services\Convocatoria\ListConvocatoriaService;
 use App\Services\Convocatoria\UpdateConvocatoriaService;
 use App\Http\Response\Response;
 use App\Services\Convocatoria\ShowConvocatoriaService;
-use Illuminate\Http\Request;
+use App\Services\Convocatoria\UltimaConvocatoriaService;
 
 class ConvocatoriaController extends Controller
 {
@@ -38,5 +38,10 @@ class ConvocatoriaController extends Controller
     public function destroy(Convocatoria $convocatoria)
     {
         //
+    }
+
+    public function ultimaConvocatoria(UltimaConvocatoriaService $ultimaService)
+    {
+        return Response::res('Ultima convocatoria mostrada', ConvocatoriaResource::make($ultimaService->ultima()));
     }
 }

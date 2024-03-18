@@ -43,6 +43,7 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatorias', 'ConvocatoriaController@index');
     $router->get('/convocatorias/{id}', 'ConvocatoriaController@show');
+    $router->get('/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
 
     //Requisito
