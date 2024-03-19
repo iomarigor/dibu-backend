@@ -37,6 +37,8 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->get('/convocatoria', 'ConvocatoriaController@index');
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
+    $router->get('/convocatorias', 'ConvocatoriaController@index');
+    $router->get('/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
 
     //Datos academicos de alumnos
     $router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Convocatoria;
 
 use Anik\Form\FormRequest;
+use App\Rules\CheckConvocatoriaDates;
 
 class ConvocatoriaRequest extends FormRequest
 {
@@ -28,11 +29,13 @@ class ConvocatoriaRequest extends FormRequest
                 'required',
                 'date',
                 'date_format:Y-m-d',
+                new CheckConvocatoriaDates,
             ],
             'fecha_fin' => [
                 'required',
                 'date',
                 'date_format:Y-m-d',
+                'after_or_equal:fecha_inicio',
             ],
             'nombre' => [
                 'required',
