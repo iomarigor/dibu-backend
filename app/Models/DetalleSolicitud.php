@@ -9,6 +9,11 @@ class DetalleSolicitud extends Model
     protected $connection = "mysql_dbu";
     protected $table = 'detalle_solicitudes';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'respuesta_formulario',
+        'url_documento',
+        'requisito_id'
+    ];
     public function status()
     {
         return $this->belongsTo(StatusData::class, 'status_id');

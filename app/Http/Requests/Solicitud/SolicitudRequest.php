@@ -24,16 +24,52 @@ class SolicitudRequest extends FormRequest
     protected function rules(): array
     {
         return [
+            'convocatoria_id' => [
+                'required',
+                'numeric',
+            ],
+            'alumno_id' => [
+                'required',
+                'numeric',
+            ],
+            'servicios_solicitados' => [
+                'required',
+                'array'
+            ],
+            'servicios_solicitados.*.estado' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'servicios_solicitados.*.servicio_id' => [
+                'required',
+                'numeric',
+            ],
+            'detalle_solicitudes' => [
+                'required',
+                'array'
+            ],
+            'detalle_solicitudes.*.respuesta_formulario' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'detalle_solicitudes.*.url_documento' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'detalle_solicitudes.*.requisito_id' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
     
     public function messages(): array
     {
         return [
-            'fecha_inicio.required' => 'La fecha de inicio es requerida',
-            'fecha_fin.required' => 'La fecha de fin es requerida',
-            'nombre.required' => 'El nombre es requerido',
-            'convocatoria_servicio.required' => 'La convocatoria de servicio es requerida',
+            'servicios_solicitados.*.servicio_id.required' => 'El servicio a solicitar es requerida',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateAlumnosTable extends Migration
@@ -17,8 +18,9 @@ class CreateAlumnosTable extends Migration
             $table->id();
             $table->string('codigo_estudiante');
             $table->string('DNI');
-            $table->string('nombre');
-            $table->string('apellido');
+            $table->string('nombres');
+            $table->string('apellido_paterno');
+            $table->string('apellido_materno');
             $table->string('sexo');
             $table->string('facultad');
             $table->string('escuela_profesional');
@@ -34,6 +36,28 @@ class CreateAlumnosTable extends Migration
             $table->string('celular_padre');
             $table->timestamps();
         });
+        DB::table('alumnos')->insert([
+            [
+                'codigo_estudiante' => '20170890',
+                'DNI' => '10439823',
+                'nombres' => 'Ruth',
+                'apellido_paterno' => 'Jara',
+                'apellido_materno' => 'Montenegro',
+                'sexo' => 'Femenino',
+                'facultad' => 'Industrias Alimentarias',
+                'escuela_profesional' => 'Industrias Alimentarias',
+                'modalidad_ingreso' => 'CEPRE',
+                'lugar_procedencia' => 'Lima',
+                'lugar_nacimiento' => 'La Perla',
+                'edad' => 23,
+                'correo_institucional' => 'ruth.jara@unas.edu.pe',
+                'direccion' => 'av. juanjaime',
+                'fecha_nacimiento' => '2001-03-21',
+                'correo_personal' => 'ruth@ruth.com',
+                'celular_estudiante' => '987654321',
+                'celular_padre' => '987456321',
+            ],
+        ]);
     }
 
     /**

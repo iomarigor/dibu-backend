@@ -18,10 +18,10 @@ class RequisitoResource extends JsonResource
     public function toArray(Request $request): ?array
     {
         //Verifica si el requisito es nulo
-        if ($this->resource === null) {
-            // Puedes devolver un arreglo vacío u algún valor predeterminado, según tus necesidades.
-            return null;
-        }
+        // if ($this->resource === null) {
+        //     // Puedes devolver un arreglo vacío u algún valor predeterminado, según tus necesidades.
+        //     return null;
+        // }
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,

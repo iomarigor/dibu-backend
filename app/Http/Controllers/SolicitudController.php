@@ -7,6 +7,8 @@ use App\Http\Resources\Solicitud\SolicitudResource;
 use App\Http\Response\Response;
 use App\Models\Solicitud;
 use App\Services\Solicitud\CreateSolicitudService;
+use App\Services\Solicitud\ListSolicitudService;
+use App\Services\Solicitud\ShowSolicitudService;
 
 class SolicitudController extends Controller
 {
@@ -17,12 +19,12 @@ class SolicitudController extends Controller
 
     public function create(SolicitudRequest $request, CreateSolicitudService $createService)
     {
-        return Response::res('Solicitudes registrada', SolicitudResource::make($createService->create($request->validated())));
+        return Response::res('Solicitud registrada', SolicitudResource::make($createService->create($request->validated())));
     }
 
     public function show($id, ShowSolicitudService $showSolicitudService)
     {
-        return Response::res('Convocatoria filtrada', SolicitudResource::make($showSolicitudService->show($id)));
+        return Response::res('Solicitud filtrada', SolicitudResource::make($showSolicitudService->show($id)));
     }
 
     public function destroy(Solicitud $solicitud)

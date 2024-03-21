@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Solicitud;
 
+use App\Http\Resources\Alumno\AlumnoResource;
+use App\Http\Resources\DetalleSolicitud\DetalleSolicitudResource;
+use App\Http\Resources\ServicioSolicitado\ServicioSolicitadoResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,10 +20,11 @@ class SolicitudResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'fecha_solicitud' => $this->fecha_solicitud,
+            'fecha_solicitud' => $this->created_at->format('Y-m-d'),
             'convocatoria_id' => $this->convocatoria_id,
-            'alumno_id' => $this->alumno_id,
-            'servicio_solicitado_id' => $this->servicio_solicitado_id,
+            'alumno' => AlumnoResource::make($this->alumno),
+            'servicios_solicitados' => ServicioSolicitadoResource::collection($this->servicioSolicitados),
+            'detalle_solicitudes' => DetalleSolicitudResource::collection($this->detalleSolicitudes),
         ];
     }
 }

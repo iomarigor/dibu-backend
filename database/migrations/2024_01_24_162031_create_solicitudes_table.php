@@ -15,7 +15,6 @@ class CreateSolicitudesTable extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_solicitud');
             $table->unsignedBigInteger('convocatoria_id');
             $table->foreign('convocatoria_id')
                 ->references('id')
@@ -25,11 +24,6 @@ class CreateSolicitudesTable extends Migration
             $table->foreign('alumno_id')
                 ->references('id')
                 ->on('alumnos');
-
-            $table->unsignedBigInteger('servicio_solicitado_id');
-            $table->foreign('servicio_solicitado_id')
-                ->references('id')
-                ->on('servicio_solicitado');
 
             $table->timestamps();
         });
