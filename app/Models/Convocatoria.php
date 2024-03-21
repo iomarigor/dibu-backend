@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Convocatoria extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'convocatorias';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -16,7 +17,7 @@ class Convocatoria extends Model
         'user_id'
     ];
 
-    
+
     public function convocatoriaServicio(): HasMany
     {
         return $this->hasMany(ConvocatoriaServicio::class);

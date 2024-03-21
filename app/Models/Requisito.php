@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Requisito extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'requisitos';
     protected $primaryKey = 'id';
     protected $fillable = [

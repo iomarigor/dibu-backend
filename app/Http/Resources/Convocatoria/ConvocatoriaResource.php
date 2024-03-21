@@ -21,6 +21,7 @@ class ConvocatoriaResource extends JsonResource
             'id' => $this->id,
             'nombre' => $this->nombre,
             'user_id' => $this->user_id,
+            'estado' => $this->estado,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'convocatoria_servicio' => ConvocatoriaServicioResource::collection($this->convocatoriaServicio),

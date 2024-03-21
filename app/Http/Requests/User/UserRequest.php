@@ -36,7 +36,12 @@ class UserRequest extends FormRequest
             ],
             'password' => [
                 'required',
-                'confirmedstring',
+                'string',
+                'min:6'
+            ],
+            'password_confirmation' => [
+                'required',
+                'string',
                 'min:6'
             ],
             'email' => [
@@ -54,6 +59,7 @@ class UserRequest extends FormRequest
             'username.required' => 'El nombre de usuario es requerido',
             'full_name.required' => 'El nombre completo es requerido',
             'password.required' => 'La contraseña es requerida',
+            'password_confirmation.required' => 'La contraseña es requerida',
             'email.required' => 'El correo es requerido',
             'id_level_user.required' => 'El nivel de acceso de usuario es requerido',
         ];

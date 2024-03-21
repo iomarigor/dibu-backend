@@ -2,6 +2,7 @@
 
 namespace App\Services\Convocatoria;
 
+use App\Exceptions\ExceptionGenerate;
 use App\Models\Convocatoria;
 
 class UpdateConvocatoriaService
@@ -12,7 +13,7 @@ class UpdateConvocatoriaService
             ['id', '=', $id]
         ])->first();
         if (!$convocatoria)
-            return null;
+            throw new ExceptionGenerate('No se encontró la convocatoria', 404);
         $convocatoria->update($data);
         return $convocatoria;
     }

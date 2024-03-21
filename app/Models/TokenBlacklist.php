@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TokenBlacklist extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'token_blacklist';
 
     protected $guarded = [];

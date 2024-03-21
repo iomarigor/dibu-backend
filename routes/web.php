@@ -28,15 +28,10 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->post('/register', 'AuthController@register');
 
     //Users
-    $router->put('/users/{id}', 'UserController@update');
+    $router->put('/users/update/{id}', 'UserController@update');
     $router->get('/users', 'UserController@index');
-    $router->delete('/users/{id}', 'UserController@destroy');
-
-    //Servicio
-    $router->post('/servicio/create', 'ServicioController@create');
-    $router->get('/servicios', 'ServicioController@index');
-    $router->get('/servicios/{id}', 'ServicioController@show');
-    $router->put('/servicio/update/{id}', 'ServicioController@update');
+    $router->get('/users/show/{id}', 'UserController@show');
+    $router->delete('/users/destroy/{id}', 'UserController@destroy');
 
     //Convocatoria
     $router->get('/convocatoria', 'ConvocatoriaController@index');
@@ -45,13 +40,10 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->get('/convocatorias/{id}', 'ConvocatoriaController@show');
     $router->get('/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
+    $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
 
-    //Requisito
-    $router->get('/requisito', 'RequisitoController@index');
-    $router->post('/requisito/create', 'RequisitoController@create');
-    $router->post('/requisito/show', 'RequisitoController@show');
-    $router->post('/requisito/update', 'RequisitoController@update');
-    $router->post('/requisito/destroy', 'RequisitoController@destroy');
+    //Datos academicos de alumnos
+    $router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1

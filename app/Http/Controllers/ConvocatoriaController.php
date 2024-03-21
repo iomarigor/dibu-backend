@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Convocatoria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Convocatoria\ConvocatoriaRequest;
 use App\Http\Resources\Convocatoria\ConvocatoriaResource;
@@ -12,6 +11,7 @@ use App\Services\Convocatoria\UpdateConvocatoriaService;
 use App\Http\Response\Response;
 use App\Services\Convocatoria\ShowConvocatoriaService;
 use App\Services\Convocatoria\UltimaConvocatoriaService;
+use App\Exceptions\ExceptionGenerate;
 
 class ConvocatoriaController extends Controller
 {
@@ -27,17 +27,20 @@ class ConvocatoriaController extends Controller
 
     public function show($id, ShowConvocatoriaService $showConvocatoriaService)
     {
-        return Response::res('Convocatoria filtrada', ConvocatoriaResource::make($showConvocatoriaService->show($id)));
+        try {
+            return Response::res('Convocatoria filtrada', ConvocatoriaResource::make($showConvocatoriaService->show($id)));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 
     public function update(ConvocatoriaRequest $request, UpdateConvocatoriaService $updateService, $id)
     {
-        return Response::res('Datos de convocatoria actualizado satisfactoriamente', ConvocatoriaResource::make($updateService->update($request->validated(), $id)));
-    }
-
-    public function destroy(Convocatoria $convocatoria)
-    {
-        //
+        try {
+            return Response::res('Datos de convocatoria actualizado satisfactoriamente', ConvocatoriaResource::make($updateService->update($request->validated(), $id)));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 
     public function ultimaConvocatoria(UltimaConvocatoriaService $ultimaService)

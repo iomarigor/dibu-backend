@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Seccion extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'secciones';
     protected $primaryKey = 'id';
     protected $fillable = [

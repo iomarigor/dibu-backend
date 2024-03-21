@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Servicio extends Model
 {
+    protected $connection = "mysql_dbu";
     protected $table = 'servicios';
     protected $primaryKey = 'id';
 
