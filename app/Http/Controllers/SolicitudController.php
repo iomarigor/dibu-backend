@@ -2,82 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Solicitud\SolicitudRequest;
+use App\Http\Resources\Solicitud\SolicitudResource;
+use App\Http\Response\Response;
 use App\Models\Solicitud;
-use Illuminate\Http\Request;
+use App\Services\Solicitud\CreateSolicitudService;
 
 class SolicitudController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(ListSolicitudService $listSolicitudService)
     {
-        //
+        return Response::res('Solicitudes listadas', SolicitudResource::collection($listSolicitudService->list()), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(SolicitudRequest $request, CreateSolicitudService $createService)
     {
-        //
+        return Response::res('Solicitudes registrada', SolicitudResource::make($createService->create($request->validated())));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($id, ShowSolicitudService $showSolicitudService)
     {
-        //
+        return Response::res('Convocatoria filtrada', SolicitudResource::make($showSolicitudService->show($id)));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Solicitud $solicitud)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Solicitud $solicitud)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Solicitud $solicitud)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Solicitud $solicitud)
     {
         //

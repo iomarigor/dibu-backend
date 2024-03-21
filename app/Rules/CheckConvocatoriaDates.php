@@ -10,6 +10,7 @@ class CheckConvocatoriaDates implements Rule
     public function passes($attribute, $value)
     {
         // Verificar que no haya convocatorias que se superpongan con la fecha proporcionada
+        // ni sea menor a la fecha fin
         $convocatorias = Convocatoria::where(function ($query) use ($value) {
             $query->where('fecha_fin', '>=', $value);
         })->exists();
