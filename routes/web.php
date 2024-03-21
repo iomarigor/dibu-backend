@@ -44,6 +44,7 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
 
 // Rutas que requieren nivel de acceso 2 y 1
 $router->group(['middleware' => ['auth', 'restriclevel2']], function ($router) {
+    $router->post('/solicitud/validacion', 'SolicitudController@validacionSolicitud');
 });
 
 // Rutas que tienen  acceso todos los niveles de usuarios logeados
