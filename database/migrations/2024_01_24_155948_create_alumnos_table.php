@@ -23,8 +23,8 @@ class CreateAlumnosTable extends Migration
             $table->string('facultad');
             $table->string('escuela_profesional');
             $table->string('modalidad_ingreso');
-            $table->string('lugar_procedencia');
-            $table->string('lugar_nacimiento');
+            $table->string('lugar_procedencia')->nullable();
+            $table->string('lugar_nacimiento')->nullable();
             $table->integer('edad');
             $table->string('correo_institucional');
             $table->string('direccion');

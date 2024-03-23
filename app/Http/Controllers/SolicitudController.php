@@ -2,84 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Solicitud;
-use Illuminate\Http\Request;
+use App\Exceptions\ExceptionGenerate;
+use App\Http\Requests\Servicio\SolicitudRequest;
+use App\Http\Requests\Solicitud\SolicitudRequest as SolicitudSolicitudRequest;
+use App\Http\Resources\Alumnos\AlumnosResource;
+use App\Http\Resources\Solicitud\SolicitudResource;
+use App\Http\Response\Response;
+use App\Services\Servicio\ValidacionSolicitudService;
+use App\Services\Solicitud\ValidacionSolicitudService as SolicitudValidacionSolicitudService;
 
 class SolicitudController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function validacionSolicitud(SolicitudSolicitudRequest $request, SolicitudValidacionSolicitudService $validacionSolicitudService)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Solicitud $solicitud)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Solicitud $solicitud)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Solicitud $solicitud)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Solicitud  $solicitud
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Solicitud $solicitud)
-    {
-        //
+        try {
+            return Response::res('Usted es apto para solicitar los servicos brindados por OBU - UNAS', AlumnosResource::make($validacionSolicitudService->validate($request->validated())));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
+        }
     }
 }

@@ -20,6 +20,7 @@ $router->group([], function ($router) {
     });
     $router->post('/login', 'AuthController@login');
     $router->get('/validateToken', 'AuthController@validateToken');
+    $router->post('/solicitud/validacion', 'SolicitudController@validacionSolicitud');
 });
 
 // Rutas que requieren nivel de acceso 1
