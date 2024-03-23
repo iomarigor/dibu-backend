@@ -24,15 +24,44 @@ class SolicitudRequest extends FormRequest
     protected function rules(): array
     {
         return [
-            'correo' => [
-                'required',
-                'email' => 'required',
-                'unas_email'
-            ],
-            'DNI' => [
+            'convocatoria_id' => [
                 'required',
                 'numeric',
-                'dni_length',
+            ],
+            'alumno_id' => [
+                'required',
+                'numeric',
+            ],
+            'servicios_solicitados' => [
+                'required',
+                'array'
+            ],
+            'servicios_solicitados.*.estado' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'servicios_solicitados.*.servicio_id' => [
+                'required',
+                'numeric',
+            ],
+            'detalle_solicitudes' => [
+                'required',
+                'array'
+            ],
+            'detalle_solicitudes.*.respuesta_formulario' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'detalle_solicitudes.*.url_documento' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'detalle_solicitudes.*.requisito_id' => [
+                'required',
+                'numeric',
             ],
         ];
     }
@@ -40,10 +69,7 @@ class SolicitudRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'correo.required' => 'El correo es requerido',
-            'correo.email' => 'Ingrese el correo institucional brindado por la oficina OTI - UNAS',
-            'DNI.required' => 'Se requiere el DNI',
-            'DNI.min' => 'Ingrese correctamente su DNI',
+            'servicios_solicitados.*.servicio_id.required' => 'El servicio a solicitar es requerida',
         ];
     }
 }

@@ -16,7 +16,15 @@ class CreateServicioSolicitadoTable extends Migration
         Schema::create('servicio_solicitado', function (Blueprint $table) {
             $table->id();
             $table->string('estado');
-            $table->date('fecha_revision');
+            $table->date('fecha_revision')->nullable();
+            $table->unsignedBigInteger('servicio_id');
+            $table->foreign('servicio_id')
+                ->references('id')
+                ->on('servicios');
+            $table->unsignedBigInteger('solicitud_id');
+                $table->foreign('solicitud_id')
+                    ->references('id')
+                    ->on('solicitudes');
             $table->timestamps();
         });
     }

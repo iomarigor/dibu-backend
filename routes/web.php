@@ -40,9 +40,19 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
     $router->get('/convocatorias', 'ConvocatoriaController@index');
     $router->get('/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
+    $router->get('/convocatorias', 'ConvocatoriaController@index');
+    $router->get('/conveocatoria/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
+    //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
+    $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
+
+    //Solicitud
+    $router->get('/solicitudes', 'SolicitudController@index');
+    $router->post('/solicitud/create', 'SolicitudController@create');
+    $router->get('/solicitud/show/{id}', 'SolicitudController@show');
 
     //Datos academicos de alumnos
     $router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
+    $router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
