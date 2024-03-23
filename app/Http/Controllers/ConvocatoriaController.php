@@ -10,12 +10,8 @@ use App\Services\Convocatoria\ListConvocatoriaService;
 use App\Services\Convocatoria\UpdateConvocatoriaService;
 use App\Http\Response\Response;
 use App\Services\Convocatoria\ShowConvocatoriaService;
-<<<<<<<<< Temporary merge branch 1
 use App\Exceptions\ExceptionGenerate;
-
-=========
 use App\Services\Convocatoria\UltimaConvocatoriaService;
->>>>>>>>> Temporary merge branch 2
 
 class ConvocatoriaController extends Controller
 {
