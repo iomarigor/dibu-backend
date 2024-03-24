@@ -21,6 +21,7 @@ $router->group([], function ($router) {
     $router->post('/login', 'AuthController@login');
     $router->get('/validateToken', 'AuthController@validateToken');
     $router->post('/solicitud/validacion', 'SolicitudController@validacionSolicitud');
+    $router->post('/solicitud/create', 'SolicitudController@create');
 });
 
 // Rutas que requieren nivel de acceso 1
@@ -46,12 +47,12 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
 
     //Solicitud
     $router->get('/solicitudes', 'SolicitudController@index');
-    $router->post('/solicitud/create', 'SolicitudController@create');
     $router->get('/solicitud/show/{id}', 'SolicitudController@show');
+    $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
 
     //Datos academicos de alumnos
-    $router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
-    $router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
+    //$router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
+    //$router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1

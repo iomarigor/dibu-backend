@@ -19,7 +19,10 @@ class ServicioSolicitado extends Model
     {
         return $this->belongsTo(StatusData::class, 'status_id');
     }
-
+    public function solicitud()
+    {
+        return $this->belongsTo(Solicitud::class, 'solicitud_id');
+    }
     public static function allDA()
     {
         return self::whereIn('status_id', [3, 2])->get();
