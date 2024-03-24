@@ -33,6 +33,9 @@ class UpdateUserService
         $data['last_user'] = auth()->id();
         // Recupera los datos actuales antes de la actualización
         $user = User::whereId($id)->first();
+        if (!$user)
+            throw new ExceptionGenerate('Usuario no enontrado', 404);
+
         $user->update($data);
         return $user;
     }

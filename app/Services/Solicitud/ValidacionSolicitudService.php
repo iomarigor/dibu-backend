@@ -5,6 +5,7 @@ namespace App\Services\Solicitud;
 use GuzzleHttp\Client;
 use App\Exceptions\ExceptionGenerate;
 use App\Models\Alumno;
+use App\Models\Convocatoria;
 use App\Models\DatosAlumnoAcademico;
 use DateTime;
 
@@ -15,31 +16,44 @@ class ValidacionSolicitudService
 
         $faltas = $this->validateRequisitosSolicitud($data);
         if (count($faltas) > 0)
-            throw new ExceptionGenerate('Usted con cumple con los siguiente requisitos para postular a los servicios de comedor e internado de la UNAS', 500, $faltas);
+            throw new ExceptionGenerate('Usted no con cumple con los siguiente requisitos para postular a los servicios de comedor e internado de la UNAS', 500, $faltas);
         //Registrando los datos de alumno apto para postulacion
         $datosAlumnoAcademico = $this->getDatosAlumnoAcademico($data['DNI']);
+        $alumno = Alumno::where('DNI', $data['DNI'])->first();
+        //Validando convocatoria actual
+        $fechaActualConvocatoria = new DateTime();
+        $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActualConvocatoria)
+            ->whereDate('fecha_fin', '>=', $fechaActualConvocatoria)->first();
+        if (!$convocatoria)
+            throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
+        //Registrado datos de postulante
+        if ($alumno) {
+            $alumno->convocatoria_id = $convocatoria->id;
+        } else {
+            Alumno::create([
+                "codigo_estudiante" => $datosAlumnoAcademico['codalumno'],
+                "DNI" => $data['DNI'],
+                "nombres" => $datosAlumnoAcademico['nombre'],
+                "apellido_paterno" => $datosAlumnoAcademico['appaterno'],
+                "apellido_materno" => $datosAlumnoAcademico['apmaterno'],
+                "sexo" => $datosAlumnoAcademico['sexo'],
+                "facultad" => $datosAlumnoAcademico['nomfac'],
+                "escuela_profesional" => $datosAlumnoAcademico['nomesp'],
+                "modalidad_ingreso" => $datosAlumnoAcademico['mod_ingreso'],
+                //"lugar_procedencia"=>$data['DNI'],
+                //"lugar_nacimiento"=>$data['DNI'],
+                "edad" => $this->getYearsInDates(new DateTime($datosAlumnoAcademico['fecnac']), new DateTime()),
+                "correo_institucional" => $datosAlumnoAcademico['emailinst'],
+                "direccion" => $datosAlumnoAcademico['direccion'],
+                "fecha_nacimiento" => $datosAlumnoAcademico['fecnac'],
+                "correo_personal" => $datosAlumnoAcademico['email'],
+                "celular_estudiante" => $datosAlumnoAcademico['telcelular'],
+                "celular_padre" => $datosAlumnoAcademico['tel_ref'],
+                "convocatoria_id" => $convocatoria->id
+            ]);
+        }
 
-        $alumnoregistrado = Alumno::create([
-            "codigo_estudiante" => $datosAlumnoAcademico['codalumno'],
-            "DNI" => $data['DNI'],
-            "nombres" => $datosAlumnoAcademico['nombre'],
-            "apellido_paterno" => $datosAlumnoAcademico['appaterno'],
-            "apellido_materno" => $datosAlumnoAcademico['apmaterno'],
-            "sexo" => $datosAlumnoAcademico['sexo'],
-            "facultad" => $datosAlumnoAcademico['nomfac'],
-            "escuela_profesional" => $datosAlumnoAcademico['nomesp'],
-            "modalidad_ingreso" => $datosAlumnoAcademico['mod_ingreso'],
-            //"lugar_procedencia"=>$data['DNI'],
-            //"lugar_nacimiento"=>$data['DNI'],
-            "edad" => $this->getYearsInDates(new DateTime($datosAlumnoAcademico['fecnac']), new DateTime()),
-            "correo_institucional" => $datosAlumnoAcademico['emailinst'],
-            "direccion" => $datosAlumnoAcademico['direccion'],
-            "fecha_nacimiento" => $datosAlumnoAcademico['fecnac'],
-            "correo_personal" => $datosAlumnoAcademico['email'],
-            "celular_estudiante" => $datosAlumnoAcademico['telcelular'],
-            "celular_padre" => $datosAlumnoAcademico['tel_ref'],
-        ]);
-        return $alumnoregistrado;
+        return $data;
     }
     private function validateRequisitosSolicitud(array $data)
     {

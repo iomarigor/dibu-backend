@@ -39,9 +39,8 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
     $router->get('/convocatorias', 'ConvocatoriaController@index');
-    $router->get('/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
     $router->get('/convocatorias', 'ConvocatoriaController@index');
-    $router->get('/conveocatoria/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
+    $router->get('/convocatoria/vigente-convocatoria', 'ConvocatoriaController@vigenteConvocatoria');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
 

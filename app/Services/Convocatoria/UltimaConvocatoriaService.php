@@ -2,13 +2,20 @@
 
 namespace App\Services\Convocatoria;
 
+use App\Exceptions\ExceptionGenerate;
 use App\Models\Convocatoria;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class UltimaConvocatoriaService
 {
-    public function ultima(): ?Model
+    public function vigente(): ?Model
     {
-        return Convocatoria::latest()->first();
+        $fechaActual = new DateTime();
+        $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
+            ->whereDate('fecha_fin', '>=', $fechaActual)->first();
+        if (!$convocatoria)
+            throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
+        return $convocatoria;
     }
 }

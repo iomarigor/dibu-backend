@@ -43,8 +43,12 @@ class ConvocatoriaController extends Controller
         }
     }
 
-    public function ultimaConvocatoria(UltimaConvocatoriaService $ultimaService)
+    public function vigenteConvocatoria(UltimaConvocatoriaService $ultimaService)
     {
-        return Response::res('Ultima convocatoria mostrada', ConvocatoriaResource::make($ultimaService->ultima()));
+        try {
+            return  Response::res('Ultima convocatoria mostrada', ConvocatoriaResource::make($ultimaService->vigente()));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 }
