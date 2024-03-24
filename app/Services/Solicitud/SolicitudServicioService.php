@@ -30,6 +30,7 @@ class SolicitudServicioService
 
                 //listar los servicios de la convocatoria para la obtencion de la cantidad
                 $servicios = ConvocatoriaServicio::where([['convocatoria_id', $convocatoria->id], ['servicio_id', $value['servicio_id']]])->first();
+
                 //obtener el total de las solicitudes registradas con estado aprobado y validar la cantidad
                 $numeroSolicitudesServicioPorConvocatoria = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria, $value) {
                     $query->where('convocatoria_id', $convocatoria->id)

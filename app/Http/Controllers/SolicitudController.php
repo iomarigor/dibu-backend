@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\ExceptionGenerate;
 use App\Http\Requests\Solicitud\SolicitudRequest;
 use App\Http\Requests\Solicitud\SolicitudServicioRequest;
+use App\Http\Requests\Solicitud\UploadDocumentRequest;
 use App\Http\Requests\Solicitud\ValidarDatosAlumnoRequest;
 use App\Http\Resources\ServicioSolicitado\ServicioSolicitadoResource;
 use App\Http\Resources\ServicioSolicitado\UpdateServicioSolicitadoResource;
@@ -46,6 +47,15 @@ class SolicitudController extends Controller
     {
         try {
             return Response::res('Datos de solicitud actualizada', ServicioSolicitadoResource::collection($updateSolicitudServicioService->updateServicio($request->validated())));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
+    }
+
+    public function uploadDocument(UploadDocumentRequest $request, CreateSolicitudService $createService)
+    {
+        try {
+            return Response::res('Documento registrado', ($createService->uploadFile($request->validated())));
         } catch (ExceptionGenerate $e) {
             return Response::res($e->getMessage(), null, $e->getStatusCode());
         }
