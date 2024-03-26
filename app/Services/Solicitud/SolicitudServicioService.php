@@ -15,6 +15,7 @@ class SolicitudServicioService
 {
     public function updateServicio(array $data): ?Collection
     {
+        //dd($data);
         $servicioIds = array_column($data['servicios'], 'servicio_id');
 
         foreach ($data['servicios'] as $key => $value) {
@@ -42,7 +43,7 @@ class SolicitudServicioService
                 if (intval($numeroSolicitudesServicioPorConvocatoria) > intval($servicios->cantidad))
                     throw new ExceptionGenerate('Ya no existen vacantes para aceptar la solicitud para el servicio ' . $servicios->id, 200);
             }
-            $solicitud = ServicioSolicitado::find($value['servicio_id']);
+            $solicitud = ServicioSolicitado::where('solicitud_id', $data['solicitud_id'])->find($value['servicio_id']);
             $solicitud->estado = $value['estado'];
             $solicitud->save();
         }

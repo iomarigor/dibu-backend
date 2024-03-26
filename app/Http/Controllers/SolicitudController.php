@@ -23,7 +23,7 @@ class SolicitudController extends Controller
     public function validacionSolicitud(ValidarDatosAlumnoRequest $request, SolicitudValidacionSolicitudService $validacionSolicitudService)
     {
         try {
-            return Response::res('Usted es apto para solicitar los servicos brindados por OBU - UNAS, revise su correo para continuar con la solicitud', ($validacionSolicitudService->validate($request->validated())));
+            return Response::res('Usted es apto para solicitar los servicos brindados por OBU - UNAS', ($validacionSolicitudService->validate($request->validated())));
         } catch (ExceptionGenerate $e) {
             return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
         }

@@ -31,6 +31,10 @@ class CreateTipoRequisitosTable extends Migration
             [
                 'id' => 3,
                 'descripcion_tipo' => 'Formulario'
+            ],
+            [
+                'id' => 4,
+                'descripcion_tipo' => 'Seleccionable'
             ]
         ]);
     }

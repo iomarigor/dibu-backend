@@ -20,6 +20,7 @@ class DetalleSolicitudResource extends JsonResource
             'id' => $this->id,
             'respuesta_formulario' => $this->respuesta_formulario,
             'url_documento' => $this->url_documento,
+            'opcion_seleccion' => $this->opcion_seleccion,
             'requisito' => RequisitoResource::make($this->requisito),
         ];
     }

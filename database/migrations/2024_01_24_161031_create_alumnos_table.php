@@ -34,8 +34,6 @@ class CreateAlumnosTable extends Migration
             $table->string('correo_personal');
             $table->string('celular_estudiante');
             $table->string('celular_padre');
-            $table->unsignedBigInteger('convocatoria_id')->nullable();
-            $table->foreign('convocatoria_id')->references('id')->on('convocatorias');
             $table->timestamps();
         });
         DB::table('alumnos')->insert([

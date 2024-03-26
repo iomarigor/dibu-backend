@@ -15,8 +15,9 @@ class CreateDetalleSolicitudesTable extends Migration
     {
         Schema::create('detalle_solicitudes', function (Blueprint $table) {
             $table->id();
-            $table->string('respuesta_formulario');
-            $table->string('url_documento');
+            $table->string('respuesta_formulario')->nullable();
+            $table->string('url_documento')->nullable();
+            $table->string('opcion_seleccion')->nullable();
             $table->unsignedBigInteger('solicitud_id');
             $table->foreign('solicitud_id')
                 ->references('id')

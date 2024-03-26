@@ -24,6 +24,10 @@ class SolicitudServicioRequest extends FormRequest
     protected function rules(): array
     {
         return [
+            'solicitud_id' => [
+                'required',
+                'numeric',
+            ],
             'servicios.*.servicio_id' => [
                 'required',
                 'numeric',

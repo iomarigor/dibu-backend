@@ -13,6 +13,8 @@ class Requisito extends Model
         'nombre',
         'descripcion',
         'url_guia',
+        'url_plantilla',
+        'opciones',
         'tipo_requisito_id',
         'seccion_id',
         'user_id',

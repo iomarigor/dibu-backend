@@ -37,6 +37,16 @@ class RequisitoRequest extends FormRequest
                 'string',
                 'max:255',
             ],
+            'url_plantilla' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'opciones' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
             'estado' => [
                 'required'
             ],

@@ -18,6 +18,8 @@ class CreateRequisitosTable extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             $table->string('url_guia')->nullable();
+            $table->string('url_plantilla')->nullable();
+            $table->string('opciones')->nullable();
             $table->unsignedBigInteger('tipo_requisito_id');
             $table->foreign('tipo_requisito_id')
                 ->references('id')

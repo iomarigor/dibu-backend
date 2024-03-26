@@ -64,6 +64,7 @@ class CreateSolicitudService
         return $solicitud->detalleSolicitudes()->create([
             "respuesta_formulario" => $data['respuesta_formulario'],
             "url_documento" => $data['url_documento'],
+            "opcion_seleccion" => $data['opcion_seleccion'],
             'requisito_id' => $data['requisito_id'],
         ]);
     }

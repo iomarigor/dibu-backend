@@ -12,6 +12,7 @@ class DetalleSolicitud extends Model
     protected $fillable = [
         'respuesta_formulario',
         'url_documento',
+        'opcion_seleccion',
         'requisito_id'
     ];
     public function status()

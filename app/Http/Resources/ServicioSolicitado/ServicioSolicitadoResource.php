@@ -19,6 +19,8 @@ class ServicioSolicitadoResource extends JsonResource
         return [
             'id' => $this->id,
             'estado' => $this->estado,
+            'servicio_id' => $this->servicio_id,
+            'solicitud_id' => $this->solicitud_id,
             'servicio' => ServicioResource::make($this->servicio),
         ];
     }

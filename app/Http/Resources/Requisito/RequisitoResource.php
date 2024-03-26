@@ -27,6 +27,8 @@ class RequisitoResource extends JsonResource
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'url_guia' => $this->url_guia,
+            'url_plantilla' => $this->url_plantilla,
+            'opciones' => $this->opciones,
             'tipo_requisito_id' => $this->tipo_requisito_id,
             'user_id' => $this->user_id,
             'fecha_registro' => $this->created_at->format('Y-m-d'),

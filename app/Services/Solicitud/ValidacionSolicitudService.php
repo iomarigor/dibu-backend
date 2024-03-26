@@ -84,7 +84,7 @@ class ValidacionSolicitudService
         }
 
         //Validacion de promedio ponderado semestral aprovado
-        if (floatval($datosAlumnoAcademico['pps']) < 10.50) {
+        if (floatval($datosAlumnoAcademico['pps']) < 10.50 && intval($datosAlumnoAcademico['nume_sem_cur']) != 0) {
             array_push($faltas,  [
                 "tipo" => "academicos",
                 "msg" => "No cumple con el promedio semestal minimo de 10.50, de usted es: " . $datosAlumnoAcademico['pps'],

@@ -50,12 +50,17 @@ class SolicitudRequest extends FormRequest
                 'array'
             ],
             'detalle_solicitudes.*.respuesta_formulario' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
             ],
             'detalle_solicitudes.*.url_documento' => [
-                'required',
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'detalle_solicitudes.*.opcion_seleccion' => [
+                'nullable',
                 'string',
                 'max:255',
             ],

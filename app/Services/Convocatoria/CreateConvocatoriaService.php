@@ -37,7 +37,6 @@ class CreateConvocatoriaService
             $convocatoria->load(['secciones']);
 
             return $convocatoria;
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('convocatoria create: ' . $e->getMessage() . ', Line: ' . $e->getLine());
@@ -52,13 +51,13 @@ class CreateConvocatoriaService
             'cantidad' => $data['cantidad'],
         ]);
     }
-    
+
     private function secciones(array $data, Convocatoria $convocatoria): Model
     {
         $secciones = $convocatoria->secciones()->create([
             'descripcion' => $data['descripcion'],
         ]);
-        
+
         foreach ($data['requisitos'] as $requisitosData) {
             $this->requisitos($requisitosData, $secciones);
         }
@@ -74,6 +73,8 @@ class CreateConvocatoriaService
             'nombre' => $data['nombre'],
             'descripcion' => $data['descripcion'],
             'url_guia' => $data['url_guia'],
+            'url_plantilla' => $data['url_plantilla'],
+            'opciones' => $data['opciones'],
             'tipo_requisito_id' => $data['tipo_requisito_id'],
             'user_id' => auth()->user()->id,
         ]);

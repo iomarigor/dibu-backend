@@ -83,6 +83,16 @@ class ConvocatoriaRequest extends FormRequest
                 'string',
                 'max:255',
             ],
+            'secciones.*.requisitos.*.url_plantilla' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'secciones.*.requisitos.*.opciones' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
             'secciones.*.requisitos.*.tipo_requisito_id' => [
                 'required',
                 'numeric',
