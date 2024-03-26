@@ -3,7 +3,6 @@
 namespace App\Services\Requisito;
 
 use App\Models\Requisito;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class ListRequisitoService

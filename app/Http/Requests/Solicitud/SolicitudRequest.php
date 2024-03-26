@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Solicitud;
 
 use Anik\Form\FormRequest;
+use App\Rules\CheckCantidadRequisitos;
 
 class SolicitudRequest extends FormRequest
 {
@@ -47,7 +48,8 @@ class SolicitudRequest extends FormRequest
             ],
             'detalle_solicitudes' => [
                 'required',
-                'array'
+                'array',
+                new CheckCantidadRequisitos,
             ],
             'detalle_solicitudes.*.respuesta_formulario' => [
                 'required',
