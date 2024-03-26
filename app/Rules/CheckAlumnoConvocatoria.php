@@ -3,15 +3,15 @@
 namespace App\Rules;
 
 use App\Models\Convocatoria;
-use App\Models\Seccion;
+use App\Models\Solicitud;
 use Illuminate\Contracts\Validation\Rule;
 use DateTime;
 
-class CheckCantidadRequisitos implements Rule
+class CheckAlumnoCOnvocatoria implements Rule
 {
     public function passes($attribute, $value)
     {
-        // Verificar la cantidad de requisitos con los requisitos enviados por la solicitud
+        // Verificar que el alumno no hizo ninguna solicitud
         $fechaActual = new DateTime();
         $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
             ->whereDate('fecha_fin', '>=', $fechaActual)
@@ -19,16 +19,15 @@ class CheckCantidadRequisitos implements Rule
         if(!$convocatoria){
             return 'No existe convocatoria activa';
         }
-        $cantidad = Seccion::where('convocatoria_id', $convocatoria->id)
-            ->withCount('requisitos')
-            ->get()
-            ->sum('requisitos_count');
-        
-        return count($value) == $cantidad;
+        $solicitud = Solicitud::where('convocatoria_id', $convocatoria->id)
+            ->where('alumno_id', $value)
+            ->exists();
+            
+        return !$solicitud;
     }
 
     public function message()
     {
-        return 'Necesitas llenar todos los requisitos de la solicitud';
+        return 'Ya has postulado anteriormente a esta convocatoria';
     }
 }
