@@ -70,7 +70,7 @@ return [
             'timezone' => env('DB_TIMEZONE', '+00:00'),
         ],
         'connection_academico' => [
-            'driver' => env('DB_CONNECTION_1', '127.0.0.1'),
+            'driver' => env('DB_CONNECTION_1', 'mysql'),
             'host' => env('DB_HOST_1', '127.0.0.1'),
             'port' => env('DB_PORT', 3306),
             'database' => env('DB_DATABASE_1', 'forge'),

@@ -16,8 +16,8 @@ class CreateRequisitosTable extends Migration
         Schema::create('requisitos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion');
-            $table->string('url_guia');
+            $table->string('descripcion')->nullable();
+            $table->string('url_guia')->nullable();
             $table->unsignedBigInteger('tipo_requisito_id');
             $table->foreign('tipo_requisito_id')
                 ->references('id')

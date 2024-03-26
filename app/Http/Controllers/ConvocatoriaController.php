@@ -10,8 +10,8 @@ use App\Services\Convocatoria\ListConvocatoriaService;
 use App\Services\Convocatoria\UpdateConvocatoriaService;
 use App\Http\Response\Response;
 use App\Services\Convocatoria\ShowConvocatoriaService;
-use App\Services\Convocatoria\UltimaConvocatoriaService;
 use App\Exceptions\ExceptionGenerate;
+use App\Services\Convocatoria\UltimaConvocatoriaService;
 
 class ConvocatoriaController extends Controller
 {
@@ -43,8 +43,12 @@ class ConvocatoriaController extends Controller
         }
     }
 
-    public function ultimaConvocatoria(UltimaConvocatoriaService $ultimaService)
+    public function vigenteConvocatoria(UltimaConvocatoriaService $ultimaService)
     {
-        return Response::res('Ultima convocatoria mostrada', ConvocatoriaResource::make($ultimaService->ultima()));
+        try {
+            return  Response::res('Ultima convocatoria mostrada', ConvocatoriaResource::make($ultimaService->vigente()));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 }

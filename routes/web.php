@@ -20,6 +20,9 @@ $router->group([], function ($router) {
     });
     $router->post('/login', 'AuthController@login');
     $router->get('/validateToken', 'AuthController@validateToken');
+    $router->post('/solicitud/validacion', 'SolicitudController@validacionSolicitud');
+    $router->post('/solicitud/create', 'SolicitudController@create');
+    $router->post('/solicitud/uploadDocument', 'SolicitudController@uploadDocument');
 });
 
 // Rutas que requieren nivel de acceso 1
@@ -36,19 +39,21 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     //Convocatoria
     $router->get('/convocatoria', 'ConvocatoriaController@index');
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
+    $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
     $router->get('/convocatorias', 'ConvocatoriaController@index');
-    $router->get('/conveocatoria/ultima-convocatoria', 'ConvocatoriaController@ultimaConvocatoria');
+    $router->get('/convocatorias', 'ConvocatoriaController@index');
+    $router->get('/convocatoria/vigente-convocatoria', 'ConvocatoriaController@vigenteConvocatoria');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
 
     //Solicitud
     $router->get('/solicitudes', 'SolicitudController@index');
-    $router->post('/solicitud/create', 'SolicitudController@create');
     $router->get('/solicitud/show/{id}', 'SolicitudController@show');
+    $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
 
     //Datos academicos de alumnos
-    $router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
-    $router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
+    //$router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
+    //$router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1

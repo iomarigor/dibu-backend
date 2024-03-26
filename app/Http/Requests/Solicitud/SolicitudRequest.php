@@ -65,7 +65,7 @@ class SolicitudRequest extends FormRequest
             ],
         ];
     }
-    
+
     public function messages(): array
     {
         return [

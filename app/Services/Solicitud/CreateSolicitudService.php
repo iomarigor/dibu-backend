@@ -24,7 +24,7 @@ class CreateSolicitudService
             DB::commit();
 
             $solicitud->load(['servicioSolicitados']);
-            
+
             foreach ($data['detalle_solicitudes'] as $detalleSolicitudData) {
                 if($detalleSolicitudData['requisito_id'] <= count($detalleSolicitudData)){
                     $this->detalleSolicitud($detalleSolicitudData, $solicitud);
@@ -35,14 +35,23 @@ class CreateSolicitudService
             $solicitud->load(['detalleSolicitudes']);
 
             return $solicitud;
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('solicitud create: ' . $e->getMessage() . ', Line: ' . $e->getLine());
             throw $e;
         }
     }
-    
+    public function uploadFile(array $file): array
+    {
+        $file_name = $file['id_convocatoria'] . '_' . $file['dni_alumno'] . '_' . $file['name_file'];
+
+        //Guardando Documento
+        $this->saveFileLocal($file['file'], $file_name);
+
+        $file['url_file'] = $this->getUrlFile($file);
+
+        return $file;
+    }
     private function servicioSolicitado(array $data, Solicitud $solicitud): Model
     {
         return $solicitud->servicioSolicitados()->create([
@@ -50,13 +59,30 @@ class CreateSolicitudService
             'servicio_id' => $data['servicio_id'],
         ]);
     }
-    
+
     private function detalleSolicitud(array $data, Solicitud $solicitud): Model
     {
+        //recuperar el documento y almacenar en el storage
         return $solicitud->detalleSolicitudes()->create([
             "respuesta_formulario" => $data['respuesta_formulario'],
             "url_documento" => $data['url_documento'],
             'requisito_id' => $data['requisito_id'],
         ]);
+    }
+
+
+    private function saveFileLocal($file, $file_name)
+    {
+        //Decodificando Documento para ser guardado
+        $filea = base64_decode($file);
+
+        //Guardando Documento
+        file_put_contents('../storage/app/public/' . $file_name, $filea);
+    }
+
+    private function getUrlFile($file)
+    {
+        //Generando url del Documento almacenado
+        return env('APP_URL') . '/storage/app/public/' . $file['id_convocatoria'] . '_' . $file['dni_alumno'] . '_' . $file['name_file'];
     }
 }

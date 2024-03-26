@@ -28,10 +28,14 @@ class RequisitoRequest extends FormRequest
                 'required',
             ],
             'descripcion' => [
-                'required',
+                'nullable',
+                'string',
+                'max:255',
             ],
             'url_guia' => [
-                'required',
+                'nullable',
+                'string',
+                'max:255',
             ],
             'estado' => [
                 'required'
