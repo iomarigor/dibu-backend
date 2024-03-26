@@ -26,7 +26,9 @@ class CreateSolicitudService
             $solicitud->load(['servicioSolicitados']);
             
             foreach ($data['detalle_solicitudes'] as $detalleSolicitudData) {
-                $this->detalleSolicitud($detalleSolicitudData, $solicitud);
+                if($detalleSolicitudData['requisito_id'] <= count($detalleSolicitudData)){
+                    $this->detalleSolicitud($detalleSolicitudData, $solicitud);
+                }
             }
             DB::commit();
 
