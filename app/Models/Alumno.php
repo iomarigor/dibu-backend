@@ -28,5 +28,6 @@ class Alumno extends Model
         'correo_personal',
         'celular_estudiante',
         'celular_padre',
+        'convocatoria_id'
     ];
 }

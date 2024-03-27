@@ -23,6 +23,7 @@ $router->group([], function ($router) {
     $router->post('/solicitud/validacion', 'SolicitudController@validacionSolicitud');
     $router->post('/solicitud/create', 'SolicitudController@create');
     $router->post('/solicitud/uploadDocument', 'SolicitudController@uploadDocument');
+    $router->get('/solicitud/alumno/{dni}', 'SolicitudController@cargaSolicitudAlumno');
 });
 
 // Rutas que requieren nivel de acceso 1

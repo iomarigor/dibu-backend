@@ -11,6 +11,7 @@ use App\Http\Resources\ServicioSolicitado\ServicioSolicitadoResource;
 use App\Http\Resources\ServicioSolicitado\UpdateServicioSolicitadoResource;
 use App\Http\Resources\Solicitud\SolicitudResource;
 use App\Http\Response\Response;
+use App\Services\Solicitud\CargaSolicitudAlumnoService;
 use App\Services\Solicitud\ValidacionSolicitudService as SolicitudValidacionSolicitudService;
 use App\Services\Solicitud\CreateSolicitudService;
 use App\Services\Solicitud\ListSolicitudService;
@@ -56,6 +57,14 @@ class SolicitudController extends Controller
     {
         try {
             return Response::res('Documento registrado', ($createService->uploadFile($request->validated())));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
+    }
+    public function cargaSolicitudAlumno($dni, CargaSolicitudAlumnoService $cargaSolicitudAlumnoService)
+    {
+        try {
+            return Response::res('Documento registrado', ($cargaSolicitudAlumnoService->cargaSolicitudAlumno($dni)));
         } catch (ExceptionGenerate $e) {
             return Response::res($e->getMessage(), null, $e->getStatusCode());
         }

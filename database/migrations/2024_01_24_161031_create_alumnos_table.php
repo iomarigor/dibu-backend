@@ -34,30 +34,10 @@ class CreateAlumnosTable extends Migration
             $table->string('correo_personal');
             $table->string('celular_estudiante');
             $table->string('celular_padre');
+            $table->unsignedBigInteger('convocatoria_id');
+            $table->foreign('convocatoria_id')->references('id')->on('convocatorias');
             $table->timestamps();
         });
-        DB::table('alumnos')->insert([
-            [
-                'codigo_estudiante' => '20170890',
-                'DNI' => '10439823',
-                'nombres' => 'Ruth',
-                'apellido_paterno' => 'Jara',
-                'apellido_materno' => 'Montenegro',
-                'sexo' => 'Femenino',
-                'facultad' => 'Industrias Alimentarias',
-                'escuela_profesional' => 'Industrias Alimentarias',
-                'modalidad_ingreso' => 'CEPRE',
-                'lugar_procedencia' => 'Lima',
-                'lugar_nacimiento' => 'La Perla',
-                'edad' => 23,
-                'correo_institucional' => 'ruth.jara@unas.edu.pe',
-                'direccion' => 'av. juanjaime',
-                'fecha_nacimiento' => '2001-03-21',
-                'correo_personal' => 'ruth@ruth.com',
-                'celular_estudiante' => '987654321',
-                'celular_padre' => '987456321',
-            ],
-        ]);
     }
 
     /**
