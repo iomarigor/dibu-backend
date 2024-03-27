@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Solicitud;
 
 use Anik\Form\FormRequest;
+use App\Rules\CheckAlumnoCOnvocatoria;
+use App\Rules\CheckCantidadRequisitos;
+use Illuminate\Validation\Rule;
 
 class SolicitudRequest extends FormRequest
 {
@@ -27,10 +30,13 @@ class SolicitudRequest extends FormRequest
             'convocatoria_id' => [
                 'required',
                 'numeric',
+                Rule::exists('convocatorias', 'id'),
             ],
             'alumno_id' => [
                 'required',
                 'numeric',
+                Rule::exists('alumnos', 'id'),
+                new CheckAlumnoCOnvocatoria,
             ],
             'servicios_solicitados' => [
                 'required',
@@ -44,10 +50,12 @@ class SolicitudRequest extends FormRequest
             'servicios_solicitados.*.servicio_id' => [
                 'required',
                 'numeric',
+                Rule::exists('servicios', 'id'),
             ],
             'detalle_solicitudes' => [
                 'required',
-                'array'
+                'array',
+                new CheckCantidadRequisitos,
             ],
             'detalle_solicitudes.*.respuesta_formulario' => [
                 'nullable',
@@ -67,6 +75,7 @@ class SolicitudRequest extends FormRequest
             'detalle_solicitudes.*.requisito_id' => [
                 'required',
                 'numeric',
+                Rule::exists('requisitos', 'id'),
             ],
         ];
     }
