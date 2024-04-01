@@ -24,7 +24,10 @@ class DetalleSolicitud extends Model
     {
         return self::whereIn('status_id', [3, 2])->get();
     }
-
+    public function requisito()
+    {
+        return $this->belongsTo(Requisito::class);
+    }
 
     public static function allall()
     {

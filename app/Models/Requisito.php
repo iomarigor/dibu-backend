@@ -24,7 +24,10 @@ class Requisito extends Model
         return self::get();
     }
 
-
+    public function seccion()
+    {
+        return $this->belongsTo(Seccion::class);
+    }
     public static function allall()
     {
         return self::all();

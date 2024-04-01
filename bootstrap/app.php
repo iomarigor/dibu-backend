@@ -102,7 +102,8 @@ $app->register(Illuminate\Validation\ValidationServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 $app->register(\Anik\Form\FormRequestServiceProvider::class);
-//$app->register('Nord\Lumen\Cors\CorsServiceProvider');
+$app->register(Maatwebsite\Excel\ExcelServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -113,7 +114,6 @@ $app->register(\Anik\Form\FormRequestServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
-
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {

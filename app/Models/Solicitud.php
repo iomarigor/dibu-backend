@@ -20,7 +20,10 @@ class Solicitud extends Model
     {
         return $this->belongsTo(StatusData::class, 'status_id');
     }
-
+    public function solicitud_servicios()
+    {
+        return $this->hasMany(ServicioSolicitado::class);
+    }
     public static function allDA()
     {
         return self::whereIn('status_id', [3, 2])->get();
@@ -35,12 +38,12 @@ class Solicitud extends Model
     {
         return $this->hasMany(DetalleSolicitud::class);
     }
-    
+
     public function alumno(): BelongsTo
     {
         return $this->belongsTo(Alumno::class);
     }
-    
+
     public static function allall()
     {
         return self::all();

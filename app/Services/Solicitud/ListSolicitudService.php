@@ -2,13 +2,21 @@
 
 namespace App\Services\Solicitud;
 
+use App\Exceptions\ExceptionGenerate;
+use App\Models\Convocatoria;
 use App\Models\Solicitud;
+use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 
 class ListSolicitudService
 {
     public function list(): Collection
     {
-        return Solicitud::all();
+        $fechaActual = new DateTime();
+        $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
+            ->whereDate('fecha_fin', '>=', $fechaActual)->first();
+        if (!$convocatoria)
+            throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
+        return Solicitud::where('id', $convocatoria->id)->get();
     }
 }

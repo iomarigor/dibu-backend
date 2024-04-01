@@ -3,6 +3,7 @@
 namespace App\Http\Resources\DetalleSolicitud;
 
 use App\Http\Resources\Requisito\RequisitoResource;
+use App\Models\DetalleSolicitud;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,14 +15,13 @@ class DetalleSolicitudResource extends JsonResource
      * @return array<string, mixed>
      */
 
-    public function toArray(Request $request): array
+    public function toArray(Request $request)/* : array */
     {
-        return [
-            'id' => $this->id,
-            'respuesta_formulario' => $this->respuesta_formulario,
-            'url_documento' => $this->url_documento,
-            'opcion_seleccion' => $this->opcion_seleccion,
-            'requisito' => RequisitoResource::make($this->requisito),
-        ];
+        return DetalleSolicitud::with('requisito.seccion')
+            ->where('solicitud_id', $this->id)
+            ->get()
+            ->groupBy(function (DetalleSolicitud $detalle_solicitud) {
+                return $detalle_solicitud->requisito->seccion_id;
+            });
     }
 }

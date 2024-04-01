@@ -16,6 +16,7 @@ use App\Services\Solicitud\ValidacionSolicitudService as SolicitudValidacionSoli
 use App\Services\Solicitud\CreateSolicitudService;
 use App\Services\Solicitud\ListSolicitudService;
 use App\Services\Solicitud\ShowSolicitudService;
+use App\Services\Solicitud\SolicitudExportService;
 use App\Services\Solicitud\SolicitudServicioService;
 
 class SolicitudController extends Controller
@@ -68,5 +69,9 @@ class SolicitudController extends Controller
         } catch (ExceptionGenerate $e) {
             return Response::res($e->getMessage(), null, $e->getStatusCode());
         }
+    }
+    public function solicitudExport(SolicitudExportService $solicitudExportService)
+    {
+        return $solicitudExportService->export();
     }
 }
