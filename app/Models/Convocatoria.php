@@ -23,6 +23,12 @@ class Convocatoria extends Model
         return $this->hasMany(ConvocatoriaServicio::class);
     }
     
+    
+    public function solicitudes(): HasMany
+    {
+        return $this->hasMany(Solicitud::class);
+    }
+
     public function secciones(): HasMany
     {
         return $this->hasMany(Seccion::class);

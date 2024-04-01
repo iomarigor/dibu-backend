@@ -11,6 +11,7 @@ use App\Services\Convocatoria\UpdateConvocatoriaService;
 use App\Http\Response\Response;
 use App\Services\Convocatoria\ShowConvocatoriaService;
 use App\Exceptions\ExceptionGenerate;
+use App\Services\Convocatoria\ReporteConvocatoriaService;
 use App\Services\Convocatoria\UltimaConvocatoriaService;
 
 class ConvocatoriaController extends Controller
@@ -47,6 +48,15 @@ class ConvocatoriaController extends Controller
     {
         try {
             return  Response::res('Ultima convocatoria mostrada', ConvocatoriaResource::make($ultimaService->vigente()));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
+    }
+    
+    public function reporteConvocatoria(ReporteConvocatoriaService $reporteService, $id)
+    {
+        try {
+            return  Response::res('Reporte convocatoria mostrada', $reporteService->reporte($id));
         } catch (ExceptionGenerate $e) {
             return Response::res($e->getMessage(), null, $e->getStatusCode());
         }
