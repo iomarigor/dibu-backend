@@ -20,9 +20,14 @@ class ReporteConvocatoriaService
             ->where('convocatoria_id', $convocatoria->id)
             ->count();
 
-        $cantidadSistemas = Alumno::where('facultad', 'INGENIERIA EN INFORMATICA Y SISTEMAS')
-            ->where('convocatoria_id', $convocatoria->id)
-            ->count();
+        $facultades = $this->obtenerFacultades($convocatoria->id);
+        $cantidadFacultades = [];
+
+        foreach($facultades as $facultad){
+            $cantidadFacultades[$facultad] = Alumno::where('facultad', $facultad)
+                ->where('convocatoria_id', $convocatoria->id)
+                ->count();
+        }
 
         $cantidadPendientes = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria) {
                 $query->where('convocatoria_id', $convocatoria->id)
@@ -53,8 +58,8 @@ class ReporteConvocatoriaService
                     'num_hombres' => $cantidadHombres,
                     'num_mujeres' => $cantidadMujeres
                 ],
-                'facultad' => [
-                    'sistemas' => $cantidadSistemas
+                'facultades' => [
+                    $cantidadFacultades
                 ],
                 'estados_solicitud' => [
                     'pendiente' => $cantidadPendientes,
@@ -64,5 +69,16 @@ class ReporteConvocatoriaService
                 ]
             ];
         return $reporte;
+    }
+
+    private function obtenerFacultades($id)
+    {
+        $facultades = Alumno::where('convocatoria_id', $id)
+            ->groupBy('facultad')
+            ->pluck('facultad')
+            ->unique()
+            ->values()
+            ->toArray();
+        return $facultades;
     }
 }
