@@ -7,7 +7,7 @@ use App\Models\Solicitud;
 use Illuminate\Contracts\Validation\Rule;
 use DateTime;
 
-class CheckAlumnoCOnvocatoria implements Rule
+class CheckAlumnoConvocatoria implements Rule
 {
     public function passes($attribute, $value)
     {
@@ -16,13 +16,13 @@ class CheckAlumnoCOnvocatoria implements Rule
         $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
             ->whereDate('fecha_fin', '>=', $fechaActual)
             ->first();
-        if(!$convocatoria){
+        if (!$convocatoria) {
             return 'No existe convocatoria activa';
         }
         $solicitud = Solicitud::where('convocatoria_id', $convocatoria->id)
             ->where('alumno_id', $value)
             ->exists();
-            
+
         return !$solicitud;
     }
 

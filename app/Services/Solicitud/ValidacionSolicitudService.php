@@ -39,6 +39,7 @@ class ValidacionSolicitudService
                 "sexo" => $datosAlumnoAcademico['sexo'],
                 "facultad" => $datosAlumnoAcademico['nomfac'],
                 "escuela_profesional" => $datosAlumnoAcademico['nomesp'],
+                "ultimo_semestre" => $datosAlumnoAcademico['codsem'],
                 "modalidad_ingreso" => $datosAlumnoAcademico['mod_ingreso'],
                 //"lugar_procedencia"=>$data['DNI'],
                 //"lugar_nacimiento"=>$data['DNI'],
@@ -49,6 +50,12 @@ class ValidacionSolicitudService
                 "correo_personal" => $datosAlumnoAcademico['email'],
                 "celular_estudiante" => $datosAlumnoAcademico['telcelular'],
                 "celular_padre" => $datosAlumnoAcademico['tel_ref'],
+                "estado_matricula"=>$datosAlumnoAcademico['est_mat_act'],
+                "creditos_matriculados"=>$datosAlumnoAcademico['credmat'],
+                "num_semestres_cursados"=>$datosAlumnoAcademico['nume_sem_cur'],
+                "pps"=>$datosAlumnoAcademico['pps'],
+                "ppa"=>$datosAlumnoAcademico['ppa'],
+                "tca"=>$datosAlumnoAcademico['tca'],
                 "convocatoria_id" => $convocatoria->id
             ]);
         }

@@ -13,8 +13,7 @@ class ListSolicitudService
     public function list(): Collection
     {
         $fechaActual = new DateTime();
-        $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
-            ->whereDate('fecha_fin', '>=', $fechaActual)->first();
+        $convocatoria = Convocatoria::first();
         if (!$convocatoria)
             throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
         return Solicitud::where('id', $convocatoria->id)->get();

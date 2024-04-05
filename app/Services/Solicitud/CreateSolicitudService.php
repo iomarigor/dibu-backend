@@ -2,6 +2,9 @@
 
 namespace App\Services\Solicitud;
 
+use App\Models\Alumno;
+use App\Models\Convocatoria;
+use App\Models\Requisito;
 use App\Models\Solicitud;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +63,15 @@ class CreateSolicitudService
 
     private function detalleSolicitud(array $data, Solicitud $solicitud): Model
     {
+        $requisito = Requisito::where('id', $data["requisito_id"])->first();
+        $alumno = Alumno::find($solicitud->alumno_id);
+        if ($requisito->nombre == "Lugar de procedencia") {
+            $alumno->lugar_procedencia = $data['respuesta_formulario'];
+        }
+        if ($requisito->nombre == "Lugar de nacimiento") {
+            $alumno->lugar_nacimiento = $data['respuesta_formulario'];
+        }
+        $alumno->update();
         //recuperar el documento y almacenar en el storage
         return $solicitud->detalleSolicitudes()->create([
             "respuesta_formulario" => $data['respuesta_formulario'],
