@@ -10,8 +10,8 @@ class CreateServicioService
     public function create(array $data): Model
     {
         return Servicio::create([
+            'nombre' => $data['nombre'],
             'descripcion' => $data['descripcion'],
-            'capacidad_maxima' => $data['capacidad_maxima'],
         ]);
     }
 }
