@@ -8,6 +8,7 @@ use App\Models\Alumno;
 use App\Models\Convocatoria;
 use App\Models\DatosAlumnoAcademico;
 use DateTime;
+use Exception;
 
 class ValidacionSolicitudService
 {
@@ -50,12 +51,12 @@ class ValidacionSolicitudService
                 "correo_personal" => $datosAlumnoAcademico['email'],
                 "celular_estudiante" => $datosAlumnoAcademico['telcelular'],
                 "celular_padre" => $datosAlumnoAcademico['tel_ref'],
-                "estado_matricula"=>$datosAlumnoAcademico['est_mat_act'],
-                "creditos_matriculados"=>$datosAlumnoAcademico['credmat'],
-                "num_semestres_cursados"=>$datosAlumnoAcademico['nume_sem_cur'],
-                "pps"=>$datosAlumnoAcademico['pps'],
-                "ppa"=>$datosAlumnoAcademico['ppa'],
-                "tca"=>$datosAlumnoAcademico['tca'],
+                "estado_matricula" => $datosAlumnoAcademico['est_mat_act'],
+                "creditos_matriculados" => $datosAlumnoAcademico['credmat'],
+                "num_semestres_cursados" => $datosAlumnoAcademico['nume_sem_cur'],
+                "pps" => $datosAlumnoAcademico['pps'],
+                "ppa" => $datosAlumnoAcademico['ppa'],
+                "tca" => $datosAlumnoAcademico['tca'],
                 "convocatoria_id" => $convocatoria->id
             ]);
         }
@@ -65,13 +66,13 @@ class ValidacionSolicitudService
     private function validateRequisitosSolicitud(array $data)
     {
         $faltas = [];
-        $consultaCaja = $this->consultaCaja($data['DNI']);
+        /* $consultaCaja = $this->consultaCaja($data['DNI']);
         if ($consultaCaja != null) {
             array_push($faltas, [
                 "tipo" => "deudas",
                 "msg" => "Usted mantiene una deuda por " . $consultaCaja->concepto_deuda . " monto:" . $consultaCaja->monto_deuda . " fecha:" . explode(" ", $consultaCaja->fecha_deuda)[0],
             ]);
-        }
+        } */
         //Validación de datos academicos
         $datosAlumnoAcademico = $this->getDatosAlumnoAcademico($data['DNI']);
         if ($datosAlumnoAcademico == null) {
@@ -99,7 +100,7 @@ class ValidacionSolicitudService
         }
 
         //Validacion de semestre matriculado
-        if (strtoupper($datosAlumnoAcademico['est_mat_act']) == 'N') {
+        if (strtoupper($datosAlumnoAcademico['est_mat_act']) == 'N' || strtoupper($datosAlumnoAcademico['est_mat_act']) == 'R') {
             array_push($faltas,  [
                 "tipo" => "academicos",
                 "msg" => "No se encuentra matriculado en el semeste actual",
@@ -145,7 +146,14 @@ class ValidacionSolicitudService
     }
     private function getDatosAlumnoAcademico(String $DNI)
     {
-        return DatosAlumnoAcademico::where('tdocumento', 'DNI' . $DNI)->first();
+        try {
+            $datosAlumnoAcademico = DatosAlumnoAcademico::where('tdocumento', 'DNI' . $DNI)->first();
+            if (!$datosAlumnoAcademico)
+                throw new ExceptionGenerate('No existe registro academico del alumno, una de la razones es que supere los 10 semestres academicos', 200);
+            return $datosAlumnoAcademico;
+        } catch (Exception $e) {
+            throw new ExceptionGenerate('No existe registro academico del alumno, una de la razones es que supere los 10 semestres academicos', 200);
+        }
     }
     private function getYearsInDates(DateTime $firsData, DateTime $secondData)
     {

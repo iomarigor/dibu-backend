@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CreateDatosAlumnoAcademico
 {
-    public function create(array $data): Model
+    public function create()
     {
-        //$data['user_id'] = auth()->id();
-        return DatosAlumnoAcademico::create($data);
     }
 }

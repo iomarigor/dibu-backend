@@ -9,6 +9,7 @@ use App\Models\Servicio;
 use App\Models\ServicioSolicitado;
 use App\Models\Solicitud;
 use App\Services\Convocatoria\UltimaConvocatoriaService;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -93,7 +94,7 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
                     ['s.convocatoria_id', $convocatoria->id]
                 ])
                 ->get();
-            for ($j = 11; $j < count($detalle_solicitud); $j++) {
+            for ($j = 17; $j < count($detalle_solicitud); $j++) {
                 $requisito = Requisito::select(
                     'tipo_requisito_id',
                     'id'
@@ -113,19 +114,23 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
             }
             $servicios = Servicio::all();
             for ($k = 0; $k < count($servicios); $k++) {
-                $servicio_solicitado = ServicioSolicitado::select(
-                    'servicio_solicitado.id',
-                    'servicio_solicitado.estado'
-                )
-                    ->join('solicitudes as s', 'servicio_solicitado.solicitud_id', '=', 's.id')
-                    ->join('alumnos as a', 's.alumno_id', '=', 'a.id')
-                    ->where([
-                        ['servicio_id', $servicios[$k]->id],
-                        ['a.codigo_estudiante', $solicitudes[$i]->codigo_estudiante],
-                        ['s.convocatoria_id', $convocatoria->id]
-                    ])
-                    ->first();
-                $solicitudes[$i]->{"sv" . $servicio_solicitado->id} = $servicio_solicitado->estado;
+                try {
+                    $servicio_solicitado = ServicioSolicitado::select(
+                        'servicio_solicitado.id',
+                        'servicio_solicitado.estado'
+                    )
+                        ->join('solicitudes as s', 'servicio_solicitado.solicitud_id', '=', 's.id')
+                        ->join('alumnos as a', 's.alumno_id', '=', 'a.id')
+                        ->where([
+                            ['servicio_id', $servicios[$k]->id],
+                            ['a.codigo_estudiante', $solicitudes[$i]->codigo_estudiante],
+                            ['s.convocatoria_id', $convocatoria->id]
+                        ])
+                        ->first();
+                    $solicitudes[$i]->{"sv" . $servicio_solicitado->id} = $servicio_solicitado->estado;
+                } catch (Exception $e) {
+                    $solicitudes[$i]->{$i . '-' . $k} = '';
+                }
             }
         }
 
@@ -140,7 +145,7 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
             ->join('convocatorias as cv', 'scc.convocatoria_id', '=', 'cv.id')
             ->where('cv.id', $convocatoria->id)
             ->get();
-        for ($i = 11; $i < count($requisito); $i++) {
+        for ($i = 17; $i < count($requisito); $i++) {
             array_push($this->demo, strtoupper($requisito[$i]->nombre));
         }
         $servicios = Servicio::all();

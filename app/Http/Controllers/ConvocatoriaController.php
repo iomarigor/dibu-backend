@@ -17,12 +17,20 @@ class ConvocatoriaController extends Controller
 {
     public function index(ListConvocatoriaService $listConvocatoriaService)
     {
-        return Response::res('Convocatorias listadas', ConvocatoriaResource::collection($listConvocatoriaService->list()), 200);
+        try {
+            return Response::res('Convocatorias listadas', ConvocatoriaResource::collection($listConvocatoriaService->list()), 200);
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 
     public function create(ConvocatoriaRequest $request, CreateConvocatoriaService $createService)
     {
-        return Response::res('Convocatoria registrada', ConvocatoriaResource::make($createService->create($request->validated())));
+        try {
+            return Response::res('Convocatoria registrada', ConvocatoriaResource::make($createService->create($request->validated())));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 
     public function show($id, ShowConvocatoriaService $showConvocatoriaService)

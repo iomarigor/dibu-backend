@@ -26,6 +26,8 @@ $router->group([], function ($router) {
     $router->post('/solicitud/create', 'SolicitudController@create');
     $router->post('/solicitud/uploadDocument', 'SolicitudController@uploadDocument');
     $router->get('/solicitud/alumno/{dni}', 'SolicitudController@cargaSolicitudAlumno');
+
+    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 });
 
 // Rutas que requieren nivel de acceso 1
@@ -49,7 +51,6 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
 
 // Rutas que requieren nivel de acceso 2 y 1
 $router->group(['middleware' => ['auth', 'restriclevel2']], function ($router) {
-    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 
     //Convocatoria
     $router->get('/convocatoria', 'ConvocatoriaController@index');
@@ -58,6 +59,8 @@ $router->group(['middleware' => ['auth', 'restriclevel2']], function ($router) {
     $router->get('/solicitudes', 'SolicitudController@index');
     $router->get('/solicitud/show/{id}', 'SolicitudController@show');
     $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
+
+    $router->get('/servicio', 'ServicioController@index');
 });
 
 // Rutas que tienen  acceso todos los niveles de usuarios logeados
