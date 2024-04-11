@@ -5,10 +5,6 @@ namespace App\Services\Solicitud;
 use App\Exceptions\ExceptionGenerate;
 use App\Models\Alumno;
 use App\Models\Convocatoria;
-use App\Models\Solicitud;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class CargaSolicitudAlumnoService
 {

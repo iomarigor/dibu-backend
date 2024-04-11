@@ -15,6 +15,7 @@ use App\Services\Solicitud\CargaSolicitudAlumnoService;
 use App\Services\Solicitud\ValidacionSolicitudService as SolicitudValidacionSolicitudService;
 use App\Services\Solicitud\CreateSolicitudService;
 use App\Services\Solicitud\ListSolicitudService;
+use App\Services\Solicitud\ServicioSolicitadoSolicitanteService;
 use App\Services\Solicitud\ShowSolicitudService;
 use App\Services\Solicitud\SolicitudExportService;
 use App\Services\Solicitud\SolicitudServicioService;
@@ -85,5 +86,12 @@ class SolicitudController extends Controller
     public function solicitudExport(SolicitudExportService $solicitudExportService)
     {
         return $solicitudExportService->export();
+    }
+    public function servicioSolicitadoSolicitante($dni, ServicioSolicitadoSolicitanteService $servicioSolicitadoSolicitanteService){
+        try {
+            return Response::res('Servicios solicitados del solicitante', ($servicioSolicitadoSolicitanteService->servicioSolicitante($dni)));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), null, $e->getStatusCode());
+        }
     }
 }
