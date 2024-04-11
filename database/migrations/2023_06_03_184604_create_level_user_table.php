@@ -17,7 +17,7 @@ class CreateLevelUserTable extends Migration
         DB::table('level_user')->insert([
             ['description' => 'ADMINISTRADOR'],
             ['description' => 'USUARIO'],
-            ['description' => 'LECTOR'],
+            ['description' => 'COLABORADOR'],
         ]);
     }
 

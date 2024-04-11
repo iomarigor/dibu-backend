@@ -84,6 +84,8 @@ class SolicitudRequest extends FormRequest
     {
         return [
             'servicios_solicitados.*.servicio_id.required' => 'El servicio a solicitar es requerida',
+            'detalle_solicitudes.required' => 'El detalle de la solicitud es requerida',
+            'servicios_solicitados.required' => 'Los servicios a solicitar es requerida',
         ];
     }
 }

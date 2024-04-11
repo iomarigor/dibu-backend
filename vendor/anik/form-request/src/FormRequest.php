@@ -33,9 +33,19 @@ abstract class FormRequest extends Request
 
     protected function errorResponse(): ?JsonResponse
     {
+        $nuevoArray = [];
+
+        foreach ($this->validator->errors()->messages() as $key => $mensajes) {
+            foreach ($mensajes as $mensaje) {
+                $nuevoArray[] = [
+                    "tipo" => $key,
+                    "msg" => $mensaje
+                ];
+            }
+        }
         return response()->json([
             'msg' => $this->errorMessage(),
-            'detalle' => $this->validator->errors()->messages(),
+            'detalle' => $nuevoArray,
         ], $this->statusCode());
     }
 

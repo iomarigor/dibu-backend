@@ -17,10 +17,9 @@ class SolicitudServicioService
     {
         //dd($data);
         $servicioIds = array_column($data['servicios'], 'servicio_id');
-
         foreach ($data['servicios'] as $key => $value) {
             if ($value['estado'] != 'pendiente' && $value['estado'] != 'rechazado' && $value['estado'] != 'aceptado' && $value['estado'] != 'aprobado')
-                throw new ExceptionGenerate('El estado de quiere acctualizar no existe', 200);
+                throw new ExceptionGenerate('El estado de quiere actualizar no existe', 200);
             if ($value['estado'] == 'aprobado') {
                 //obtener la convocatoria actual
                 $fechaActual = new DateTime();
@@ -45,6 +44,7 @@ class SolicitudServicioService
             }
             $solicitud = ServicioSolicitado::where('solicitud_id', $data['solicitud_id'])->find($value['servicio_id']);
             $solicitud->estado = $value['estado'];
+            if ($value['estado'] == 'rechazado') $solicitud->detalle_rechazo = $value['detalle_rechazo'];
             $solicitud->save();
         }
         return ServicioSolicitado::whereIn('id', $servicioIds)->get();

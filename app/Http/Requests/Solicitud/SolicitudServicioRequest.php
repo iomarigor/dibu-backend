@@ -28,6 +28,11 @@ class SolicitudServicioRequest extends FormRequest
                 'required',
                 'numeric',
             ],
+            'servicios.*.detalle_rechazo' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
             'servicios.*.servicio_id' => [
                 'required',
                 'numeric',

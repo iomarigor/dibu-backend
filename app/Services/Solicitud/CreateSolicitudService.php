@@ -18,7 +18,7 @@ class CreateSolicitudService
         try {
             $solicitud = Solicitud::create([
                 'convocatoria_id' => $data['convocatoria_id'],
-                'alumno_id' => $data['alumno_id'],
+                'alumno_id' => $data['alumno_id']
             ]);
 
             foreach ($data['servicios_solicitados'] as $servicioSolicitadoData) {
@@ -65,11 +65,11 @@ class CreateSolicitudService
     {
         $requisito = Requisito::where('id', $data["requisito_id"])->first();
         $alumno = Alumno::find($solicitud->alumno_id);
-        if ($requisito->nombre == "Lugar de procedencia") {
-            $alumno->lugar_procedencia = $data['respuesta_formulario'];
+        if ($requisito->nombre == "Departamento de procedencia" || $requisito->nombre == "Provincia de procedencia" || $requisito->nombre == "Distrito de procedencia") {
+            $alumno->lugar_procedencia = $alumno->lugar_procedencia . strtoupper($data['respuesta_formulario']) . '/';
         }
-        if ($requisito->nombre == "Lugar de nacimiento") {
-            $alumno->lugar_nacimiento = $data['respuesta_formulario'];
+        if ($requisito->nombre == "Departamento de nacimiento"  || $requisito->nombre == "Provincia de nacimiento" || $requisito->nombre == "Distrito de nacimiento") {
+            $alumno->lugar_nacimiento = $alumno->lugar_nacimiento . strtoupper($data['respuesta_formulario']) . '/';
         }
         $alumno->update();
         //recuperar el documento y almacenar en el storage

@@ -94,7 +94,7 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
                     ['s.convocatoria_id', $convocatoria->id]
                 ])
                 ->get();
-            for ($j = 17; $j < count($detalle_solicitud); $j++) {
+            for ($j = 22; $j < count($detalle_solicitud); $j++) {
                 $requisito = Requisito::select(
                     'tipo_requisito_id',
                     'id'
@@ -145,7 +145,7 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
             ->join('convocatorias as cv', 'scc.convocatoria_id', '=', 'cv.id')
             ->where('cv.id', $convocatoria->id)
             ->get();
-        for ($i = 17; $i < count($requisito); $i++) {
+        for ($i = 22; $i < count($requisito); $i++) {
             array_push($this->demo, strtoupper($requisito[$i]->nombre));
         }
         $servicios = Servicio::all();

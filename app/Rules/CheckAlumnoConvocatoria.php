@@ -19,11 +19,14 @@ class CheckAlumnoConvocatoria implements Rule
         if (!$convocatoria) {
             return 'No existe convocatoria activa';
         }
+
+        //eliminando la solicitud de la db para registrar la nueva
         $solicitud = Solicitud::where('convocatoria_id', $convocatoria->id)
             ->where('alumno_id', $value)
-            ->exists();
-
-        return !$solicitud;
+            ->first();
+        if ($solicitud)
+            $solicitud->delete();
+        return true;
     }
 
     public function message()
