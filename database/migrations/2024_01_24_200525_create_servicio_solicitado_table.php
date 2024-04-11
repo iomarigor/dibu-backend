@@ -22,9 +22,10 @@ class CreateServicioSolicitadoTable extends Migration
                 ->references('id')
                 ->on('servicios');
             $table->unsignedBigInteger('solicitud_id');
-                $table->foreign('solicitud_id')
-                    ->references('id')
-                    ->on('solicitudes');
+            $table->foreign('solicitud_id')
+                ->references('id')
+                ->on('solicitudes');
+            $table->string('detalle_rechazo')->nullable();
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class CreateAlumnosTable extends Migration
             $table->string('sexo');
             $table->string('facultad');
             $table->string('escuela_profesional');
+            $table->string('ultimo_semestre');
             $table->string('modalidad_ingreso');
             $table->string('lugar_procedencia')->nullable();
             $table->string('lugar_nacimiento')->nullable();
@@ -34,6 +35,12 @@ class CreateAlumnosTable extends Migration
             $table->string('correo_personal');
             $table->string('celular_estudiante');
             $table->string('celular_padre');
+            $table->string('estado_matricula');
+            $table->string('creditos_matriculados');
+            $table->string('num_semestres_cursados');
+            $table->string('pps');
+            $table->string('ppa');
+            $table->string('tca');
             $table->unsignedBigInteger('convocatoria_id');
             $table->foreign('convocatoria_id')->references('id')->on('convocatorias');
             $table->timestamps();

@@ -18,6 +18,7 @@ class Alumno extends Model
         'sexo',
         'facultad',
         'escuela_profesional',
+        'ultimo_semestre',
         'modalidad_ingreso',
         'lugar_procedencia',
         'lugar_nacimiento',
@@ -28,6 +29,12 @@ class Alumno extends Model
         'correo_personal',
         'celular_estudiante',
         'celular_padre',
+        'estado_matricula',
+        'creditos_matriculados',
+        'num_semestres_cursados',
+        'pps',
+        'ppa',
+        'tca',
         'convocatoria_id'
     ];
 }

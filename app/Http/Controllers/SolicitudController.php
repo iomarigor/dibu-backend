@@ -32,17 +32,29 @@ class SolicitudController extends Controller
     }
     public function index(ListSolicitudService $listSolicitudService)
     {
-        return Response::res('Solicitudes listadas', SolicitudResource::collection($listSolicitudService->list()), 200);
+        try {
+            return Response::res('Solicitudes listadas', SolicitudResource::collection($listSolicitudService->list()), 200);
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
+        }
     }
 
     public function create(SolicitudRequest $request, CreateSolicitudService $createService)
     {
-        return Response::res('Solicitud registrada', SolicitudResource::make($createService->create($request->validated())));
+        try {
+            return Response::res('Solicitud registrada', SolicitudResource::make($createService->create($request->validated())));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
+        }
     }
 
     public function show($id, ShowSolicitudService $showSolicitudService)
     {
-        return Response::res('Solicitud filtrada', SolicitudResource::make($showSolicitudService->show($id)));
+        try {
+            return Response::res('Solicitud filtrada', SolicitudResource::make($showSolicitudService->show($id)));
+        } catch (ExceptionGenerate $e) {
+            return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
+        }
     }
 
     public function updateServicio(SolicitudServicioRequest $request, SolicitudServicioService $updateSolicitudServicioService)

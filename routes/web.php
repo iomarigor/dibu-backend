@@ -26,8 +26,6 @@ $router->group([], function ($router) {
     $router->post('/solicitud/create', 'SolicitudController@create');
     $router->post('/solicitud/uploadDocument', 'SolicitudController@uploadDocument');
     $router->get('/solicitud/alumno/{dni}', 'SolicitudController@cargaSolicitudAlumno');
-
-    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 });
 
 // Rutas que requieren nivel de acceso 1
@@ -42,35 +40,42 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->delete('/users/destroy/{id}', 'UserController@destroy');
 
     //Convocatoria
-    $router->get('/convocatoria', 'ConvocatoriaController@index');
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
+<<<<<<< HEAD
     $router->get('/convocatoria/reporte/{id}', 'ConvocatoriaController@reporteConvocatoria');
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
+=======
+>>>>>>> b940ea2cd9580ba8bb53e3c79193eab07e21920c
 
-    //Solicitud
-    $router->get('/solicitudes', 'SolicitudController@index');
-    $router->get('/solicitud/show/{id}', 'SolicitudController@show');
-    $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
+    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 
-
-
-    //Datos academicos de alumnos
     //$router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
     //$router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
 });
 
 // Rutas que requieren nivel de acceso 2 y 1
 $router->group(['middleware' => ['auth', 'restriclevel2']], function ($router) {
+
+    //Convocatoria
+    $router->get('/convocatoria', 'ConvocatoriaController@index');
+
+    //Solicitud
+    $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
+
+    $router->get('/servicio', 'ServicioController@index');
 });
 
 // Rutas que tienen  acceso todos los niveles de usuarios logeados
 $router->group(['middleware' => 'auth'], function ($router) {
+    //Solicitud
+    $router->get('/solicitudes', 'SolicitudController@index');
+    $router->get('/solicitud/show/{id}', 'SolicitudController@show');
 
     //LevelUsers
     $router->get('/leveluser', 'LevelUserController@index');
 
-    $router->get('/logout', 'AuthController@logout');
+    $router->post('/logout', 'AuthController@logout');
     $router->get('/validateToken', 'AuthController@validateToken');
 
     //Rutas a implementar
