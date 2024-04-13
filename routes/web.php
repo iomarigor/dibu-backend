@@ -43,7 +43,6 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
 
-    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 
     //$router->get('/DatosAlumnoAcademico', 'DatosAlumnoAcademicoController@index');
     //$router->get('/DatosAlumnoAcademico/show/{DNI}', 'DatosAlumnoAcademicoController@show');
@@ -66,6 +65,7 @@ $router->group(['middleware' => 'auth'], function ($router) {
     //Solicitud
     $router->get('/solicitudes', 'SolicitudController@index');
     $router->get('/solicitud/show/{id}', 'SolicitudController@show');
+    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 
     //LevelUsers
     $router->get('/leveluser', 'LevelUserController@index');
