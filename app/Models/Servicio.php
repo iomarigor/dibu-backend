@@ -12,8 +12,8 @@ class Servicio extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'descripcion',
-        'capacidad_maxima',
+        'nombre',
+        'descripcion'
     ];
 
     public function status()

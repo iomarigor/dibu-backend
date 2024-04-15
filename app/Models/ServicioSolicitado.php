@@ -13,6 +13,8 @@ class ServicioSolicitado extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'estado',
+        'fecha_revision',
+        'detalle_rechazo',
         'servicio_id'
     ];
     public function status()

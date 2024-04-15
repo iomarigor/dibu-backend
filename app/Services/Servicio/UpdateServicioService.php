@@ -9,8 +9,8 @@ class UpdateServicioService
     public function update(Servicio $servicio, array $dataServicio): Servicio
     {
         $servicio->update([
+            'nombre' => $dataServicio['nombre'],
             'descripcion' => $dataServicio['descripcion'],
-            'capacidad_maxima' => $dataServicio['capacidad_maxima'],
         ]);
 
         return $servicio;
