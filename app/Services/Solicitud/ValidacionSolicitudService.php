@@ -84,7 +84,7 @@ class ValidacionSolicitudService
         }
 
         //Validar correo institucional
-        if ($datosAlumnoAcademico['emailinst'] != $data['correo']) {
+        if (strtoupper($datosAlumnoAcademico['emailinst']) != strtoupper($data['correo'])) {
             array_push($faltas,  [
                 "tipo" => "academicos",
                 "msg" => "El correo electronico no coincide con el registrado en el sistema academico",
