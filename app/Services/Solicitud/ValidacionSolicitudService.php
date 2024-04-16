@@ -100,7 +100,7 @@ class ValidacionSolicitudService
         }
 
         //Validacion de semestre matriculado
-        if (strtoupper($datosAlumnoAcademico['est_mat_act']) == 'N' || strtoupper($datosAlumnoAcademico['est_mat_act']) == 'R') {
+        if (strtoupper($datosAlumnoAcademico['est_mat_act']) == 'R') {
             array_push($faltas,  [
                 "tipo" => "academicos",
                 "msg" => "No se encuentra matriculado en el semeste actual",
