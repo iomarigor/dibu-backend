@@ -17,7 +17,9 @@ class ListSolicitudService
             throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
 
 
-        $solicitudesTemporales = Solicitud::where('convocatoria_id', $convocatoria->id)->get();
+        $solicitudesTemporales = Solicitud::where('convocatoria_id', $convocatoria->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
         $solicitudes = new Collection();
 
         foreach ($solicitudesTemporales as $solicitudTemporal) {

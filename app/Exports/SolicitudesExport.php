@@ -82,7 +82,8 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
         )
             ->join('alumnos as a', 'solicitudes.alumno_id', '=', 'a.id')
             ->where('solicitudes.convocatoria_id', $convocatoria->id)
-            ->orderBy('solicitudes.created_at', 'desc')
+            ->groupBy('a.codigo_estudiante')
+            ->orderBy('fecha_solicitud', 'desc')
             ->get();
         $solicitudes = new Collection();
 
