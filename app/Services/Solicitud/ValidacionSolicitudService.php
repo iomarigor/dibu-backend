@@ -32,6 +32,9 @@ class ValidacionSolicitudService
         //Registrado datos de postulante
         if ($alumno) {
             $alumno->convocatoria_id = $convocatoria->id;
+            $alumno->facultad = $datosAlumnoAcademico['nomfac'];
+            $alumno->escuela_profesional = $datosAlumnoAcademico['nomesp'];
+            $alumno->save();
         } else {
             try {
                 Alumno::create([
@@ -122,12 +125,12 @@ class ValidacionSolicitudService
         }
 
         //Creditos matriculados (12 minimo)
-        /* if (intval($datosAlumnoAcademico['nume_sem_cur']) <= 12) {
+        if (intval($datosAlumnoAcademico['credmat']) < 12) {
             array_push($faltas,  [
                 "tipo" => "academicos",
                 "msg" => "No cumple con los creditos minimos matriculas, de usted es: " . $datosAlumnoAcademico['nume_sem_cur'] . " el minimo es 12",
             ]);
-        } */
+        }
 
         //Validar articulo incurso
         if (strlen($datosAlumnoAcademico['artincurso']) > 0) {
