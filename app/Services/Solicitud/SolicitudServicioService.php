@@ -46,7 +46,9 @@ class SolicitudServicioService
             $solicitud = ServicioSolicitado::where('solicitud_id', $data['solicitud_id'])->find($value['servicio_id']);
             $solicitud->estado = $value['estado'];
             if ($value['estado'] == 'rechazado') $solicitud->detalle_rechazo = $value['detalle_rechazo'];
-            $solicitud->fecha_revision = new DateTime();
+            $currentTime = new DateTime();
+            $currentTime->setTime(date('H'), date('i'), date('s'));
+            $solicitud->fecha_revision = $currentTime->format('Y-m-d H:i:s');
             $solicitud->save();
         }
         return ServicioSolicitado::whereIn('id', $servicioIds)->get();

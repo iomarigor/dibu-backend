@@ -23,7 +23,7 @@ class ListSolicitudService
         $solicitudes = new Collection();
 
         foreach ($solicitudesTemporales as $solicitudTemporal) {
-            if (!$solicitudes->contains('codigo_estudiante', $solicitudTemporal->codigo_estudiante)) {
+            if (!$solicitudes->contains('alumno_id', $solicitudTemporal->alumno_id)) {
                 $solicitudes->push($solicitudTemporal);
             }
         }

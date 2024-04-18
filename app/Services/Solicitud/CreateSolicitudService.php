@@ -5,6 +5,7 @@ namespace App\Services\Solicitud;
 use App\Models\Alumno;
 use App\Models\Convocatoria;
 use App\Models\Requisito;
+use App\Models\ServicioSolicitado;
 use App\Models\Solicitud;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,12 @@ class CreateSolicitudService
 {
     public function create(array $data)
     {
-        /* $solicitud = Solicitud::where('convocatoria_id', $data['convocatoria_id'])
+        $solicitudes = Solicitud::where('convocatoria_id', $data['convocatoria_id'])
             ->where('alumno_id', $data['alumno_id'])
-            ->delete(); */
+            ->get();
+        foreach ($solicitudes as $solicitud) {
+            ServicioSolicitado::where('solicitud_id', $solicitud->id)->update(['estado' => 'rechazado']);
+        }
 
         DB::beginTransaction();
         try {

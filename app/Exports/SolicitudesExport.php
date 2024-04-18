@@ -53,6 +53,13 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         $convocatoria = Convocatoria::first();
+        $solicitudesIDsTemporales = Solicitud::select(
+            'solicitudes.id as id',
+        )
+            ->join('alumnos as a', 'solicitudes.alumno_id', '=', 'a.id')
+            ->where('solicitudes.convocatoria_id', $convocatoria->id)
+            ->orderBy('solicitudes.created_at', 'desc')
+            ->get();
 
         $solicitudesTemporales = Solicitud::select(
             'a.codigo_estudiante',
@@ -82,16 +89,18 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
         )
             ->join('alumnos as a', 'solicitudes.alumno_id', '=', 'a.id')
             ->where('solicitudes.convocatoria_id', $convocatoria->id)
-            ->groupBy('a.codigo_estudiante')
-            ->orderBy('fecha_solicitud', 'desc')
+            ->orderBy('solicitudes.created_at', 'desc')
             ->get();
+        $solicitudesIDs = new Collection();
         $solicitudes = new Collection();
 
-        foreach ($solicitudesTemporales as $solicitudTemporal) {
-            if (!$solicitudes->contains('codigo_estudiante', $solicitudTemporal->codigo_estudiante)) {
-                $solicitudes->push($solicitudTemporal);
+        for ($i = 0; $i < count($solicitudesTemporales); $i++) {
+            if (!$solicitudes->contains('codigo_estudiante', $solicitudesTemporales[$i]->codigo_estudiante)) {
+                $solicitudes->push($solicitudesTemporales[$i]);
+                $solicitudesIDs->push($solicitudesIDsTemporales[$i]);
             }
         }
+        dd(json_encode($solicitudes));
         for ($i = 0; $i < count($solicitudes); $i++) {
             //recorrer los requisitos de tipo 3
             $detalle_solicitud = DetalleSolicitud::select(
@@ -100,7 +109,7 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 ->join('solicitudes as s', 'detalle_solicitudes.solicitud_id', '=', 's.id')
                 ->join('alumnos as a', 's.alumno_id', '=', 'a.id')
                 ->where([
-                    ['a.codigo_estudiante', $solicitudes[$i]->codigo_estudiante],
+                    ['s.id', $solicitudesIDs[$i]->id],
                     ['s.convocatoria_id', $convocatoria->id]
                 ])
                 ->get();
@@ -134,7 +143,8 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
                         ->where([
                             ['servicio_id', $servicios[$k]->id],
                             ['a.codigo_estudiante', $solicitudes[$i]->codigo_estudiante],
-                            ['s.convocatoria_id', $convocatoria->id]
+                            ['s.convocatoria_id', $convocatoria->id],
+                            ['s.id', $solicitudesIDs[$i]->id]
                         ])
                         ->first();
                     $solicitudes[$i]->{"sv" . $servicio_solicitado->id} = $servicio_solicitado->estado;
