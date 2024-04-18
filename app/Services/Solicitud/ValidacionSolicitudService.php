@@ -153,7 +153,8 @@ class ValidacionSolicitudService
     private function getDatosAlumnoAcademico(String $DNI)
     {
         try {
-            $datosAlumnoAcademico = DatosAlumnoAcademico::where('tdocumento', 'DNI' . $DNI)->first();
+            $datosAlumnoAcademico = DatosAlumnoAcademico::where('tdocumento', 'DNI' . $DNI)->get();
+            $datosAlumnoAcademico = $datosAlumnoAcademico[(count($datosAlumnoAcademico) - 1)];
             if (!$datosAlumnoAcademico)
                 throw new ExceptionGenerate('No existe registro academico del alumno, una de la razones es que supere los 10 semestres academicos', 200);
             return $datosAlumnoAcademico;
