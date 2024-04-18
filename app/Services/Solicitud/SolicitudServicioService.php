@@ -15,7 +15,6 @@ class SolicitudServicioService
 {
     public function updateServicio(array $data): ?Collection
     {
-        //dd($data);
         $servicioIds = array_column($data['servicios'], 'servicio_id');
         foreach ($data['servicios'] as $key => $value) {
             if ($value['estado'] != 'pendiente' && $value['estado'] != 'rechazado' && $value['estado'] != 'aceptado' && $value['estado'] != 'aprobado')
@@ -28,8 +27,10 @@ class SolicitudServicioService
                 if (!$convocatoria)
                     throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
 
+                //obtener el servicio solicitado
+                $servicioSolicitado = ServicioSolicitado::find($value['servicio_id']);
                 //listar los servicios de la convocatoria para la obtencion de la cantidad
-                $servicios = ConvocatoriaServicio::where([['convocatoria_id', $convocatoria->id], ['servicio_id', $value['servicio_id']]])->first();
+                $servicios = ConvocatoriaServicio::where([['convocatoria_id', $convocatoria->id], ['id', $servicioSolicitado->servicio_id]])->first();
 
                 //obtener el total de las solicitudes registradas con estado aprobado y validar la cantidad
                 $numeroSolicitudesServicioPorConvocatoria = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria, $value) {
@@ -45,6 +46,7 @@ class SolicitudServicioService
             $solicitud = ServicioSolicitado::where('solicitud_id', $data['solicitud_id'])->find($value['servicio_id']);
             $solicitud->estado = $value['estado'];
             if ($value['estado'] == 'rechazado') $solicitud->detalle_rechazo = $value['detalle_rechazo'];
+            $solicitud->fecha_revision = new DateTime();
             $solicitud->save();
         }
         return ServicioSolicitado::whereIn('id', $servicioIds)->get();

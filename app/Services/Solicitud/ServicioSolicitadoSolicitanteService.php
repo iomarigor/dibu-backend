@@ -18,7 +18,9 @@ class ServicioSolicitadoSolicitanteService
             throw new ExceptionGenerate('No existe registros del alumno', 200);
 
         $solicitud = Solicitud::where('alumno_id', $alumno->id)
-            ->where('convocatoria_id', $alumno->convocatoria_id)->first();
+            ->where('convocatoria_id', $alumno->convocatoria_id)
+            ->orderBy('solicitudes.created_at', 'desc')
+            ->first();
         if (!$solicitud)
             throw new ExceptionGenerate('No existe registros del alumno en la actual convocatoria solicitando servicios', 200);
 
