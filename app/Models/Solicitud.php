@@ -14,21 +14,21 @@ class Solicitud extends Model
     protected $fillable = [
         'convocatoria_id',
         'alumno_id',
-        'solicitud_id'
+        'solicitud_id',
+        'created_at'
     ];
-    public function status()
+    /* public function status()
     {
         return $this->belongsTo(StatusData::class, 'status_id');
-    }
+    } */
     public function solicitud_servicios()
     {
         return $this->hasMany(ServicioSolicitado::class);
     }
     public static function allDA()
     {
-        return self::whereIn('status_id', [3, 2])->get();
+        return self::get();
     }
-
     public function servicioSolicitados(): HasMany
     {
         return $this->hasMany(ServicioSolicitado::class);
@@ -49,15 +49,8 @@ class Solicitud extends Model
         return self::all();
     }
 
-    public static function findDA($id)
+    /* public static function findDA($id)
     {
         return self::whereIn('status_id', [2, 3])->find($id);
-    }
-
-    public function delete()
-    {
-        // Cambia el estado a "Eliminado" en lugar de eliminar el registro
-        $this->status_id = 1;
-        $this->save();
-    }
+    } */
 }

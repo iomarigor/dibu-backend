@@ -16,10 +16,10 @@ class CargaSolicitudAlumnoService
             throw new ExceptionGenerate('No existe registros del alumno', 200);
 
         $convocatoria = Convocatoria::find($alumno->convocatoria_id);
+        $convocatoria->user_id = $alumno->id;
         if (!$convocatoria)
             throw new ExceptionGenerate('No existe registros del alumno en la actual convocatoria', 200);
 
-        //dd(json_encode($convocatoria->secciones));
         //Cargando datos obtenidos del alumno en la solicitud
         //Nombre
         for ($i = 0; $i < count($convocatoria->secciones[0]->requisitos); $i++) {
@@ -62,11 +62,11 @@ class CargaSolicitudAlumnoService
             if ($convocatoria->secciones[0]->requisitos[$i]->nombre == 'Correo personal')
                 $convocatoria->secciones[0]->requisitos[$i]->default = $alumno->correo_personal;
 
-            if ($convocatoria->secciones[0]->requisitos[$i]->nombre == 'celular de estudiante')
+            /* if ($convocatoria->secciones[0]->requisitos[$i]->nombre == 'celular de estudiante')
                 $convocatoria->secciones[0]->requisitos[$i]->default = $alumno->celular_estudiante;
 
             if ($convocatoria->secciones[0]->requisitos[$i]->nombre == 'Celular padre')
-                $convocatoria->secciones[0]->requisitos[$i]->default = $alumno->celular_padre;
+                $convocatoria->secciones[0]->requisitos[$i]->default = $alumno->celular_padre; */
         }
 
 

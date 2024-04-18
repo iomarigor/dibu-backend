@@ -35,7 +35,6 @@ class SolicitudRequest extends FormRequest
             'alumno_id' => [
                 'required',
                 'numeric',
-                Rule::exists('alumnos', 'id'),
                 new CheckAlumnoConvocatoria,
             ],
             'servicios_solicitados' => [
@@ -55,7 +54,6 @@ class SolicitudRequest extends FormRequest
             'detalle_solicitudes' => [
                 'required',
                 'array',
-                new CheckCantidadRequisitos,
             ],
             'detalle_solicitudes.*.respuesta_formulario' => [
                 'nullable',

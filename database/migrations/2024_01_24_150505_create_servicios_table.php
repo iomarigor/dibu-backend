@@ -22,12 +22,12 @@ class CreateServiciosTable extends Migration
         });
         DB::table('servicios')->insert([
             [
-                'nombre' => 'Residencia',
-                'descripcion' => 'Residencia',
-            ],
-            [
                 'nombre' => 'Comedor',
                 'descripcion' => 'Comedor',
+            ],
+            [
+                'nombre' => 'Residencia',
+                'descripcion' => 'Residencia',
             ]
         ]);
     }

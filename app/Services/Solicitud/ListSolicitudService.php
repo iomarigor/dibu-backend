@@ -12,10 +12,19 @@ class ListSolicitudService
 {
     public function list(): Collection
     {
-        $fechaActual = new DateTime();
         $convocatoria = Convocatoria::first();
         if (!$convocatoria)
             throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
-        return Solicitud::where('id', $convocatoria->id)->get();
+
+
+        $solicitudesTemporales = Solicitud::where('convocatoria_id', $convocatoria->id)->get();
+        $solicitudes = new Collection();
+
+        foreach ($solicitudesTemporales as $solicitudTemporal) {
+            if (!$solicitudes->contains('codigo_estudiante', $solicitudTemporal->codigo_estudiante)) {
+                $solicitudes->push($solicitudTemporal);
+            }
+        }
+        return $solicitudes;
     }
 }

@@ -27,7 +27,7 @@ class ValidarDatosAlumnoRequest extends FormRequest
             'correo' => [
                 'required',
                 'email' => 'required',
-                'unas_email'
+                /* 'unas_email' */
             ],
             'DNI' => [
                 'required',

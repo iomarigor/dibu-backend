@@ -87,7 +87,8 @@ class SolicitudController extends Controller
     {
         return $solicitudExportService->export();
     }
-    public function servicioSolicitadoSolicitante($dni, ServicioSolicitadoSolicitanteService $servicioSolicitadoSolicitanteService){
+    public function servicioSolicitadoSolicitante($dni, ServicioSolicitadoSolicitanteService $servicioSolicitadoSolicitanteService)
+    {
         try {
             return Response::res('Servicios solicitados del solicitante', ($servicioSolicitadoSolicitanteService->servicioSolicitante($dni)));
         } catch (ExceptionGenerate $e) {

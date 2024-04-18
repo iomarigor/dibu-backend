@@ -57,8 +57,6 @@ $router->group(['middleware' => ['auth', 'restriclevel2']], function ($router) {
     //Convocatoria
     $router->get('/convocatoria', 'ConvocatoriaController@index');
 
-    //Solicitud
-    $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
 
     $router->get('/servicio', 'ServicioController@index');
 });
@@ -75,5 +73,6 @@ $router->group(['middleware' => 'auth'], function ($router) {
     $router->post('/logout', 'AuthController@logout');
     $router->get('/validateToken', 'AuthController@validateToken');
 
-    //Rutas a implementar
+    //Solicitud
+    $router->put('/solicitud/servicio', 'SolicitudController@updateServicio');
 });

@@ -12,8 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class CreateSolicitudService
 {
-    public function create(array $data): Model
+    public function create(array $data)
     {
+        /* $solicitud = Solicitud::where('convocatoria_id', $data['convocatoria_id'])
+            ->where('alumno_id', $data['alumno_id'])
+            ->delete(); */
+
         DB::beginTransaction();
         try {
             $solicitud = Solicitud::create([
@@ -39,7 +43,6 @@ class CreateSolicitudService
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('solicitud create: ' . $e->getMessage() . ', Line: ' . $e->getLine());
-            throw $e;
         }
     }
     public function uploadFile(array $file): array
@@ -66,9 +69,11 @@ class CreateSolicitudService
         $requisito = Requisito::where('id', $data["requisito_id"])->first();
         $alumno = Alumno::find($solicitud->alumno_id);
         if ($requisito->nombre == "Departamento de procedencia" || $requisito->nombre == "Provincia de procedencia" || $requisito->nombre == "Distrito de procedencia") {
+            if (count(explode("/", $alumno->lugar_procedencia)) >= 4) $alumno->lugar_procedencia = "";
             $alumno->lugar_procedencia = $alumno->lugar_procedencia . strtoupper($data['respuesta_formulario']) . '/';
         }
         if ($requisito->nombre == "Departamento de nacimiento"  || $requisito->nombre == "Provincia de nacimiento" || $requisito->nombre == "Distrito de nacimiento") {
+            if (count(explode("/", $alumno->lugar_nacimiento)) >= 4) $alumno->lugar_nacimiento = "";
             $alumno->lugar_nacimiento = $alumno->lugar_nacimiento . strtoupper($data['respuesta_formulario']) . '/';
         }
         $alumno->update();
@@ -88,7 +93,7 @@ class CreateSolicitudService
         $filea = base64_decode($file);
 
         //Guardando Documento
-        file_put_contents('../storage/app/public/' . $file_name, $filea);
+        file_put_contents('storage/app/public/' . $file_name, $filea);
     }
 
     private function getUrlFile($file)

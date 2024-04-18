@@ -41,7 +41,6 @@ class Requisito extends Model
     public function delete()
     {
         // Cambia el estado a "Eliminado" en lugar de eliminar el registro
-        $this->estado = -1;
         $this->save();
     }
 }

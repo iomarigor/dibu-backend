@@ -10,6 +10,7 @@ use App\Models\ServicioSolicitado;
 use App\Models\Solicitud;
 use App\Services\Convocatoria\UltimaConvocatoriaService;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -53,9 +54,9 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
     {
         $convocatoria = Convocatoria::first();
 
-        $solicitudes = Solicitud::select(
+        $solicitudesTemporales = Solicitud::select(
             'a.codigo_estudiante',
-            'a.created_at as fecha_solicitud',
+            'solicitudes.created_at as fecha_solicitud',
             'a.DNI',
             DB::raw('concat(a.apellido_paterno, \' \', a.apellido_materno, \', \', a.nombres) as alumno'),
             'a.sexo',
@@ -81,7 +82,15 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
         )
             ->join('alumnos as a', 'solicitudes.alumno_id', '=', 'a.id')
             ->where('solicitudes.convocatoria_id', $convocatoria->id)
+            ->orderBy('solicitudes.created_at', 'desc')
             ->get();
+        $solicitudes = new Collection();
+
+        foreach ($solicitudesTemporales as $solicitudTemporal) {
+            if (!$solicitudes->contains('codigo_estudiante', $solicitudTemporal->codigo_estudiante)) {
+                $solicitudes->push($solicitudTemporal);
+            }
+        }
         for ($i = 0; $i < count($solicitudes); $i++) {
             //recorrer los requisitos de tipo 3
             $detalle_solicitud = DetalleSolicitud::select(

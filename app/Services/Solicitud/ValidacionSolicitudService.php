@@ -4,9 +4,11 @@ namespace App\Services\Solicitud;
 
 use GuzzleHttp\Client;
 use App\Exceptions\ExceptionGenerate;
+use App\Http\Response\Response;
 use App\Models\Alumno;
 use App\Models\Convocatoria;
 use App\Models\DatosAlumnoAcademico;
+use App\Models\Solicitud;
 use DateTime;
 use Exception;
 
@@ -14,7 +16,6 @@ class ValidacionSolicitudService
 {
     public function validate(array $data)
     {
-
         $faltas = $this->validateRequisitosSolicitud($data);
         if (count($faltas) > 0)
             throw new ExceptionGenerate('Usted no con cumple con los siguiente requisitos para postular a los servicios de comedor e internado de la UNAS', 500, $faltas);
@@ -27,38 +28,43 @@ class ValidacionSolicitudService
             ->whereDate('fecha_fin', '>=', $fechaActualConvocatoria)->first();
         if (!$convocatoria)
             throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
+        //Solicitud::find();
         //Registrado datos de postulante
         if ($alumno) {
             $alumno->convocatoria_id = $convocatoria->id;
         } else {
-            Alumno::create([
-                "codigo_estudiante" => $datosAlumnoAcademico['codalumno'],
-                "DNI" => $data['DNI'],
-                "nombres" => $datosAlumnoAcademico['nombre'],
-                "apellido_paterno" => $datosAlumnoAcademico['appaterno'],
-                "apellido_materno" => $datosAlumnoAcademico['apmaterno'],
-                "sexo" => $datosAlumnoAcademico['sexo'],
-                "facultad" => $datosAlumnoAcademico['nomfac'],
-                "escuela_profesional" => $datosAlumnoAcademico['nomesp'],
-                "ultimo_semestre" => $datosAlumnoAcademico['codsem'],
-                "modalidad_ingreso" => $datosAlumnoAcademico['mod_ingreso'],
-                //"lugar_procedencia"=>$data['DNI'],
-                //"lugar_nacimiento"=>$data['DNI'],
-                "edad" => $this->getYearsInDates(new DateTime($datosAlumnoAcademico['fecnac']), new DateTime()),
-                "correo_institucional" => $datosAlumnoAcademico['emailinst'],
-                "direccion" => $datosAlumnoAcademico['direccion'],
-                "fecha_nacimiento" => $datosAlumnoAcademico['fecnac'],
-                "correo_personal" => $datosAlumnoAcademico['email'],
-                "celular_estudiante" => $datosAlumnoAcademico['telcelular'],
-                "celular_padre" => $datosAlumnoAcademico['tel_ref'],
-                "estado_matricula" => $datosAlumnoAcademico['est_mat_act'],
-                "creditos_matriculados" => $datosAlumnoAcademico['credmat'],
-                "num_semestres_cursados" => $datosAlumnoAcademico['nume_sem_cur'],
-                "pps" => $datosAlumnoAcademico['pps'],
-                "ppa" => $datosAlumnoAcademico['ppa'],
-                "tca" => $datosAlumnoAcademico['tca'],
-                "convocatoria_id" => $convocatoria->id
-            ]);
+            try {
+                Alumno::create([
+                    "codigo_estudiante" => $datosAlumnoAcademico['codalumno'],
+                    "DNI" => $data['DNI'],
+                    "nombres" => $datosAlumnoAcademico['nombre'],
+                    "apellido_paterno" => $datosAlumnoAcademico['appaterno'],
+                    "apellido_materno" => $datosAlumnoAcademico['apmaterno'],
+                    "sexo" => $datosAlumnoAcademico['sexo'],
+                    "facultad" => $datosAlumnoAcademico['nomfac'],
+                    "escuela_profesional" => $datosAlumnoAcademico['nomesp'],
+                    "ultimo_semestre" => $datosAlumnoAcademico['codsem'],
+                    "modalidad_ingreso" => $datosAlumnoAcademico['mod_ingreso'],
+                    //"lugar_procedencia"=>$data['DNI'],
+                    //"lugar_nacimiento"=>$data['DNI'],
+                    "edad" => $this->getYearsInDates(new DateTime($datosAlumnoAcademico['fecnac']), new DateTime()),
+                    "correo_institucional" => empty($datosAlumnoAcademico['emailinst']) ? "" : $datosAlumnoAcademico['emailinst'],
+                    "direccion" => $datosAlumnoAcademico['direccion'],
+                    "fecha_nacimiento" => $datosAlumnoAcademico['fecnac'],
+                    "correo_personal" => empty($datosAlumnoAcademico['email']) ? "" : $datosAlumnoAcademico['email'],
+                    "celular_estudiante" => empty($datosAlumnoAcademico['telcelular']) ? "" : $datosAlumnoAcademico['telcelular'],
+                    "celular_padre" => empty($datosAlumnoAcademico['tel_ref']) ? "" : $datosAlumnoAcademico['tel_ref'],
+                    "estado_matricula" => $datosAlumnoAcademico['est_mat_act'],
+                    "creditos_matriculados" => $datosAlumnoAcademico['credmat'],
+                    "num_semestres_cursados" => empty($datosAlumnoAcademico['nume_sem_cur']) ? 0 : $datosAlumnoAcademico['nume_sem_cur'],
+                    "pps" => empty($datosAlumnoAcademico['pps']) ? 0 : $datosAlumnoAcademico['pps'],
+                    "ppa" => empty($datosAlumnoAcademico['ppa']) ? 0 : $datosAlumnoAcademico['ppa'],
+                    "tca" => empty($datosAlumnoAcademico['tca']) ? 0 : $datosAlumnoAcademico['ppa'],
+                    "convocatoria_id" => $convocatoria->id
+                ]);
+            } catch (ExceptionGenerate $e) {
+                return Response::res($e->getMessage(), $datosAlumnoAcademico, $e->getStatusCode());
+            }
         }
 
         return $data;
@@ -84,12 +90,12 @@ class ValidacionSolicitudService
         }
 
         //Validar correo institucional
-        if (strtoupper($datosAlumnoAcademico['emailinst']) != strtoupper($data['correo'])) {
+        /*  if ((strtoupper($datosAlumnoAcademico['emailinst']) != strtoupper($data['correo'])) || (strtoupper($datosAlumnoAcademico['email']) != strtoupper($data['correo']))) {
             array_push($faltas,  [
                 "tipo" => "academicos",
                 "msg" => "El correo electronico no coincide con el registrado en el sistema academico",
             ]);
-        }
+        } */
 
         //Validacion de promedio ponderado semestral aprovado
         if (floatval($datosAlumnoAcademico['pps']) < 11 && intval($datosAlumnoAcademico['nume_sem_cur']) != 0) {
@@ -108,10 +114,10 @@ class ValidacionSolicitudService
         }
 
         //Validación de numero de ciclos cursado
-        if (intval($datosAlumnoAcademico['nume_sem_cur']) > 10) {
+        if (intval($datosAlumnoAcademico['nume_sem_cur']) > 12) {
             array_push($faltas,  [
                 "tipo" => "academicos",
-                "msg" => "Ya no puede solicitar por exceso de semestre, de usted es: " . $datosAlumnoAcademico['nume_sem_cur'] . " el maximo se ciclos es 10",
+                "msg" => "Ya no puede solicitar por exceso de semestre, de usted es: " . $datosAlumnoAcademico['nume_sem_cur'] . " el maximo se ciclos es 12",
             ]);
         }
 
