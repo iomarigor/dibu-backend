@@ -100,7 +100,6 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 $solicitudesIDs->push($solicitudesIDsTemporales[$i]);
             }
         }
-        dd(json_encode($solicitudes));
         for ($i = 0; $i < count($solicitudes); $i++) {
             //recorrer los requisitos de tipo 3
             $detalle_solicitud = DetalleSolicitud::select(

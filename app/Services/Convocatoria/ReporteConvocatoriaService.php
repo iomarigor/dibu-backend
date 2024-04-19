@@ -4,6 +4,7 @@ namespace App\Services\Convocatoria;
 
 use App\Models\Convocatoria;
 use App\Models\Alumno;
+use App\Models\DatosAlumnoAcademico;
 use App\Models\ServicioSolicitado;
 
 class ReporteConvocatoriaService
@@ -20,65 +21,87 @@ class ReporteConvocatoriaService
             ->where('convocatoria_id', $convocatoria->id)
             ->count();
 
-        $facultades = $this->obtenerFacultades($convocatoria->id);
+        $facultades = $this->obtenerFacultades();
         $cantidadFacultades = [];
 
-        foreach($facultades as $facultad){
+        foreach ($facultades as $facultad) {
             $cantidadFacultades[$facultad] = Alumno::where('facultad', $facultad)
                 ->where('convocatoria_id', $convocatoria->id)
                 ->count();
         }
 
+        $escuelas = $this->obtenerEscuelasProfecionales();
+        $cantidadEscuelas = [];
+
+        foreach ($escuelas as $escuela) {
+            $cantidadEscuelas[$escuela] = Alumno::where('escuela_profesional', $escuela)
+                ->where('convocatoria_id', $convocatoria->id)
+                ->count();
+        }
+
         $cantidadPendientes = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria) {
-                $query->where('convocatoria_id', $convocatoria->id)
-                    ->where('estado', 'pendiente'); // Pendiente
-            })
+            $query->where('convocatoria_id', $convocatoria->id)
+                ->where('estado', 'pendiente'); // Pendiente
+        })
             ->count();
 
         $cantidadRechazados = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria) {
-                $query->where('convocatoria_id', $convocatoria->id)
-                    ->where('estado', 'rechazado'); // Rechazado
-            })
+            $query->where('convocatoria_id', $convocatoria->id)
+                ->where('estado', 'rechazado'); // Rechazado
+        })
             ->count();
 
         $cantidadAceptados = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria) {
-                $query->where('convocatoria_id', $convocatoria->id)
-                    ->where('estado', 'aceptado'); // Aceptado
-            })
+            $query->where('convocatoria_id', $convocatoria->id)
+                ->where('estado', 'aceptado'); // Aceptado
+        })
             ->count();
-            
+
         $cantidadAprobados = ServicioSolicitado::whereHas('solicitud', function ($query) use ($convocatoria) {
-                $query->where('convocatoria_id', $convocatoria->id)
-                    ->where('estado', 'aprobado'); // Aprobado
-            })
+            $query->where('convocatoria_id', $convocatoria->id)
+                ->where('estado', 'aprobado'); // Aprobado
+        })
             ->count();
-        
+
         $reporte = [
-                'sexo' => [
-                    'num_hombres' => $cantidadHombres,
-                    'num_mujeres' => $cantidadMujeres
-                ],
-                'facultades' => [
-                    $cantidadFacultades
-                ],
-                'estados_solicitud' => [
-                    'pendiente' => $cantidadPendientes,
-                    'rechazado' => $cantidadRechazados,
-                    'aceptado' => $cantidadAceptados,
-                    'aprobado' => $cantidadAprobados
-                ]
-            ];
+            'sexo' => [
+                'num_hombres' => $cantidadHombres,
+                'num_mujeres' => $cantidadMujeres
+            ],
+            'facultades' => [
+                $cantidadFacultades
+            ],
+            'escuelas_profesionales' => [$cantidadEscuelas],
+            'estados_solicitud' => [
+                'pendiente' => $cantidadPendientes,
+                'rechazado' => $cantidadRechazados,
+                'aceptado' => $cantidadAceptados,
+                'aprobado' => $cantidadAprobados
+            ]
+        ];
         return $reporte;
     }
 
-    private function obtenerFacultades($id)
+    private function obtenerFacultades()
     {
-        $facultades = Alumno::where('convocatoria_id', $id)
-            ->groupBy('facultad')
-            ->pluck('facultad')
+        $facultades = DatosAlumnoAcademico::groupBy('nomfac')
+            ->pluck('nomfac')
             ->unique()
             ->values()
             ->toArray();
+        //Eliminando las facultades erroneas
+        unset($facultades[0]);
         return $facultades;
+    }
+
+    private function obtenerEscuelasProfecionales()
+    {
+        $escuelas = DatosAlumnoAcademico::groupBy('nomesp')
+            ->pluck('nomesp')
+            ->unique()
+            ->values()
+            ->toArray();
+        unset($escuelas[4]);
+        return $escuelas;
     }
 }
