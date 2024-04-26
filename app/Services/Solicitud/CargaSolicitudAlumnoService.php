@@ -10,7 +10,6 @@ class CargaSolicitudAlumnoService
 {
     public function cargaSolicitudAlumno(int $dni): Convocatoria
     {
-        //dd($dni);
         $alumno = Alumno::where('DNI', $dni)->first();
         if (!$alumno)
             throw new ExceptionGenerate('No existe registros del alumno', 200);
@@ -70,7 +69,7 @@ class CargaSolicitudAlumnoService
         }
 
 
-        if ($alumno->lugar_nacimiento != null && strlen($alumno->lugar_nacimiento) > 0) {
+        /*  if ($alumno->lugar_nacimiento != null && strlen($alumno->lugar_nacimiento) > 0) {
             $datosNacimiento = explode("/", $alumno->lugar_nacimiento);
             if ($convocatoria->secciones[1]->requisitos[0]->nombre == 'Departamento de nacimiento')
                 $convocatoria->secciones[1]->requisitos[0]->default = $datosNacimiento[0];
@@ -88,7 +87,7 @@ class CargaSolicitudAlumnoService
                 $convocatoria->secciones[2]->requisitos[1]->default = $datosProcedencia[1];
             if ($convocatoria->secciones[2]->requisitos[2]->nombre == 'Distrito de procedencia')
                 $convocatoria->secciones[2]->requisitos[2]->default = $datosProcedencia[2];
-        }
+        } */
         for ($i = 0; $i < count($convocatoria->secciones); $i++) {
             $convocatoria->secciones[$i]->requisitos[1];
         }

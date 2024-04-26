@@ -2,11 +2,13 @@
 
 namespace App\Services\Solicitud;
 
+use App\Exceptions\ExceptionGenerate;
 use App\Models\Alumno;
 use App\Models\Convocatoria;
 use App\Models\Requisito;
 use App\Models\ServicioSolicitado;
 use App\Models\Solicitud;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +20,7 @@ class CreateSolicitudService
         $solicitudes = Solicitud::where('convocatoria_id', $data['convocatoria_id'])
             ->where('alumno_id', $data['alumno_id'])
             ->get();
+
         foreach ($solicitudes as $solicitud) {
             ServicioSolicitado::where('solicitud_id', $solicitud->id)->update(['estado' => 'rechazado']);
         }
@@ -80,6 +83,12 @@ class CreateSolicitudService
             if (count(explode("/", $alumno->lugar_nacimiento)) >= 4) $alumno->lugar_nacimiento = "";
             $alumno->lugar_nacimiento = $alumno->lugar_nacimiento . strtoupper($data['respuesta_formulario']) . '/';
         }
+        if ($requisito->nombre == "Celular De Estudiante") {
+            $alumno->celular_estudiante = empty($data['respuesta_formulario']) ? "" : $data['respuesta_formulario'];
+        }
+        if ($requisito->nombre == "Celular Padre") {
+            $alumno->celular_padre = empty($data['respuesta_formulario']) ? "" : $data['respuesta_formulario'];
+        }
         $alumno->update();
         //recuperar el documento y almacenar en el storage
         return $solicitud->detalleSolicitudes()->create([
@@ -89,8 +98,26 @@ class CreateSolicitudService
             'requisito_id' => $data['requisito_id'],
         ]);
     }
+    private function standarDates(String $dateString)
+    {
+        $dateFormats = ['d-m-Y', 'Y-m-d', 'd/m/Y', 'Y/m/d'];
+        $date = false;
+        foreach ($dateFormats as $dateFormat) {
+            $date = DateTime::createFromFormat($dateFormat, $dateString);
+            if ($date) {
+                break;
+            }
+        }
 
-
+        // Check if the DateTime object was created successfully
+        if ($date) {
+            // Convert the DateTime object to the desired format
+            $formattedDate = $date->format('d-m-Y');
+            return $formattedDate; // Output: 25-12-2022
+        } else {
+            throw new ExceptionGenerate('No se soportar el tipo fecha ingresado', 200);
+        }
+    }
     private function saveFileLocal($file, $file_name)
     {
         //Decodificando Documento para ser guardado

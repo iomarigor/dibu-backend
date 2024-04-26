@@ -12,8 +12,8 @@ class UltimaConvocatoriaService
     public function vigente(): ?Model
     {
         $fechaActual = new DateTime();
-        $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
-            ->whereDate('fecha_fin', '>=', $fechaActual)->first();
+        $convocatoria = Convocatoria::where('fecha_inicio', '<=', $fechaActual)
+            ->where('fecha_fin', '>=', $fechaActual)->first();
         if (!$convocatoria)
             throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
         return $convocatoria;

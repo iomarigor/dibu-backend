@@ -31,10 +31,10 @@ class SolicitudController extends Controller
             return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
         }
     }
-    public function index(ListSolicitudService $listSolicitudService)
+    public function index($id, ListSolicitudService $listSolicitudService)
     {
         try {
-            return Response::res('Solicitudes listadas', SolicitudResource::collection($listSolicitudService->list()), 200);
+            return Response::res('Solicitudes listadas', SolicitudResource::collection($listSolicitudService->list($id)), 200);
         } catch (ExceptionGenerate $e) {
             return Response::res($e->getMessage(), $e->getData(), $e->getStatusCode());
         }

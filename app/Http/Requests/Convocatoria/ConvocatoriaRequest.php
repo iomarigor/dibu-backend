@@ -28,13 +28,13 @@ class ConvocatoriaRequest extends FormRequest
             'fecha_inicio' => [
                 'required',
                 'date',
-                'date_format:Y-m-d',
+                'date_format:Y-m-d H:i:s',
                 new CheckConvocatoriaDates,
             ],
             'fecha_fin' => [
                 'required',
                 'date',
-                'date_format:Y-m-d',
+                'date_format:Y-m-d H:i:s',
                 'after_or_equal:fecha_inicio',
             ],
             'nombre' => [

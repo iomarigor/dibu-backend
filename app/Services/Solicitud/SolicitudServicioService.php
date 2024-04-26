@@ -20,10 +20,9 @@ class SolicitudServicioService
             if ($value['estado'] != 'pendiente' && $value['estado'] != 'rechazado' && $value['estado'] != 'aceptado' && $value['estado'] != 'aprobado')
                 throw new ExceptionGenerate('El estado de quiere actualizar no existe', 200);
             if ($value['estado'] == 'aprobado') {
-                //obtener la convocatoria actual
-                $fechaActual = new DateTime();
-                $convocatoria = Convocatoria::whereDate('fecha_inicio', '<=', $fechaActual)
-                    ->whereDate('fecha_fin', '>=', $fechaActual)->first();
+                //obtener la convocatoria
+                $convocatoria = Convocatoria::get();
+                $convocatoria = $convocatoria[(count($convocatoria) - 1)];
                 if (!$convocatoria)
                     throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
 

@@ -82,6 +82,7 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'restriclevel1' => App\Http\Middleware\RestricLevel1::class,
     'restriclevel2' => App\Http\Middleware\RestricLevel2::class,
+    'restriclevel3' => App\Http\Middleware\RestricLevel3::class,
 ]);
 
 /*

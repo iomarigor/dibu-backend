@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ListSolicitudService
 {
-    public function list(): Collection
+    public function list($id): Collection
     {
-        $convocatoria = Convocatoria::first();
+        $convocatoria = Convocatoria::find($id);
         if (!$convocatoria)
-            throw new ExceptionGenerate('Actualmente no existe convocatoria en curso', 200);
+            throw new ExceptionGenerate('Convocatoria no encontrada', 200);
 
 
         $solicitudesTemporales = Solicitud::where('convocatoria_id', $convocatoria->id)

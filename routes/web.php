@@ -43,7 +43,7 @@ $router->group(['middleware' => ['auth', 'restriclevel1']], function ($router) {
     //Convocatoria
     $router->post('/convocatoria/create', 'ConvocatoriaController@create');
     $router->get('/convocatoria/show/{id}', 'ConvocatoriaController@show');
-    $router->get('/convocatoria/reporte/{id}', 'ConvocatoriaController@reporteConvocatoria');
+
     //$router->put('/convocatoria/update/{id}', 'ConvocatoriaController@update');
 
 
@@ -56,15 +56,15 @@ $router->group(['middleware' => ['auth', 'restriclevel2']], function ($router) {
 
     //Convocatoria
     $router->get('/convocatoria', 'ConvocatoriaController@index');
-
+    $router->get('/convocatoria/reporte/{id}', 'ConvocatoriaController@reporteConvocatoria');
 
     $router->get('/servicio', 'ServicioController@index');
 });
 
 // Rutas que tienen  acceso todos los niveles de usuarios logeados
-$router->group(['middleware' => 'auth'], function ($router) {
+$router->group(['middleware' => ['auth', 'restriclevel3']], function ($router) {
     //Solicitud
-    $router->get('/solicitudes', 'SolicitudController@index');
+    $router->get('/solicitudes/{id}', 'SolicitudController@index');
     $router->get('/solicitud/show/{id}', 'SolicitudController@show');
     $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
     //LevelUsers

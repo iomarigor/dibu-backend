@@ -52,7 +52,8 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        $convocatoria = Convocatoria::first();
+        $convocatoria = Convocatoria::get();
+        $convocatoria = $convocatoria[(count($convocatoria) - 1)];
         $solicitudesIDsTemporales = Solicitud::select(
             'solicitudes.id as id',
         )
@@ -140,10 +141,8 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
                         ->join('solicitudes as s', 'servicio_solicitado.solicitud_id', '=', 's.id')
                         ->join('alumnos as a', 's.alumno_id', '=', 'a.id')
                         ->where([
-                            ['servicio_id', $servicios[$k]->id],
-                            ['a.codigo_estudiante', $solicitudes[$i]->codigo_estudiante],
-                            ['s.convocatoria_id', $convocatoria->id],
-                            ['s.id', $solicitudesIDs[$i]->id]
+                            ['servicio_solicitado.servicio_id', $servicios[$k]->id],
+                            ['servicio_solicitado.solicitud_id', $solicitudesIDs[$i]->id]
                         ])
                         ->first();
                     $solicitudes[$i]->{"sv" . $servicio_solicitado->id} = $servicio_solicitado->estado;

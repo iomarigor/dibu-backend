@@ -68,10 +68,8 @@ class ReporteConvocatoriaService
                 'num_hombres' => $cantidadHombres,
                 'num_mujeres' => $cantidadMujeres
             ],
-            'facultades' => [
-                $cantidadFacultades
-            ],
-            'escuelas_profesionales' => [$cantidadEscuelas],
+            'facultades' => $cantidadFacultades,
+            'escuelas_profesionales' => $cantidadEscuelas,
             'estados_solicitud' => [
                 'pendiente' => $cantidadPendientes,
                 'rechazado' => $cantidadRechazados,
@@ -89,7 +87,6 @@ class ReporteConvocatoriaService
             ->unique()
             ->values()
             ->toArray();
-        //Eliminando las facultades erroneas
         unset($facultades[0]);
         return $facultades;
     }

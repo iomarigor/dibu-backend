@@ -21,11 +21,11 @@ class CheckAlumnoConvocatoria implements Rule
         }
 
         //eliminando la solicitud de la db para registrar la nueva
-        $solicitud = Solicitud::where('convocatoria_id', $convocatoria->id)
+        /* $solicitud = Solicitud::where('convocatoria_id', $convocatoria->id)
             ->where('alumno_id', $value)
             ->first();
         if ($solicitud)
-            $solicitud->delete();
+            $solicitud->delete(); */
         return true;
     }
 

@@ -23,7 +23,7 @@ class SolicitudResource extends JsonResource
             'convocatoria_id' => $this->convocatoria_id,
             'alumno' => AlumnoResource::make($this->alumno),
             'servicios_solicitados' => ServicioSolicitadoResource::collection($this->servicioSolicitados),
-            'detalle_solicitudes' => $this->detalle_solicitudes/* DetalleSolicitudResource::collection($this->detalleSolicitudes, $this->convocatoria_id) */,
+            'detalle_solicitudes' => $this->detalle_solicitudes,
         ];
     }
 }
