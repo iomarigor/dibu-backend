@@ -12,6 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable;
+    protected $connection = "mysql_dbu";
     protected $table = 'users';
     public $timestamps = true;
     /**
@@ -20,7 +21,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'id', 'username', 'full_name', 'email', 'password', 'ip_address', 'id_level_user', 'last_user', 'status_id'
+        'id',
+        'username',
+        'full_name',
+        'email',
+        'password',
+        'ip_address',
+        'id_level_user',
+        'last_user',
+        'status_id'
     ];
 
     /**

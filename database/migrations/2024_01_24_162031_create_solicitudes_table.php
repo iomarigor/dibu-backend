@@ -15,29 +15,17 @@ class CreateSolicitudesTable extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_solicitud');
             $table->unsignedBigInteger('convocatoria_id');
-            $table->unsignedBigInteger('alumno_id');
-            $table->unsignedBigInteger('id_servicio_solicitado');
-            $table->timestamps();
-            
             $table->foreign('convocatoria_id')
                 ->references('id')
-                ->on('convocatorias')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-                
+                ->on('convocatorias');
+
+            $table->unsignedBigInteger('alumno_id');
             $table->foreign('alumno_id')
                 ->references('id')
-                ->on('alumnos')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-            
-            $table->foreign('id_servicio_solicitado')
-                ->references('id')
-                ->on('servicio_solicitado')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+                ->on('alumnos');
+
+            $table->timestamps();
         });
     }
 
@@ -48,6 +36,6 @@ class CreateSolicitudesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitud');
+        Schema::dropIfExists('solicitudes');
     }
 }

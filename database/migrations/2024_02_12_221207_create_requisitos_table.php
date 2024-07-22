@@ -16,32 +16,28 @@ class CreateRequisitosTable extends Migration
         Schema::create('requisitos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion');
-            $table->string('url_guia');
-            $table->string('estado');
-            $table->date('fecha_registro');
+            $table->string('descripcion')->nullable();
+            $table->string('url_guia')->nullable();
+            $table->string('url_plantilla')->nullable();
+            $table->string('opciones')->nullable();
             $table->unsignedBigInteger('tipo_requisito_id');
-            $table->unsignedBigInteger('convocatoria_id');
-            $table->unsignedBigInteger('seccion_id');
-            $table->timestamps();
-            
             $table->foreign('tipo_requisito_id')
                 ->references('id')
                 ->on('tipo_requisitos')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-                
-            $table->foreign('convocatoria_id')
-                ->references('id')
-                ->on('convocatorias')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-            
+
+            $table->unsignedBigInteger('seccion_id');
             $table->foreign('seccion_id')
                 ->references('id')
                 ->on('secciones')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->timestamps();
         });
     }
 
@@ -52,6 +48,6 @@ class CreateRequisitosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requisito');
+        Schema::dropIfExists('requisitos');
     }
 }

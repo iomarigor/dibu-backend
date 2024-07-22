@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use App\Http\Response\Response;
 
 class RestricLevel2
 {
@@ -43,6 +44,6 @@ class RestricLevel2
             return $next($request);
         }
 
-        return response()->json(['msg' => 'Acceso no autorizado 2', 'detalle' => null], 403);
+        return Response::res('Acceso no autorizadoo', null, 403);
     }
 }

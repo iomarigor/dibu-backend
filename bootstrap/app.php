@@ -62,7 +62,6 @@ $app->singleton(
 $app->configure('app');
 $app->configure('auth');
 $app->configure('cors');
-
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -83,6 +82,7 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'restriclevel1' => App\Http\Middleware\RestricLevel1::class,
     'restriclevel2' => App\Http\Middleware\RestricLevel2::class,
+    'restriclevel3' => App\Http\Middleware\RestricLevel3::class,
 ]);
 
 /*
@@ -99,9 +99,12 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Illuminate\Validation\ValidationServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
-//$app->register('Nord\Lumen\Cors\CorsServiceProvider');
+$app->register(\Anik\Form\FormRequestServiceProvider::class);
+$app->register(Maatwebsite\Excel\ExcelServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -112,7 +115,6 @@ $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
-
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {

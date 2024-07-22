@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Servicio\ServicioRequest;
+use App\Http\Resources\Servicio\ServicioResource;
 use App\Models\Servicio;
+use App\Services\Servicio\UpdateServicioService;
+use App\Services\Servicio\CreateServicioService;
+use App\Services\Servicio\ListServicioService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServicioController extends Controller
 {
@@ -12,19 +18,9 @@ class ServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ListServicioService $listServicioService)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(['msg' => 'Servicios listados satisfactoriamente','detalle' => ServicioResource::collection($listServicioService->list())],200);
     }
 
     /**
@@ -33,6 +29,11 @@ class ServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function create(ServicioRequest $request, CreateServicioService $createService)
+    {
+        return response()->json(['msg' => 'Servicio registrado satisfactoriamente','detalle' => ServicioResource::make($createService->create($request->validated()))],200);
+    }
+
     public function store(Request $request)
     {
         //
@@ -44,9 +45,13 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function show(Servicio $servicio)
+    public function show($id)
     {
-        //
+        $servicio = Servicio::find($id);
+        if (!$servicio) {
+            return response()->json(['msg' => 'Servicio no encontrado', 'detalle' => null], 404);
+        }
+        return response()->json(['msg' => 'Servicio', 'detalle' => $servicio]);
     }
 
     /**
@@ -55,9 +60,8 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Servicio $servicio)
+    public function edit(Request $request, Servicio $servicio)
     {
-        //
     }
 
     /**
@@ -67,9 +71,11 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Servicio $servicio)
+    public function update(ServicioRequest $request, UpdateServicioService $updateService, $id)
     {
-        //
+        $servicio = Servicio::findOrFail($id);
+        $servicio = $updateService->update($servicio, $request->validated());
+        return response()->json(['msg' => 'Servicio actualizado satisfactoriamente','detalle' => ServicioResource::make($servicio)],200);
     }
 
     /**
@@ -81,5 +87,6 @@ class ServicioController extends Controller
     public function destroy(Servicio $servicio)
     {
         //
+        
     }
 }
