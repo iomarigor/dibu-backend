@@ -52,8 +52,8 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        $convocatoria = Convocatoria::get();
-        $convocatoria = $convocatoria[(count($convocatoria) - 1)];
+        $convocatoria = Convocatoria::find(1);
+        //$convocatoria = $convocatoria[(count($convocatoria) - 1)];
         $solicitudesIDsTemporales = Solicitud::select(
             'solicitudes.id as id',
         )
@@ -91,6 +91,36 @@ class SolicitudesExport implements FromCollection, WithHeadings, ShouldAutoSize
             ->join('alumnos as a', 'solicitudes.alumno_id', '=', 'a.id')
             ->where('solicitudes.convocatoria_id', $convocatoria->id)
             ->orderBy('solicitudes.created_at', 'desc')
+            ->where('a.correo_institucional', 'LIKE', "%lia.alania@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%angel.taipe@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%merilis.cierto@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%mariciaelo.azañedo@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%johan.archenti@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%manuel.herrera@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%banner.anteaga@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%tony.soplin@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%orlando.vallejos@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%samuel.ascencio@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%betkeila.antonio@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%jheison.carranza@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%flor.espiritu@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%bridyith.valentin@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%javier.nolazco@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%matyori.sanchez@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%alvaro.samaniego@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%elvin.angulo@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%daniela.gama@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%ricky.malpartida@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%gaudencia.dominguez@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%diego.verde@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%francisco.vidal@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%bryam.gozme@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%nayeli.seas@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%mavila.carlos@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%katrin.rios@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%alvaro.castro@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%liz.mamani@unas.edu.pe%")
+            ->orWhere('a.correo_institucional', 'LIKE', "%esther.rodriguez@unas.edu.pe%")
             ->get();
         $solicitudesIDs = new Collection();
         $solicitudes = new Collection();

@@ -11,8 +11,8 @@ class SolicitudExportService
 {
     public function export()/* : ?Model */
     {
-        $convocatoria = Convocatoria::get();
-        $convocatoria = $convocatoria[(count($convocatoria) - 1)];
+        $convocatoria = Convocatoria::find(1);
+        //$convocatoria = $convocatoria[(count($convocatoria) - 1)];
         return Excel::download(new SolicitudesExport, $convocatoria->nombre . '-Solicitantes.xlsx');
     }
 }

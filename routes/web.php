@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 $router->group([], function ($router) {
     $router->get('/', function () use ($router) {
         //return ;
-        return '<h1>API REST</h1> </br> ' . $router->app->version() . '-' . storage_path('app/private_key.pem');
+        return '<h1>API REST</h1> </br> ';
     });
     $router->post('/login', 'AuthController@login');
 
@@ -27,6 +27,8 @@ $router->group([], function ($router) {
     $router->post('/solicitud/uploadDocument', 'SolicitudController@uploadDocument');
     $router->get('/solicitud/alumno/{dni}', 'SolicitudController@cargaSolicitudAlumno');
     $router->get('/solicitud/servicioSolicitado/{dni}', 'SolicitudController@servicioSolicitadoSolicitante');
+
+    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
 });
 
 // Rutas que requieren nivel de acceso 1
@@ -66,7 +68,6 @@ $router->group(['middleware' => ['auth', 'restriclevel3']], function ($router) {
     //Solicitud
     $router->get('/solicitudes/{id}', 'SolicitudController@index');
     $router->get('/solicitud/show/{id}', 'SolicitudController@show');
-    $router->get('/solicitud/export/', 'SolicitudController@solicitudExport');
     //LevelUsers
     $router->get('/leveluser', 'LevelUserController@index');
 
